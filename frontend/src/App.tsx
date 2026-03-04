@@ -17,7 +17,7 @@ function NavBar() {
 
     return (
         <nav className="left-0 top-0 bottom-0 w-16 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)] flex flex-col items-center py-4 z-50">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--color-accent-blue)] to-[var(--color-accent-purple)] flex items-center justify-center mb-6">
+            <div className="w-10 h-10 rounded-xl bg-(--color-muted-foreground) flex items-center justify-center mb-6">
                 <Shield size={20} className="text-white" />
             </div>
 
@@ -47,7 +47,7 @@ export default function App() {
         <BrowserRouter>
             <div className="flex min-h-screen">
                 <NavBar />
-                <main className="ml-16 flex-1">
+                <main className="flex-1">
                     <Routes>
                         <Route path="/" element={<Navigate to="/hospital/H1/dashboard" replace />} />
                         <Route path="/hospital/:hospitalId/dashboard" element={<HospitalDashboard />} />
