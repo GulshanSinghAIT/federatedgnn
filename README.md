@@ -7,6 +7,8 @@ A full-stack research prototype for **privacy-preserving medical decision suppor
 ### Backend
 ```bash
 cd backend
+python3 -m venv venv
+source venv/bin/activate   # on macOS/Linux
 pip3 install -r requirements.txt
 python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
