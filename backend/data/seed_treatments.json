@@ -1,0 +1,200 @@
+[
+    {
+        "id": "T001",
+        "name": "Metformin",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T002",
+        "name": "Insulin Therapy",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T003",
+        "name": "Lisinopril",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T004",
+        "name": "Amlodipine",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T005",
+        "name": "Amoxicillin",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T006",
+        "name": "Azithromycin",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T007",
+        "name": "Sertraline",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T008",
+        "name": "Cognitive Behavioral Therapy",
+        "type": "lifestyle",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T009",
+        "name": "Albuterol Inhaler",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T010",
+        "name": "Fluticasone Inhaler",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T011",
+        "name": "Appendectomy",
+        "type": "surgical",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T012",
+        "name": "Sumatriptan",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T013",
+        "name": "Topiramate",
+        "type": "pharmacological",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T014",
+        "name": "Levothyroxine",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T015",
+        "name": "Omeprazole",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T016",
+        "name": "Iron Supplementation",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T017",
+        "name": "Remdesivir",
+        "type": "pharmacological",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T018",
+        "name": "Dexamethasone",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T019",
+        "name": "Furosemide",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T020",
+        "name": "Carvedilol",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T021",
+        "name": "Alteplase (tPA)",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T022",
+        "name": "Mechanical Thrombectomy",
+        "type": "surgical",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T023",
+        "name": "Buspirone",
+        "type": "pharmacological",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T024",
+        "name": "Acetaminophen",
+        "type": "pharmacological",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T025",
+        "name": "Physical Therapy",
+        "type": "lifestyle",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T026",
+        "name": "DASH Diet",
+        "type": "lifestyle",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T027",
+        "name": "Regular Exercise Program",
+        "type": "lifestyle",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T028",
+        "name": "CPAP Therapy",
+        "type": "pharmacological",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T029",
+        "name": "Dietary Modifications",
+        "type": "lifestyle",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T030",
+        "name": "Hydrochlorothiazide",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T031",
+        "name": "Escitalopram",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    },
+    {
+        "id": "T032",
+        "name": "Ibuprofen",
+        "type": "pharmacological",
+        "evidence_level": "B"
+    },
+    {
+        "id": "T033",
+        "name": "Aspirin",
+        "type": "pharmacological",
+        "evidence_level": "A"
+    }
+]

@@ -1,0 +1,512 @@
+[
+    {
+        "id": "S001",
+        "name": "Cough",
+        "body_system": "Respiratory",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S002",
+        "name": "Shortness of breath",
+        "body_system": "Respiratory",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S003",
+        "name": "Wheezing",
+        "body_system": "Respiratory",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S004",
+        "name": "Chest tightness",
+        "body_system": "Respiratory",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S005",
+        "name": "Sputum production",
+        "body_system": "Respiratory",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S006",
+        "name": "Hemoptysis",
+        "body_system": "Respiratory",
+        "severity_weight": 1.0
+    },
+    {
+        "id": "S007",
+        "name": "Nasal congestion",
+        "body_system": "Respiratory",
+        "severity_weight": 0.3
+    },
+    {
+        "id": "S008",
+        "name": "Sore throat",
+        "body_system": "Respiratory",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S009",
+        "name": "Sneezing",
+        "body_system": "Respiratory",
+        "severity_weight": 0.2
+    },
+    {
+        "id": "S010",
+        "name": "Stridor",
+        "body_system": "Respiratory",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S011",
+        "name": "Pleuritic chest pain",
+        "body_system": "Respiratory",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S012",
+        "name": "Chest pain",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S013",
+        "name": "Palpitations",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S014",
+        "name": "Peripheral edema",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S015",
+        "name": "Syncope",
+        "body_system": "Cardiovascular",
+        "severity_weight": 1.0
+    },
+    {
+        "id": "S016",
+        "name": "Orthopnea",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S017",
+        "name": "Paroxysmal nocturnal dyspnea",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S018",
+        "name": "Jugular venous distension",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S019",
+        "name": "Cyanosis",
+        "body_system": "Cardiovascular",
+        "severity_weight": 1.0
+    },
+    {
+        "id": "S020",
+        "name": "Claudication",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S021",
+        "name": "Cold extremities",
+        "body_system": "Cardiovascular",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S022",
+        "name": "Headache",
+        "body_system": "Neurological",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S023",
+        "name": "Dizziness",
+        "body_system": "Neurological",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S024",
+        "name": "Numbness",
+        "body_system": "Neurological",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S025",
+        "name": "Tingling",
+        "body_system": "Neurological",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S026",
+        "name": "Seizures",
+        "body_system": "Neurological",
+        "severity_weight": 1.0
+    },
+    {
+        "id": "S027",
+        "name": "Tremor",
+        "body_system": "Neurological",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S028",
+        "name": "Visual disturbances",
+        "body_system": "Neurological",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S029",
+        "name": "Speech difficulty",
+        "body_system": "Neurological",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S030",
+        "name": "Memory loss",
+        "body_system": "Neurological",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S031",
+        "name": "Photophobia",
+        "body_system": "Neurological",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S032",
+        "name": "Aura",
+        "body_system": "Neurological",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S033",
+        "name": "Facial droop",
+        "body_system": "Neurological",
+        "severity_weight": 1.0
+    },
+    {
+        "id": "S034",
+        "name": "Nausea",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S035",
+        "name": "Vomiting",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S036",
+        "name": "Abdominal pain",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S037",
+        "name": "Diarrhea",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S038",
+        "name": "Constipation",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S039",
+        "name": "Bloating",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.3
+    },
+    {
+        "id": "S040",
+        "name": "Heartburn",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S041",
+        "name": "Dysphagia",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S042",
+        "name": "Melena",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S043",
+        "name": "Loss of appetite",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S044",
+        "name": "Right lower quadrant pain",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S045",
+        "name": "Rebound tenderness",
+        "body_system": "Gastrointestinal",
+        "severity_weight": 0.9
+    },
+    {
+        "id": "S046",
+        "name": "Joint pain",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S047",
+        "name": "Joint stiffness",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S048",
+        "name": "Muscle weakness",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S049",
+        "name": "Back pain",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S050",
+        "name": "Joint swelling",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S051",
+        "name": "Limited range of motion",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S052",
+        "name": "Crepitus",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S053",
+        "name": "Bone pain",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S054",
+        "name": "Muscle cramps",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S055",
+        "name": "Gait abnormality",
+        "body_system": "Musculoskeletal",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S056",
+        "name": "Rash",
+        "body_system": "Dermatological",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S057",
+        "name": "Itching",
+        "body_system": "Dermatological",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S058",
+        "name": "Skin lesions",
+        "body_system": "Dermatological",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S059",
+        "name": "Hair loss",
+        "body_system": "Dermatological",
+        "severity_weight": 0.3
+    },
+    {
+        "id": "S060",
+        "name": "Dry skin",
+        "body_system": "Dermatological",
+        "severity_weight": 0.2
+    },
+    {
+        "id": "S061",
+        "name": "Bruising easily",
+        "body_system": "Dermatological",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S062",
+        "name": "Skin pallor",
+        "body_system": "Dermatological",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S063",
+        "name": "Jaundice",
+        "body_system": "Dermatological",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S064",
+        "name": "Depressed mood",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S065",
+        "name": "Anhedonia",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S066",
+        "name": "Insomnia",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S067",
+        "name": "Anxiety",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S068",
+        "name": "Panic attacks",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.8
+    },
+    {
+        "id": "S069",
+        "name": "Irritability",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S070",
+        "name": "Fatigue",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S071",
+        "name": "Difficulty concentrating",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S072",
+        "name": "Social withdrawal",
+        "body_system": "Psychiatric",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S073",
+        "name": "Suicidal ideation",
+        "body_system": "Psychiatric",
+        "severity_weight": 1.0
+    },
+    {
+        "id": "S074",
+        "name": "Fever",
+        "body_system": "General",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S075",
+        "name": "Chills",
+        "body_system": "General",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S076",
+        "name": "Night sweats",
+        "body_system": "General",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S077",
+        "name": "Unintentional weight loss",
+        "body_system": "General",
+        "severity_weight": 0.7
+    },
+    {
+        "id": "S078",
+        "name": "Weight gain",
+        "body_system": "General",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S079",
+        "name": "Excessive thirst",
+        "body_system": "General",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S080",
+        "name": "Frequent urination",
+        "body_system": "General",
+        "severity_weight": 0.5
+    },
+    {
+        "id": "S081",
+        "name": "Blurred vision",
+        "body_system": "General",
+        "severity_weight": 0.6
+    },
+    {
+        "id": "S082",
+        "name": "Malaise",
+        "body_system": "General",
+        "severity_weight": 0.4
+    },
+    {
+        "id": "S083",
+        "name": "Loss of smell",
+        "body_system": "General",
+        "severity_weight": 0.3
+    },
+    {
+        "id": "S084",
+        "name": "Loss of taste",
+        "body_system": "General",
+        "severity_weight": 0.3
+    },
+    {
+        "id": "S085",
+        "name": "Slow wound healing",
+        "body_system": "General",
+        "severity_weight": 0.5
+    }
+]

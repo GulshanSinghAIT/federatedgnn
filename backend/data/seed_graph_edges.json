@@ -1,0 +1,687 @@
+{
+    "indicates": [
+        {
+            "symptom_id": "S079",
+            "disease_id": "D001",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S080",
+            "disease_id": "D001",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S070",
+            "disease_id": "D001",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S081",
+            "disease_id": "D001",
+            "weight": 0.61
+        },
+        {
+            "symptom_id": "S085",
+            "disease_id": "D001",
+            "weight": 0.58
+        },
+        {
+            "symptom_id": "S078",
+            "disease_id": "D001",
+            "weight": 0.45
+        },
+        {
+            "symptom_id": "S022",
+            "disease_id": "D002",
+            "weight": 0.65
+        },
+        {
+            "symptom_id": "S023",
+            "disease_id": "D002",
+            "weight": 0.58
+        },
+        {
+            "symptom_id": "S081",
+            "disease_id": "D002",
+            "weight": 0.52
+        },
+        {
+            "symptom_id": "S012",
+            "disease_id": "D002",
+            "weight": 0.48
+        },
+        {
+            "symptom_id": "S001",
+            "disease_id": "D003",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S074",
+            "disease_id": "D003",
+            "weight": 0.85
+        },
+        {
+            "symptom_id": "S002",
+            "disease_id": "D003",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S005",
+            "disease_id": "D003",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S075",
+            "disease_id": "D003",
+            "weight": 0.65
+        },
+        {
+            "symptom_id": "S011",
+            "disease_id": "D003",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S064",
+            "disease_id": "D004",
+            "weight": 0.92
+        },
+        {
+            "symptom_id": "S065",
+            "disease_id": "D004",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S066",
+            "disease_id": "D004",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S070",
+            "disease_id": "D004",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S071",
+            "disease_id": "D004",
+            "weight": 0.65
+        },
+        {
+            "symptom_id": "S077",
+            "disease_id": "D004",
+            "weight": 0.52
+        },
+        {
+            "symptom_id": "S072",
+            "disease_id": "D004",
+            "weight": 0.68
+        },
+        {
+            "symptom_id": "S002",
+            "disease_id": "D005",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S003",
+            "disease_id": "D005",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S004",
+            "disease_id": "D005",
+            "weight": 0.75
+        },
+        {
+            "symptom_id": "S001",
+            "disease_id": "D005",
+            "weight": 0.68
+        },
+        {
+            "symptom_id": "S036",
+            "disease_id": "D006",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S044",
+            "disease_id": "D006",
+            "weight": 0.92
+        },
+        {
+            "symptom_id": "S034",
+            "disease_id": "D006",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S035",
+            "disease_id": "D006",
+            "weight": 0.65
+        },
+        {
+            "symptom_id": "S074",
+            "disease_id": "D006",
+            "weight": 0.58
+        },
+        {
+            "symptom_id": "S045",
+            "disease_id": "D006",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S022",
+            "disease_id": "D007",
+            "weight": 0.95
+        },
+        {
+            "symptom_id": "S034",
+            "disease_id": "D007",
+            "weight": 0.68
+        },
+        {
+            "symptom_id": "S031",
+            "disease_id": "D007",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S028",
+            "disease_id": "D007",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S032",
+            "disease_id": "D007",
+            "weight": 0.85
+        },
+        {
+            "symptom_id": "S070",
+            "disease_id": "D008",
+            "weight": 0.75
+        },
+        {
+            "symptom_id": "S078",
+            "disease_id": "D008",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S038",
+            "disease_id": "D008",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S060",
+            "disease_id": "D008",
+            "weight": 0.62
+        },
+        {
+            "symptom_id": "S059",
+            "disease_id": "D008",
+            "weight": 0.52
+        },
+        {
+            "symptom_id": "S071",
+            "disease_id": "D008",
+            "weight": 0.58
+        },
+        {
+            "symptom_id": "S040",
+            "disease_id": "D009",
+            "weight": 0.92
+        },
+        {
+            "symptom_id": "S036",
+            "disease_id": "D009",
+            "weight": 0.68
+        },
+        {
+            "symptom_id": "S034",
+            "disease_id": "D009",
+            "weight": 0.65
+        },
+        {
+            "symptom_id": "S041",
+            "disease_id": "D009",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S039",
+            "disease_id": "D009",
+            "weight": 0.52
+        },
+        {
+            "symptom_id": "S070",
+            "disease_id": "D010",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S062",
+            "disease_id": "D010",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S023",
+            "disease_id": "D010",
+            "weight": 0.58
+        },
+        {
+            "symptom_id": "S002",
+            "disease_id": "D010",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S061",
+            "disease_id": "D010",
+            "weight": 0.62
+        },
+        {
+            "symptom_id": "S001",
+            "disease_id": "D011",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S074",
+            "disease_id": "D011",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S070",
+            "disease_id": "D011",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S083",
+            "disease_id": "D011",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S084",
+            "disease_id": "D011",
+            "weight": 0.85
+        },
+        {
+            "symptom_id": "S002",
+            "disease_id": "D011",
+            "weight": 0.68
+        },
+        {
+            "symptom_id": "S082",
+            "disease_id": "D011",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S002",
+            "disease_id": "D012",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S014",
+            "disease_id": "D012",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S016",
+            "disease_id": "D012",
+            "weight": 0.85
+        },
+        {
+            "symptom_id": "S017",
+            "disease_id": "D012",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S070",
+            "disease_id": "D012",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S018",
+            "disease_id": "D012",
+            "weight": 0.75
+        },
+        {
+            "symptom_id": "S029",
+            "disease_id": "D013",
+            "weight": 0.92
+        },
+        {
+            "symptom_id": "S033",
+            "disease_id": "D013",
+            "weight": 0.95
+        },
+        {
+            "symptom_id": "S048",
+            "disease_id": "D013",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S022",
+            "disease_id": "D013",
+            "weight": 0.68
+        },
+        {
+            "symptom_id": "S028",
+            "disease_id": "D013",
+            "weight": 0.75
+        },
+        {
+            "symptom_id": "S067",
+            "disease_id": "D014",
+            "weight": 0.92
+        },
+        {
+            "symptom_id": "S068",
+            "disease_id": "D014",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S069",
+            "disease_id": "D014",
+            "weight": 0.62
+        },
+        {
+            "symptom_id": "S066",
+            "disease_id": "D014",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S071",
+            "disease_id": "D014",
+            "weight": 0.58
+        },
+        {
+            "symptom_id": "S048",
+            "disease_id": "D014",
+            "weight": 0.55
+        },
+        {
+            "symptom_id": "S046",
+            "disease_id": "D015",
+            "weight": 0.92
+        },
+        {
+            "symptom_id": "S047",
+            "disease_id": "D015",
+            "weight": 0.88
+        },
+        {
+            "symptom_id": "S050",
+            "disease_id": "D015",
+            "weight": 0.72
+        },
+        {
+            "symptom_id": "S051",
+            "disease_id": "D015",
+            "weight": 0.78
+        },
+        {
+            "symptom_id": "S052",
+            "disease_id": "D015",
+            "weight": 0.82
+        },
+        {
+            "symptom_id": "S055",
+            "disease_id": "D015",
+            "weight": 0.55
+        }
+    ],
+    "treats": [
+        {
+            "treatment_id": "T001",
+            "disease_id": "D001",
+            "efficacy": 0.82
+        },
+        {
+            "treatment_id": "T002",
+            "disease_id": "D001",
+            "efficacy": 0.91
+        },
+        {
+            "treatment_id": "T027",
+            "disease_id": "D001",
+            "efficacy": 0.65
+        },
+        {
+            "treatment_id": "T029",
+            "disease_id": "D001",
+            "efficacy": 0.58
+        },
+        {
+            "treatment_id": "T003",
+            "disease_id": "D002",
+            "efficacy": 0.85
+        },
+        {
+            "treatment_id": "T004",
+            "disease_id": "D002",
+            "efficacy": 0.82
+        },
+        {
+            "treatment_id": "T030",
+            "disease_id": "D002",
+            "efficacy": 0.78
+        },
+        {
+            "treatment_id": "T026",
+            "disease_id": "D002",
+            "efficacy": 0.62
+        },
+        {
+            "treatment_id": "T027",
+            "disease_id": "D002",
+            "efficacy": 0.55
+        },
+        {
+            "treatment_id": "T005",
+            "disease_id": "D003",
+            "efficacy": 0.85
+        },
+        {
+            "treatment_id": "T006",
+            "disease_id": "D003",
+            "efficacy": 0.82
+        },
+        {
+            "treatment_id": "T007",
+            "disease_id": "D004",
+            "efficacy": 0.78
+        },
+        {
+            "treatment_id": "T031",
+            "disease_id": "D004",
+            "efficacy": 0.75
+        },
+        {
+            "treatment_id": "T008",
+            "disease_id": "D004",
+            "efficacy": 0.72
+        },
+        {
+            "treatment_id": "T027",
+            "disease_id": "D004",
+            "efficacy": 0.52
+        },
+        {
+            "treatment_id": "T009",
+            "disease_id": "D005",
+            "efficacy": 0.88
+        },
+        {
+            "treatment_id": "T010",
+            "disease_id": "D005",
+            "efficacy": 0.82
+        },
+        {
+            "treatment_id": "T011",
+            "disease_id": "D006",
+            "efficacy": 0.95
+        },
+        {
+            "treatment_id": "T012",
+            "disease_id": "D007",
+            "efficacy": 0.78
+        },
+        {
+            "treatment_id": "T013",
+            "disease_id": "D007",
+            "efficacy": 0.68
+        },
+        {
+            "treatment_id": "T014",
+            "disease_id": "D008",
+            "efficacy": 0.92
+        },
+        {
+            "treatment_id": "T015",
+            "disease_id": "D009",
+            "efficacy": 0.85
+        },
+        {
+            "treatment_id": "T029",
+            "disease_id": "D009",
+            "efficacy": 0.62
+        },
+        {
+            "treatment_id": "T016",
+            "disease_id": "D010",
+            "efficacy": 0.88
+        },
+        {
+            "treatment_id": "T029",
+            "disease_id": "D010",
+            "efficacy": 0.52
+        },
+        {
+            "treatment_id": "T017",
+            "disease_id": "D011",
+            "efficacy": 0.72
+        },
+        {
+            "treatment_id": "T018",
+            "disease_id": "D011",
+            "efficacy": 0.78
+        },
+        {
+            "treatment_id": "T019",
+            "disease_id": "D012",
+            "efficacy": 0.82
+        },
+        {
+            "treatment_id": "T020",
+            "disease_id": "D012",
+            "efficacy": 0.85
+        },
+        {
+            "treatment_id": "T003",
+            "disease_id": "D012",
+            "efficacy": 0.72
+        },
+        {
+            "treatment_id": "T021",
+            "disease_id": "D013",
+            "efficacy": 0.75
+        },
+        {
+            "treatment_id": "T022",
+            "disease_id": "D013",
+            "efficacy": 0.82
+        },
+        {
+            "treatment_id": "T033",
+            "disease_id": "D013",
+            "efficacy": 0.65
+        },
+        {
+            "treatment_id": "T023",
+            "disease_id": "D014",
+            "efficacy": 0.72
+        },
+        {
+            "treatment_id": "T031",
+            "disease_id": "D014",
+            "efficacy": 0.68
+        },
+        {
+            "treatment_id": "T008",
+            "disease_id": "D014",
+            "efficacy": 0.75
+        },
+        {
+            "treatment_id": "T024",
+            "disease_id": "D015",
+            "efficacy": 0.55
+        },
+        {
+            "treatment_id": "T032",
+            "disease_id": "D015",
+            "efficacy": 0.62
+        },
+        {
+            "treatment_id": "T025",
+            "disease_id": "D015",
+            "efficacy": 0.78
+        }
+    ],
+    "comorbid_with": [
+        {
+            "disease_id_1": "D001",
+            "disease_id_2": "D002",
+            "correlation": 0.72
+        },
+        {
+            "disease_id_1": "D001",
+            "disease_id_2": "D012",
+            "correlation": 0.55
+        },
+        {
+            "disease_id_1": "D002",
+            "disease_id_2": "D012",
+            "correlation": 0.68
+        },
+        {
+            "disease_id_1": "D002",
+            "disease_id_2": "D013",
+            "correlation": 0.62
+        },
+        {
+            "disease_id_1": "D004",
+            "disease_id_2": "D014",
+            "correlation": 0.75
+        },
+        {
+            "disease_id_1": "D004",
+            "disease_id_2": "D007",
+            "correlation": 0.42
+        },
+        {
+            "disease_id_1": "D001",
+            "disease_id_2": "D015",
+            "correlation": 0.38
+        },
+        {
+            "disease_id_1": "D005",
+            "disease_id_2": "D009",
+            "correlation": 0.35
+        },
+        {
+            "disease_id_1": "D008",
+            "disease_id_2": "D004",
+            "correlation": 0.45
+        },
+        {
+            "disease_id_1": "D001",
+            "disease_id_2": "D010",
+            "correlation": 0.32
+        }
+    ],
+    "contraindicated": [
+        {
+            "treatment_id_1": "T001",
+            "treatment_id_2": "T002"
+        },
+        {
+            "treatment_id_1": "T032",
+            "treatment_id_2": "T033"
+        },
+        {
+            "treatment_id_1": "T003",
+            "treatment_id_2": "T030"
+        }
+    ]
+}
