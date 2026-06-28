@@ -5,10 +5,11 @@ import TrainingCharts from '../components/federation/TrainingCharts';
 import { useFederationStore } from '../store/federationStore';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { startFederation, stopFederation, resetFederation, fetchDatasets } from '../api/client';
-import { Play, Square, RotateCcw, Zap } from 'lucide-react';
+import { Play, Square, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import { InputGroup, InputField } from '@/components/ui/input-group';
+import PageHeader from '../components/layout/PageHeader';
 
 const MODELS = ['FedFairGNN', 'FairGCN', 'FairGNN', 'SMPC-LP', 'all'];
 const ENGINES = [{ id: 'sim', label: 'Simulation' }, { id: 'real', label: 'Real (PyTorch)' }];
@@ -53,26 +54,19 @@ export default function FederationDashboard() {
 
     return (
         <div className="h-full flex flex-col shadow-xl rounded-tl-2xl bg-bg-primary">
-            {/* Top Bar */}
-            <header className="shrink-0 border-b pl-4 p-2 bg-white rounded-tl-2xl">
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <h1 className="text-xl font-medium tracking-tighter text-text-primary flex items-center gap-2">
-                            <Zap size={20} className="text-accent-blue" />
-                            Federated Learning Network
-                        </h1>
-                        <div className="flex items-center gap-2 text-sm">
-                            <span className="text-text-muted">Round</span>
-                            <span className="font-bold text-accent-blue text-lg animate-count-up">{currentRound}</span>
-                            <span className="text-text-muted">/ {totalRounds || '—'}</span>
-                        </div>
-                        <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${isRunning ? 'bg-green-500/20 text-green-400' : 'bg-bg-tertiary text-text-muted'}`}>
-                            <div className={`w-2 h-2 rounded-full ${isRunning ? 'bg-green-500 animate-pulse' : 'bg-gray-500'}`} />
+            <PageHeader
+                title="Federated Learning Network"
+                subtitle={
+                    <span className="flex items-center gap-3">
+                        <span>Round <b className="font-medium text-accent-blue animate-count-up">{currentRound}</b> / {totalRounds || '—'}</span>
+                        <span className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${isRunning ? 'bg-green-500/20 text-green-600' : 'bg-bg-tertiary text-text-muted'}`}>
+                            <span className={`w-2 h-2 rounded-full ${isRunning ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
                             {isRunning ? 'Training' : 'Idle'}
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
+                        </span>
+                    </span>
+                }
+                actions={
+                    <>
                         <Select value={dataset} onValueChange={setDataset} disabled={isRunning}>
                             <SelectTrigger title="Benchmark dataset" />
                             <SelectContent>
@@ -110,9 +104,9 @@ export default function FederationDashboard() {
                             className="text-text-secondary">
                             Reset
                         </Button>
-                    </div>
-                </div>
-            </header>
+                    </>
+                }
+            />
 
             <div className="flex-1 min-h-0 overflow-y-auto p-6 space-y-4">
                 {/* Top: Network + Metrics Feed */}

@@ -2,6 +2,17 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+@import "@fontsource-variable/inter/opsz.css";   /* body — Inter (rsms) w/ optical-size axis */
+@import "@fontsource-variable/geist-mono";       /* mono — Geist Mono */
+
+/* display — Bagoss Standard (local trial); served from /public/fonts */
+@font-face {
+  font-family: 'Bagoss Standard';
+  src: url('/fonts/BagossStandardTRIAL-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -93,11 +104,10 @@
   --color-ring: #2840C9;
   --color-input: #E5E8EC;
 
-  /* type — brand fonts with graceful fallback to the bundled Geist.
-     To match the brand exactly, add @fontsource/space-grotesk + ibm-plex. */
-  --font-display: 'Space Grotesk', 'Geist Variable', system-ui, sans-serif;
-  --font-body: 'IBM Plex Sans', 'Geist Variable', system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  /* type — generates the font-display / font-body / font-mono utilities. */
+  --font-display: 'Bagoss Standard', 'Geist Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
   --radius-brand: 6px;
 }
@@ -132,6 +142,8 @@ body {
   background-color: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
+  font-optical-sizing: auto;       /* drives Inter's opsz axis */
+  font-variant-numeric: tabular-nums;  /* all digits tabular (metrics/tables align, no jitter) */
   -webkit-font-smoothing: antialiased;
 }
 

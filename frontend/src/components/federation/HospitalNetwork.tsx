@@ -51,7 +51,7 @@ export default function HospitalNetwork() {
             {demoPanel && (
                 <div className="absolute top-0 right-0 w-80 h-full glass-card p-4 overflow-y-auto animate-slide-in z-50">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-sm font-bold text-text-primary">
+                        <h3 className="text-sm font-medium text-text-primary">
                             🔒 Demographics — {demoPanel.hospital_id}
                         </h3>
                         <Button variant="ghost" size="icon-sm" onClick={() => setDemoPanel(null)} className="text-text-muted hover:text-white">✕</Button>
@@ -110,7 +110,7 @@ export default function HospitalNetwork() {
 
                     {demoPanel.fairness_gap != null && (
                         <div className="text-xs text-text-muted">
-                            <strong>Fairness Gap:</strong> <span className={`font-bold ${demoPanel.fairness_gap > 0.1 ? 'text-accent-red' : 'text-accent-green'}`}>
+                            <strong>Fairness Gap:</strong> <span className={`font-medium ${demoPanel.fairness_gap > 0.1 ? 'text-accent-red' : 'text-accent-green'}`}>
                                 {demoPanel.fairness_gap.toFixed(4)}
                             </span>
                         </div>

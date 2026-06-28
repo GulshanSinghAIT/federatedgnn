@@ -168,8 +168,8 @@ const InputField = forwardRef<HTMLLabelElement, InputFieldProps>(
       bgClass = "bg-muted/50";
       ringClass = "ring-border";
     } else {
-      bgClass = "bg-transparent";
-      ringClass = "ring-transparent";
+      bgClass = "bg-white";
+      ringClass = "ring-border";
     }
 
     return (

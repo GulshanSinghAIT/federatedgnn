@@ -28,7 +28,10 @@
       "Bash(.venv/bin/python -m pip install --quiet --upgrade pip)",
       "Bash(.venv/bin/pip install *)",
       "Bash(.venv/bin/pip list *)",
-      "Bash(.venv/bin/python -c \"import main; print\\('✅ app imports OK — routers, gnn engine, datasets all load'\\)\")"
+      "Bash(.venv/bin/python -c \"import main; print\\('✅ app imports OK — routers, gnn engine, datasets all load'\\)\")",
+      "Bash(npm install *)",
+      "Bash(/usr/bin/grep -E \"font-family|font-named-instance|opsz|font-weight\" inter/opsz.css)",
+      "Bash(/usr/bin/grep -E \"font-family\" geist-mono/index.css)"
     ]
   }
 }

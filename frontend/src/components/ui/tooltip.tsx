@@ -103,7 +103,7 @@ function Tooltip({
   return (
     <TooltipPrimitive.Provider delayDuration={delayDuration}>
       <TooltipPrimitive.Root open={open} onOpenChange={(v) => { setInternalOpen(v); onOpenChangeProp?.(v); }}>
-        <TooltipPrimitive.Trigger>
+        <TooltipPrimitive.Trigger asChild>
           {children}
         </TooltipPrimitive.Trigger>
         {mounted && (
@@ -131,6 +131,7 @@ function Tooltip({
                 onAnimationComplete={handleExitComplete}
               >
                 {content}
+                <TooltipPrimitive.Arrow className="fill-foreground" width={11} height={5} />
               </motion.div>
             </TooltipPrimitive.Content>
           </TooltipPrimitive.Portal>

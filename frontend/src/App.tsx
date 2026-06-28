@@ -1,9 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 import HospitalDashboard from './pages/HospitalDashboard';
 import FederationDashboard from './pages/FederationDashboard';
 import MetricsDashboard from './pages/MetricsDashboard';
 import { Stethoscope, Zap, BarChart3 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Tooltip } from '@/components/ui/tooltip';
 
 /** Brand node-glyph: a cobalt core linked to three satellite nodes
  *  (the federated-aggregation motif from frontend/brand.html). */
@@ -23,6 +25,7 @@ function BrandGlyph({ size = 26 }: { size?: number }) {
 
 function NavBar() {
     const location = useLocation();
+    const navigate = useNavigate();
     const isActive = (path: string) => location.pathname.startsWith(path);
 
     const links = [
@@ -38,17 +41,19 @@ function NavBar() {
             </Link>
 
             <div className="flex flex-col gap-3 flex-1">
-                {links.map(link => (
-                    <Link key={link.path} to={link.path}
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all group relative ${isActive(link.path.split('/').slice(0, 2).join('/')) ? 'bg-bg-tertiary' : 'hover:bg-bg-tertiary/30'}`}
-                        style={{ color: isActive(link.path.split('/').slice(0, 2).join('/')) ? link.color : 'var(--color-white)' }}>
-                        {link.icon}
-                        <div className="absolute left-14 px-2 py-1 bg-bg-secondary border border-border rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-sm"
-                            style={{ color: link.color }}>
-                            {link.label}
-                        </div>
-                    </Link>
-                ))}
+                {links.map(link => {
+                    const active = isActive(link.path.split('/').slice(0, 2).join('/'));
+                    return (
+                        <Tooltip delayDuration={0} key={link.path} content={link.label} side="right">
+                            <Button variant="ghost" size="icon"
+                                onClick={() => navigate(link.path)}
+                                className={active ? 'bg-bg-tertiary' : ''}
+                                style={{ color: active ? link.color : 'var(--color-white)' }}>
+                                {link.icon}
+                            </Button>
+                        </Tooltip>
+                    );
+                })}
             </div>
 
             <div className="font-display text-[8px] text-text-muted text-center leading-tight tracking-tight">

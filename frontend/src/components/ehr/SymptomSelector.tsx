@@ -114,7 +114,7 @@ export default function SymptomSelector({ selected, onChange }: Props) {
                                 <input type="range" min="1" max="10" value={sym.severity}
                                     onChange={e => updateSeverity(sym.symptom_id, parseInt(e.target.value))}
                                     className="flex-1 accent-accent-blue" />
-                                <span className={`text-sm font-bold w-6 text-center ${sym.severity >= 8 ? 'text-accent-red' : sym.severity >= 5 ? 'text-accent-yellow' : 'text-accent-green'}`}>
+                                <span className={`text-sm font-medium w-6 text-center ${sym.severity >= 8 ? 'text-accent-red' : sym.severity >= 5 ? 'text-accent-yellow' : 'text-accent-green'}`}>
                                     {sym.severity}
                                 </span>
                             </div>

@@ -9,6 +9,7 @@ import { Plus, Users, Network, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import { TabsSubtle, TabsSubtleItem } from '@/components/ui/tabs-subtle';
+import PageHeader from '../components/layout/PageHeader';
 
 const TABS = [
     { key: 'list' as const, label: 'Patient List', icon: Users },
@@ -35,17 +36,12 @@ export default function HospitalDashboard() {
 
     return (
         <div className="h-full flex flex-col shadow-xl rounded-tl-2xl bg-bg-primary">
-            {/* Header */}
-            <header className="shrink-0 border-b pl-4 p-2 bg-white rounded-tl-2xl">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-xl font-medium tracking-tighter " style={{ color: HOSPITAL_COLORS[hospitalId] }}>
-                            {hospital?.name || hospitalId}
-                        </h1>
-                        <p className="text-xs text-text-muted">{hospital?.location} • {hospital?.patient_count || 0} patients</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        {/* Hospital Selector */}
+            <PageHeader
+                title={hospital?.name || hospitalId}
+                titleColor={HOSPITAL_COLORS[hospitalId]}
+                subtitle={`${hospital?.location ?? ''} • ${hospital?.patient_count || 0} patients`}
+                actions={
+                    <>
                         <Select value={hospitalId} onValueChange={val => navigate(`/hospital/${val}/dashboard`)}>
                             <SelectTrigger />
                             <SelectContent>
@@ -58,20 +54,18 @@ export default function HospitalDashboard() {
                         <Button variant={view === 'form' ? 'tertiary' : 'accent'} size="md" leadingIcon={view === 'form' ? X : Plus} onClick={() => setView(view === 'form' ? 'list' : 'form')}>
                             {view === 'form' ? 'Cancel' : 'Add Patient'}
                         </Button>
-                    </div>
-                </div>
-                {/* Tab Bar */}
-                <div className="mt-3">
-                    <TabsSubtle
-                        selectedIndex={Math.max(0, TABS.findIndex(t => t.key === view))}
-                        onSelect={(i) => setView(TABS[i].key)}
-                    >
-                        {TABS.map((tab, i) => (
-                            <TabsSubtleItem key={tab.key} index={i} label={tab.label} icon={tab.icon} />
-                        ))}
-                    </TabsSubtle>
-                </div>
-            </header>
+                    </>
+                }
+            >
+                <TabsSubtle
+                    selectedIndex={Math.max(0, TABS.findIndex(t => t.key === view))}
+                    onSelect={(i) => setView(TABS[i].key)}
+                >
+                    {TABS.map((tab, i) => (
+                        <TabsSubtleItem key={tab.key} index={i} label={tab.label} icon={tab.icon} />
+                    ))}
+                </TabsSubtle>
+            </PageHeader>
 
             {/* Main Content */}
             <main className="flex-1 min-h-0 overflow-y-auto p-6">

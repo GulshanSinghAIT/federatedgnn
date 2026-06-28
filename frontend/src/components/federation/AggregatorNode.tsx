@@ -14,28 +14,28 @@ export default function AggregatorNode() {
             )}
 
             <div className="text-xs text-text-muted uppercase tracking-wider">Global Aggregator</div>
-            <div className="text-sm font-bold text-accent-blue mt-1">{activeModel}</div>
+            <div className="text-sm font-medium text-accent-blue mt-1">{activeModel}</div>
 
             <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
                 <div>
                     <span className="text-text-muted">Round</span>
-                    <div className="font-bold">{currentRound}/{totalRounds}</div>
+                    <div className="font-medium">{currentRound}/{totalRounds}</div>
                 </div>
                 <div>
                     <span className="text-text-muted">Accuracy</span>
-                    <div className="font-bold text-accent-green animate-count-up">
+                    <div className="font-medium text-accent-green animate-count-up">
                         {globalMetrics.accuracy ? `${(globalMetrics.accuracy * 100).toFixed(1)}%` : '—'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔSP</span>
-                    <div className="font-bold animate-count-up">
+                    <div className="font-medium animate-count-up">
                         {globalMetrics.sp_difference != null ? globalMetrics.sp_difference.toFixed(3) : '—'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔEO</span>
-                    <div className="font-bold animate-count-up">
+                    <div className="font-medium animate-count-up">
                         {globalMetrics.eo_difference != null ? globalMetrics.eo_difference.toFixed(3) : '—'}
                     </div>
                 </div>

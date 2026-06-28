@@ -19,7 +19,7 @@ export default function FairnessAudit({ fairnessCheck, explanation, confidence, 
                 ) : (
                     <AlertTriangle size={18} className="text-accent-red" />
                 )}
-                <span className={`text-sm font-bold ${passed ? 'text-accent-green' : 'text-accent-red'}`}>
+                <span className={`text-sm font-medium ${passed ? 'text-accent-green' : 'text-accent-red'}`}>
                     {passed ? 'Fairness Check Passed ✓' : 'Potential Bias Detected ⚠️'}
                 </span>
             </div>
@@ -27,12 +27,12 @@ export default function FairnessAudit({ fairnessCheck, explanation, confidence, 
             <div className="flex gap-4 text-xs">
                 <div>
                     <span className="text-text-muted">Model Confidence: </span>
-                    <span className="font-bold text-text-primary">{(confidence * 100).toFixed(1)}%</span>
+                    <span className="font-medium text-text-primary">{(confidence * 100).toFixed(1)}%</span>
                 </div>
                 {uncertainty != null && (
                     <div>
                         <span className="text-text-muted">Uncertainty: </span>
-                        <span className="font-bold text-text-primary">{(uncertainty * 100).toFixed(1)}%</span>
+                        <span className="font-medium text-text-primary">{(uncertainty * 100).toFixed(1)}%</span>
                     </div>
                 )}
             </div>

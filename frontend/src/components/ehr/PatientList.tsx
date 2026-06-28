@@ -4,6 +4,7 @@ import { usePatientStore, Patient } from '../../store/patientStore';
 import { Search, Filter, Users } from 'lucide-react';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import { InputGroup, InputField } from '@/components/ui/input-group';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 interface Props {
     hospitalId: string;
@@ -75,45 +76,45 @@ export default function PatientList({ hospitalId, onSelectPatient }: Props) {
             {loading ? (
                 <div className="text-center py-8 text-text-muted">Loading patients...</div>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
-                        <thead>
-                            <tr className="border-b border-border">
-                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Patient ID</th>
-                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Age Group</th>
-                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Ethnicity</th>
-                                <th className="text-center py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Symptoms</th>
-                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Predicted Disease</th>
-                                <th className="text-center py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Confidence</th>
-                                <th className="text-center py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Fairness</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filtered.map(p => {
+                <div className="overflow-x-auto border rounded-lg">
+                    <Table>
+                        <TableHeader className='bg-muted-foreground/10'>
+                            <TableRow>
+                                <TableHead className="text-text-muted font-medium text-xs uppercase tracking-wider">Patient ID</TableHead>
+                                <TableHead className="text-text-muted font-medium text-xs uppercase tracking-wider">Age Group</TableHead>
+                                <TableHead className="text-text-muted font-medium text-xs uppercase tracking-wider">Ethnicity</TableHead>
+                                <TableHead className="text-center text-text-muted font-medium text-xs uppercase tracking-wider">Symptoms</TableHead>
+                                <TableHead className="text-text-muted font-medium text-xs uppercase tracking-wider">Predicted Disease</TableHead>
+                                <TableHead className="text-center text-text-muted font-medium text-xs uppercase tracking-wider">Confidence</TableHead>
+                                <TableHead className="text-center text-text-muted font-medium text-xs uppercase tracking-wider">Fairness</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {filtered.map((p, i) => {
                                 const topDisease = p.diseases?.[0];
                                 return (
-                                    <tr key={p.id} onClick={() => onSelectPatient(p.id)}
-                                        className="border-b border-border/30 hover:bg-bg-tertiary/50 cursor-pointer transition-colors">
-                                        <td className="py-3 px-3 font-mono text-xs text-accent-blue">{p.id.slice(0, 8)}...</td>
-                                        <td className="py-3 px-3">{p.age_group}</td>
-                                        <td className="py-3 px-3">{p.ethnicity}</td>
-                                        <td className="py-3 px-3 text-center">{p.symptoms?.length || 0}</td>
-                                        <td className="py-3 px-3">{topDisease?.disease_name || '-'}</td>
-                                        <td className="py-3 px-3 text-center">
+                                    <TableRow key={p.id} index={i} onClick={() => onSelectPatient(p.id)}
+                                        className="cursor-pointer transition-colors">
+                                        <TableCell className="font-mono text-xs text-accent-blue">{p.id.slice(0, 8)}...</TableCell>
+                                        <TableCell>{p.age_group}</TableCell>
+                                        <TableCell>{p.ethnicity}</TableCell>
+                                        <TableCell className="text-center">{p.symptoms?.length || 0}</TableCell>
+                                        <TableCell>{topDisease?.disease_name || '-'}</TableCell>
+                                        <TableCell className="text-center">
                                             {topDisease ? (
-                                                <span className={`font-bold ${topDisease.confidence > 0.8 ? 'text-accent-green' : topDisease.confidence > 0.5 ? 'text-accent-yellow' : 'text-accent-orange'}`}>
+                                                <span className={`font-medium ${topDisease.confidence > 0.8 ? 'text-accent-green' : topDisease.confidence > 0.5 ? 'text-accent-yellow' : 'text-accent-orange'}`}>
                                                     {(topDisease.confidence * 100).toFixed(1)}%
                                                 </span>
                                             ) : '-'}
-                                        </td>
-                                        <td className="py-3 px-3 text-center">
+                                        </TableCell>
+                                        <TableCell className="text-center">
                                             <div className={`w-3 h-3 rounded-full mx-auto ${fairnessColor(p.fairness_flag)}`} title={p.fairness_flag} />
-                                        </td>
-                                    </tr>
+                                        </TableCell>
+                                    </TableRow>
                                 );
                             })}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
                 </div>
             )}
         </div>

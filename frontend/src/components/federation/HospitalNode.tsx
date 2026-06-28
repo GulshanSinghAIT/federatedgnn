@@ -30,7 +30,7 @@ export default function HospitalNode({ data }: { data: HospitalNodeData }) {
 
             <div className="flex items-center justify-between mb-2">
                 <div>
-                    <div className="text-sm font-bold" style={{ color }}>{data.name}</div>
+                    <div className="text-sm font-medium" style={{ color }}>{data.name}</div>
                     <div className="text-xs text-text-muted">{data.hospitalId}</div>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -42,25 +42,25 @@ export default function HospitalNode({ data }: { data: HospitalNodeData }) {
             <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
                     <span className="text-text-muted">Accuracy</span>
-                    <div className="font-bold text-text-primary animate-count-up">
+                    <div className="font-medium text-text-primary animate-count-up">
                         {metrics?.accuracy ? `${(metrics.accuracy * 100).toFixed(1)}%` : '—'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔSP</span>
-                    <div className="font-bold text-text-primary animate-count-up">
+                    <div className="font-medium text-text-primary animate-count-up">
                         {metrics?.sp_difference != null ? metrics.sp_difference.toFixed(3) : '—'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">Nodes</span>
-                    <div className="font-bold text-text-primary">
+                    <div className="font-medium text-text-primary">
                         {metrics?.nodes_trained || '—'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔEO</span>
-                    <div className="font-bold text-text-primary">
+                    <div className="font-medium text-text-primary">
                         {metrics?.eo_difference != null ? metrics.eo_difference.toFixed(3) : '—'}
                     </div>
                 </div>

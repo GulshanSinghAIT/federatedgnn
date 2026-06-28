@@ -27,13 +27,13 @@ export default function DiagnosisPanel({ diagnoses }: { diagnoses: Diagnosis[] }
                     <div key={d.disease_id} className="bg-bg-tertiary/50 rounded-lg p-3 animate-fade-in" style={{ animationDelay: `${i * 0.1}s` }}>
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-text-muted w-5">#{i + 1}</span>
+                                <span className="text-xs font-medium text-text-muted w-5">#{i + 1}</span>
                                 <div>
                                     <span className="text-sm font-medium">{d.disease_name}</span>
                                     <span className="text-xs text-text-muted ml-2">{d.icd10_code}</span>
                                 </div>
                             </div>
-                            <span className="text-sm font-bold animate-count-up" style={{ color: confColor(d.confidence) }}>
+                            <span className="text-sm font-medium animate-count-up" style={{ color: confColor(d.confidence) }}>
                                 {(d.confidence * 100).toFixed(1)}%
                             </span>
                         </div>

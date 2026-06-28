@@ -28,7 +28,7 @@ const typeIcon = (type: string) => {
 
 const evidenceBadge = (level: string) => {
     const colors: Record<string, string> = { A: 'bg-accent-green/20 text-accent-green', B: 'bg-accent-yellow/20 text-accent-yellow', C: 'bg-accent-orange/20 text-accent-orange' };
-    return <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${colors[level] || colors.C}`}>Level {level}</span>;
+    return <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${colors[level] || colors.C}`}>Level {level}</span>;
 };
 
 export default function TreatmentPanel({ treatments, diagnoses }: Props) {

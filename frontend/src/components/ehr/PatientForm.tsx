@@ -107,7 +107,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 {STEPS.map((s, i) => (
                     <React.Fragment key={s}>
                         <div className="flex items-center gap-2 cursor-pointer" onClick={() => i <= step && setStep(i)}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${i < step ? 'bg-accent-green text-white' : i === step ? 'bg-accent-blue text-white animate-pulse-glow' : 'bg-bg-tertiary text-text-muted'}`}>
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${i < step ? 'bg-accent-green text-white' : i === step ? 'bg-accent-blue text-white animate-pulse-glow' : 'bg-bg-tertiary text-text-muted'}`}>
                                 {i < step ? <Check size={14} /> : i + 1}
                             </div>
                             <span className={`text-xs hidden sm:block ${i === step ? 'text-text-primary' : 'text-text-muted'}`}>{s}</span>

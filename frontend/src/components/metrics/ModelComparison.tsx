@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchModelComparison, fetchDatasets, exportCSV } from '../../api/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 import { Download } from 'lucide-react';
 
 interface Model {
@@ -30,7 +31,7 @@ export default function ModelComparison() {
     const [dataset, setDataset] = useState<string>('MedGraph-S');
 
     useEffect(() => {
-        fetchDatasets().then(setDatasets).catch(() => {});
+        fetchDatasets().then(setDatasets).catch(() => { });
     }, []);
 
     useEffect(() => {
@@ -50,7 +51,7 @@ export default function ModelComparison() {
         <div className="glass-card p-4">
             <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-text-primary">Model Comparison</h3>
+                    <h3 className="text-sm font-medium text-text-primary">Model Comparison</h3>
                     <Badge variant="dot" size="sm" color={isLive ? 'blue' : 'gray'}>
                         {isLive ? 'live (this session)' : 'paper benchmark'}
                     </Badge>
@@ -80,37 +81,37 @@ export default function ModelComparison() {
                 ))}
             </div>
 
-            <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                    <thead>
-                        <tr className="border-b border-border">
+            <div className="overflow-x-auto border rounded-lg">
+                <Table>
+                    <TableHeader className='bg-muted-foreground/10'>
+                        <TableRow>
                             {['Model', 'Accuracy', 'F1-Score', 'AUC', 'ΔSP', 'ΔEO', 'Privacy', 'Comm. Cost'].map((h, i) => (
-                                <th key={h} className={`${i === 0 ? 'text-left' : 'text-center'} py-2 px-3 text-text-muted text-xs uppercase tracking-wide`}>{h}</th>
+                                <TableHead key={h} className={`${i === 0 ? 'text-left' : 'text-center'} text-text-muted text-xs uppercase tracking-wide`}>{h}</TableHead>
                             ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {models.map(m => (
-                            <tr key={m.model} className={`border-b border-border/40 ${m.is_proposed ? 'bg-cobalt-tint/60' : ''}`}>
-                                <td className="py-2 px-3 font-medium">
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {models.map((m, i) => (
+                            <TableRow key={m.model} index={i} className={m.is_proposed ? 'bg-cobalt-tint/60' : ''}>
+                                <TableCell className="font-medium">
                                     {m.model}{' '}
                                     {m.is_proposed && <span className="text-cobalt text-xs" title="Proposed model">★</span>}
-                                </td>
-                                <td className="py-2 px-3 text-center font-bold animate-count-up">{fmt(m.accuracy)}</td>
-                                <td className="py-2 px-3 text-center animate-count-up">{fmt(m.f1_score)}</td>
-                                <td className="py-2 px-3 text-center animate-count-up">{fmt(m.auc)}</td>
-                                <td className="py-2 px-3 text-center animate-count-up">{fmt(m.sp_difference, false)}</td>
-                                <td className="py-2 px-3 text-center animate-count-up">{fmt(m.eo_difference, false)}</td>
-                                <td className="py-2 px-3 text-center">
+                                </TableCell>
+                                <TableCell className="text-center font-medium animate-count-up">{fmt(m.accuracy)}</TableCell>
+                                <TableCell className="text-center animate-count-up">{fmt(m.f1_score)}</TableCell>
+                                <TableCell className="text-center animate-count-up">{fmt(m.auc)}</TableCell>
+                                <TableCell className="text-center animate-count-up">{fmt(m.sp_difference, false)}</TableCell>
+                                <TableCell className="text-center animate-count-up">{fmt(m.eo_difference, false)}</TableCell>
+                                <TableCell className="text-center">
                                     <Badge variant="solid" size="sm" color={m.privacy === 'High' ? 'teal' : 'gray'}>
                                         {m.privacy}
                                     </Badge>
-                                </td>
-                                <td className="py-2 px-3 text-center text-xs text-text-muted">{m.comm_cost}</td>
-                            </tr>
+                                </TableCell>
+                                <TableCell className="text-center text-xs text-text-muted">{m.comm_cost}</TableCell>
+                            </TableRow>
                         ))}
-                    </tbody>
-                </table>
+                    </TableBody>
+                </Table>
             </div>
 
             <div className="mt-4 space-y-2 text-xs text-text-muted">

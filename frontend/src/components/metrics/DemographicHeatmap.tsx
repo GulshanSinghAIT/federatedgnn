@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchDemographics } from '../../api/client';
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 
 interface DemoData {
     hospital_id: string;
@@ -24,40 +25,40 @@ export default function DemographicHeatmap() {
 
     return (
         <div className="glass-card p-4">
-            <h3 className="text-sm font-bold text-text-primary mb-4">Per-Demographic Accuracy Heatmap</h3>
+            <h3 className="text-sm font-medium text-text-primary mb-4">Per-Demographic Accuracy Heatmap</h3>
             {allGroups.length === 0 ? (
                 <div className="text-center text-text-muted py-4 text-sm">No demographic data available yet</div>
             ) : (
-                <div className="overflow-x-auto">
-                    <table className="w-full text-xs">
-                        <thead>
-                            <tr className="border-b border-border">
-                                <th className="text-left py-2 px-2 text-text-muted">Group</th>
+                <div className="overflow-x-auto border rounded-lg">
+                    <Table className="text-xs">
+                        <TableHeader className='bg-muted-foreground/10'>
+                            <TableRow>
+                                <TableHead className="text-text-muted">Group</TableHead>
                                 {data.map(d => (
-                                    <th key={d.hospital_id} className="text-center py-2 px-2 text-text-muted">{d.hospital_id}</th>
+                                    <TableHead key={d.hospital_id} className="text-center text-text-muted">{d.hospital_id}</TableHead>
                                 ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {allGroups.map(group => (
-                                <tr key={group} className="border-b border-border/20">
-                                    <td className="py-1.5 px-2 text-text-secondary">{group.replace('|', ' / ')}</td>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {allGroups.map((group, i) => (
+                                <TableRow key={group} index={i}>
+                                    <TableCell className="text-text-secondary">{group.replace('|', ' / ')}</TableCell>
                                     {data.map(d => {
                                         const val = d.per_group_accuracy[group];
                                         return (
-                                            <td key={d.hospital_id} className="py-1.5 px-2 text-center">
+                                            <TableCell key={d.hospital_id} className="text-center">
                                                 {val != null ? (
-                                                    <span className={`px-2 py-0.5 rounded ${colorScale(val)} font-bold`}>
+                                                    <span className={`px-2 py-0.5 rounded ${colorScale(val)} font-medium`}>
                                                         {(val * 100).toFixed(1)}%
                                                     </span>
                                                 ) : <span className="text-text-muted">—</span>}
-                                            </td>
+                                            </TableCell>
                                         );
                                     })}
-                                </tr>
+                                </TableRow>
                             ))}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
                 </div>
             )}
             {data.map(d => d.fairness_gap > 0.1 && (
