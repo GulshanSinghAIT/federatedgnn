@@ -75,24 +75,24 @@ export default function SymptomSelector({ selected, onChange }: Props) {
                 <div className="flex gap-1 mt-2 flex-wrap">
                     {BODY_SYSTEMS.map(sys => (
                         <Button key={sys} variant="ghost" size="sm" onClick={() => setActiveSystem(sys)}
-                            className={`text-xs rounded-full transition-all ${activeSystem === sys ? 'bg-[var(--color-accent-blue)] text-white' : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)]'}`}>
+                            className={`text-xs rounded-full transition-all ${activeSystem === sys ? 'bg-accent-blue text-white' : 'bg-bg-tertiary text-text-secondary hover:bg-bg-primary'}`}>
                             {sys}
                         </Button>
                     ))}
                 </div>
                 {isOpen && (
-                    <div className="absolute z-50 w-full mt-2 max-h-60 overflow-y-auto bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg shadow-xl">
+                    <div className="absolute z-50 w-full mt-2 max-h-60 overflow-y-auto bg-bg-secondary border border-border rounded-lg shadow-xl">
                         {filtered.map(sym => {
                             const isSelected = selected.some(s => s.symptom_id === sym.id);
                             return (
                                 <Button key={sym.id} variant="ghost" onClick={() => toggle(sym)}
-                                    className={`w-full px-4 py-2 justify-between rounded-none text-left text-sm hover:bg-[var(--color-bg-tertiary)] transition-colors ${isSelected ? 'bg-[var(--color-accent-blue)]/10 text-[var(--color-accent-blue)]' : 'text-[var(--color-text-primary)]'}`}>
+                                    className={`w-full px-4 py-2 justify-between rounded-none text-left text-sm hover:bg-bg-tertiary transition-colors ${isSelected ? 'bg-accent-blue/10 text-accent-blue' : 'text-text-primary'}`}>
                                     <span>{sym.name}</span>
-                                    <span className="text-xs text-[var(--color-text-muted)]">{sym.body_system}</span>
+                                    <span className="text-xs text-text-muted">{sym.body_system}</span>
                                 </Button>
                             );
                         })}
-                        {filtered.length === 0 && <div className="px-4 py-3 text-[var(--color-text-muted)] text-sm">No symptoms found</div>}
+                        {filtered.length === 0 && <div className="px-4 py-3 text-text-muted text-sm">No symptoms found</div>}
                     </div>
                 )}
             </div>
@@ -101,28 +101,28 @@ export default function SymptomSelector({ selected, onChange }: Props) {
 
             {selected.length > 0 && (
                 <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-[var(--color-text-secondary)]">Selected Symptoms ({selected.length})</h4>
+                    <h4 className="text-sm font-medium text-text-secondary">Selected Symptoms ({selected.length})</h4>
                     {selected.map(sym => (
                         <div key={sym.symptom_id} className="glass-card p-3 space-y-2 animate-fade-in">
                             <div className="flex justify-between items-center">
                                 <span className="text-sm font-medium">{sym.name}</span>
                                 <Button variant="ghost" size="sm" onClick={() => toggle({ id: sym.symptom_id, name: sym.name, body_system: '', severity_weight: 0 })}
-                                    className="text-[var(--color-accent-red)] hover:text-red-400 text-xs">✕ Remove</Button>
+                                    className="text-accent-red hover:text-red-400 text-xs">✕ Remove</Button>
                             </div>
                             <div className="flex items-center gap-3">
-                                <label className="text-xs text-[var(--color-text-muted)] w-16">Severity</label>
+                                <label className="text-xs text-text-muted w-16">Severity</label>
                                 <input type="range" min="1" max="10" value={sym.severity}
                                     onChange={e => updateSeverity(sym.symptom_id, parseInt(e.target.value))}
-                                    className="flex-1 accent-[var(--color-accent-blue)]" />
-                                <span className={`text-sm font-bold w-6 text-center ${sym.severity >= 8 ? 'text-[var(--color-accent-red)]' : sym.severity >= 5 ? 'text-[var(--color-accent-yellow)]' : 'text-[var(--color-accent-green)]'}`}>
+                                    className="flex-1 accent-accent-blue" />
+                                <span className={`text-sm font-bold w-6 text-center ${sym.severity >= 8 ? 'text-accent-red' : sym.severity >= 5 ? 'text-accent-yellow' : 'text-accent-green'}`}>
                                     {sym.severity}
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
-                                <label className="text-xs text-[var(--color-text-muted)] w-16">Onset</label>
+                                <label className="text-xs text-text-muted w-16">Onset</label>
                                 <input type="date" value={sym.onset_date}
                                     onChange={e => updateOnset(sym.symptom_id, e.target.value)}
-                                    className="flex-1 px-2 py-1 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded text-sm text-[var(--color-text-primary)]" />
+                                    className="flex-1 px-2 py-1 bg-bg-tertiary border border-border rounded text-sm text-text-primary" />
                             </div>
                         </div>
                     ))}

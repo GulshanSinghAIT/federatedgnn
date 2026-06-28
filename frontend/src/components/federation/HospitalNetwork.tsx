@@ -51,19 +51,19 @@ export default function HospitalNetwork() {
             {demoPanel && (
                 <div className="absolute top-0 right-0 w-80 h-full glass-card p-4 overflow-y-auto animate-slide-in z-50">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-sm font-bold text-[var(--color-text-primary)]">
+                        <h3 className="text-sm font-bold text-text-primary">
                             🔒 Demographics — {demoPanel.hospital_id}
                         </h3>
-                        <Button variant="ghost" size="icon-sm" onClick={() => setDemoPanel(null)} className="text-[var(--color-text-muted)] hover:text-white">✕</Button>
+                        <Button variant="ghost" size="icon-sm" onClick={() => setDemoPanel(null)} className="text-text-muted hover:text-white">✕</Button>
                     </div>
 
-                    <p className="text-[10px] text-[var(--color-accent-yellow)] mb-3 italic">
+                    <p className="text-[10px] text-accent-yellow mb-3 italic">
                         Sensitive attributes are stored locally. Only model weights are transmitted.
                     </p>
 
                     {/* Age Groups Pie */}
                     <div className="mb-4">
-                        <h4 className="text-xs text-[var(--color-text-muted)] mb-1">Age Distribution</h4>
+                        <h4 className="text-xs text-text-muted mb-1">Age Distribution</h4>
                         <ResponsiveContainer width="100%" height={140}>
                             <PieChart>
                                 <Pie data={Object.entries(demoPanel.age_groups || {}).map(([k, v]) => ({ name: k, value: v as number }))}
@@ -79,7 +79,7 @@ export default function HospitalNetwork() {
 
                     {/* Ethnicity Pie */}
                     <div className="mb-4">
-                        <h4 className="text-xs text-[var(--color-text-muted)] mb-1">Ethnicity Distribution</h4>
+                        <h4 className="text-xs text-text-muted mb-1">Ethnicity Distribution</h4>
                         <ResponsiveContainer width="100%" height={140}>
                             <PieChart>
                                 <Pie data={Object.entries(demoPanel.ethnicities || {}).map(([k, v]) => ({ name: k, value: v as number }))}
@@ -96,7 +96,7 @@ export default function HospitalNetwork() {
                     {/* Per-group accuracy */}
                     {Object.keys(demoPanel.per_group_accuracy || {}).length > 0 && (
                         <div className="mb-4">
-                            <h4 className="text-xs text-[var(--color-text-muted)] mb-1">Per-Group Prediction Accuracy</h4>
+                            <h4 className="text-xs text-text-muted mb-1">Per-Group Prediction Accuracy</h4>
                             <ResponsiveContainer width="100%" height={120}>
                                 <BarChart data={Object.entries(demoPanel.per_group_accuracy).map(([k, v]) => ({ group: k.split('|')[0], accuracy: v as number }))}>
                                     <XAxis dataKey="group" tick={{ fill: '#64748b', fontSize: 8 }} />
@@ -109,8 +109,8 @@ export default function HospitalNetwork() {
                     )}
 
                     {demoPanel.fairness_gap != null && (
-                        <div className="text-xs text-[var(--color-text-muted)]">
-                            <strong>Fairness Gap:</strong> <span className={`font-bold ${demoPanel.fairness_gap > 0.1 ? 'text-[var(--color-accent-red)]' : 'text-[var(--color-accent-green)]'}`}>
+                        <div className="text-xs text-text-muted">
+                            <strong>Fairness Gap:</strong> <span className={`font-bold ${demoPanel.fairness_gap > 0.1 ? 'text-accent-red' : 'text-accent-green'}`}>
                                 {demoPanel.fairness_gap.toFixed(4)}
                             </span>
                         </div>

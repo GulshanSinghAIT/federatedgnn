@@ -33,9 +33,9 @@ export default function PatientList({ hospitalId, onSelectPatient }: Props) {
     }, [patients, search, filterAge, filterEthnicity]);
 
     const fairnessColor = (flag: string) => {
-        if (flag === 'green') return 'bg-[var(--color-accent-green)]';
-        if (flag === 'yellow') return 'bg-[var(--color-accent-yellow)]';
-        return 'bg-[var(--color-accent-red)]';
+        if (flag === 'green') return 'bg-accent-green';
+        if (flag === 'yellow') return 'bg-accent-yellow';
+        return 'bg-accent-red';
     };
 
     return (
@@ -67,25 +67,25 @@ export default function PatientList({ hospitalId, onSelectPatient }: Props) {
                 </Select>
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
+            <div className="flex items-center gap-2 text-sm text-text-muted">
                 <Users size={14} />
                 <span>{filtered.length} patients</span>
             </div>
 
             {loading ? (
-                <div className="text-center py-8 text-[var(--color-text-muted)]">Loading patients...</div>
+                <div className="text-center py-8 text-text-muted">Loading patients...</div>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
-                            <tr className="border-b border-[var(--color-border)]">
-                                <th className="text-left py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Patient ID</th>
-                                <th className="text-left py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Age Group</th>
-                                <th className="text-left py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Ethnicity</th>
-                                <th className="text-center py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Symptoms</th>
-                                <th className="text-left py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Predicted Disease</th>
-                                <th className="text-center py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Confidence</th>
-                                <th className="text-center py-3 px-3 text-[var(--color-text-muted)] font-medium text-xs uppercase tracking-wider">Fairness</th>
+                            <tr className="border-b border-border">
+                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Patient ID</th>
+                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Age Group</th>
+                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Ethnicity</th>
+                                <th className="text-center py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Symptoms</th>
+                                <th className="text-left py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Predicted Disease</th>
+                                <th className="text-center py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Confidence</th>
+                                <th className="text-center py-3 px-3 text-text-muted font-medium text-xs uppercase tracking-wider">Fairness</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,15 +93,15 @@ export default function PatientList({ hospitalId, onSelectPatient }: Props) {
                                 const topDisease = p.diseases?.[0];
                                 return (
                                     <tr key={p.id} onClick={() => onSelectPatient(p.id)}
-                                        className="border-b border-[var(--color-border)]/30 hover:bg-[var(--color-bg-tertiary)]/50 cursor-pointer transition-colors">
-                                        <td className="py-3 px-3 font-mono text-xs text-[var(--color-accent-blue)]">{p.id.slice(0, 8)}...</td>
+                                        className="border-b border-border/30 hover:bg-bg-tertiary/50 cursor-pointer transition-colors">
+                                        <td className="py-3 px-3 font-mono text-xs text-accent-blue">{p.id.slice(0, 8)}...</td>
                                         <td className="py-3 px-3">{p.age_group}</td>
                                         <td className="py-3 px-3">{p.ethnicity}</td>
                                         <td className="py-3 px-3 text-center">{p.symptoms?.length || 0}</td>
                                         <td className="py-3 px-3">{topDisease?.disease_name || '-'}</td>
                                         <td className="py-3 px-3 text-center">
                                             {topDisease ? (
-                                                <span className={`font-bold ${topDisease.confidence > 0.8 ? 'text-[var(--color-accent-green)]' : topDisease.confidence > 0.5 ? 'text-[var(--color-accent-yellow)]' : 'text-[var(--color-accent-orange)]'}`}>
+                                                <span className={`font-bold ${topDisease.confidence > 0.8 ? 'text-accent-green' : topDisease.confidence > 0.5 ? 'text-accent-yellow' : 'text-accent-orange'}`}>
                                                     {(topDisease.confidence * 100).toFixed(1)}%
                                                 </span>
                                             ) : '-'}

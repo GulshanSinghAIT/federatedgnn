@@ -52,21 +52,21 @@ export default function FederationDashboard() {
     };
 
     return (
-        <div className="min-h-screen shadow-xl rounded-tl-2xl bg-[var(--color-bg-primary)]">
+        <div className="h-full flex flex-col shadow-xl rounded-tl-2xl bg-bg-primary">
             {/* Top Bar */}
-            <header className="border-b pl-4 p-2 bg-white rounded-tl-2xl">
+            <header className="shrink-0 border-b pl-4 p-2 bg-white rounded-tl-2xl">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <h1 className="text-xl font-medium tracking-tighter text-[var(--color-text-primary)] flex items-center gap-2">
-                            <Zap size={20} className="text-[var(--color-accent-blue)]" />
+                        <h1 className="text-xl font-medium tracking-tighter text-text-primary flex items-center gap-2">
+                            <Zap size={20} className="text-accent-blue" />
                             Federated Learning Network
                         </h1>
                         <div className="flex items-center gap-2 text-sm">
-                            <span className="text-[var(--color-text-muted)]">Round</span>
-                            <span className="font-bold text-[var(--color-accent-blue)] text-lg animate-count-up">{currentRound}</span>
-                            <span className="text-[var(--color-text-muted)]">/ {totalRounds || '—'}</span>
+                            <span className="text-text-muted">Round</span>
+                            <span className="font-bold text-accent-blue text-lg animate-count-up">{currentRound}</span>
+                            <span className="text-text-muted">/ {totalRounds || '—'}</span>
                         </div>
-                        <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${isRunning ? 'bg-green-500/20 text-green-400' : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-muted)]'}`}>
+                        <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium ${isRunning ? 'bg-green-500/20 text-green-400' : 'bg-bg-tertiary text-text-muted'}`}>
                             <div className={`w-2 h-2 rounded-full ${isRunning ? 'bg-green-500 animate-pulse' : 'bg-gray-500'}`} />
                             {isRunning ? 'Training' : 'Idle'}
                         </div>
@@ -107,14 +107,14 @@ export default function FederationDashboard() {
                             </Button>
                         )}
                         <Button variant="tertiary" size="md" leadingIcon={RotateCcw} onClick={handleReset} disabled={isRunning}
-                            className="text-[var(--color-text-secondary)]">
+                            className="text-text-secondary">
                             Reset
                         </Button>
                     </div>
                 </div>
             </header>
 
-            <div className="p-6 space-y-4 overflow-auto">
+            <div className="flex-1 min-h-0 overflow-y-auto p-6 space-y-4">
                 {/* Top: Network + Metrics Feed */}
                 <div className="grid grid-cols-12 gap-4" style={{ height: '420px' }}>
                     <div className="col-span-9 glass-card overflow-hidden">
@@ -127,13 +127,13 @@ export default function FederationDashboard() {
 
                 {/* Privacy Callouts */}
                 <div className="flex gap-3 text-xs">
-                    <div className="glass-card px-3 py-2 flex items-center gap-2 text-[var(--color-accent-yellow)]">
+                    <div className="glass-card px-3 py-2 flex items-center gap-2 text-accent-yellow">
                         🔒 No raw patient data transmitted — only model weights
                     </div>
-                    <div className="glass-card px-3 py-2 flex items-center gap-2 text-[var(--color-accent-yellow)]">
+                    <div className="glass-card px-3 py-2 flex items-center gap-2 text-accent-yellow">
                         🔒 SMPC simulation: σ=0.01 Gaussian noise on shared gradients
                     </div>
-                    <div className="glass-card px-3 py-2 flex items-center gap-2 text-[var(--color-accent-yellow)]">
+                    <div className="glass-card px-3 py-2 flex items-center gap-2 text-accent-yellow">
                         🔒 Sensitive attributes never leave the hospital
                     </div>
                 </div>

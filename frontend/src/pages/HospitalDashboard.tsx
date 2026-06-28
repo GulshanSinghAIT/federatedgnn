@@ -34,15 +34,15 @@ export default function HospitalDashboard() {
     const HOSPITAL_COLORS: Record<string, string> = { H1: '#38bdf8', H2: '#a78bfa', H3: '#2dd4bf' };
 
     return (
-        <div className="min-h-screen shadow-xl rounded-tl-2xl bg-[var(--color-bg-primary)]">
+        <div className="h-full flex flex-col shadow-xl rounded-tl-2xl bg-bg-primary">
             {/* Header */}
-            <header className="border-b pl-4 p-2 bg-white rounded-tl-2xl">
+            <header className="shrink-0 border-b pl-4 p-2 bg-white rounded-tl-2xl">
                 <div className="flex items-center justify-between">
                     <div>
                         <h1 className="text-xl font-medium tracking-tighter " style={{ color: HOSPITAL_COLORS[hospitalId] }}>
                             {hospital?.name || hospitalId}
                         </h1>
-                        <p className="text-xs text-[var(--color-text-muted)]">{hospital?.location} • {hospital?.patient_count || 0} patients</p>
+                        <p className="text-xs text-text-muted">{hospital?.location} • {hospital?.patient_count || 0} patients</p>
                     </div>
                     <div className="flex items-center gap-3">
                         {/* Hospital Selector */}
@@ -74,7 +74,7 @@ export default function HospitalDashboard() {
             </header>
 
             {/* Main Content */}
-            <main className="p-6 overflow-auto">
+            <main className="flex-1 min-h-0 overflow-y-auto p-6">
                 {view === 'list' && <PatientList hospitalId={hospitalId} onSelectPatient={handleSelectPatient} />}
                 {view === 'form' && <PatientForm hospitalId={hospitalId} onComplete={() => setView('list')} />}
                 {view === 'detail' && selectedPatientId && (

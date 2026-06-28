@@ -96,12 +96,12 @@ export default function PatientSubgraph({ patientId, hospitalId }: Props) {
         <div className="relative w-full h-full">
             <svg ref={svgRef} className="w-full h-full" />
             {tooltip && (
-                <div className="fixed z-50 px-3 py-1.5 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg text-xs shadow-lg pointer-events-none"
+                <div className="fixed z-50 px-3 py-1.5 bg-bg-secondary border border-border rounded-lg text-xs shadow-lg pointer-events-none"
                     style={{ left: tooltip.x + 10, top: tooltip.y - 10 }}>
                     {tooltip.content}
                 </div>
             )}
-            <div className="absolute bottom-2 left-2 flex gap-3 text-xs text-[var(--color-text-muted)]">
+            <div className="absolute bottom-2 left-2 flex gap-3 text-xs text-text-muted">
                 {Object.entries(NODE_COLORS).map(([type, color]) => (
                     <div key={type} className="flex items-center gap-1">
                         <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />

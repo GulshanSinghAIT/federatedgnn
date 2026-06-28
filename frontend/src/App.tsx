@@ -40,10 +40,10 @@ function NavBar() {
             <div className="flex flex-col gap-3 flex-1">
                 {links.map(link => (
                     <Link key={link.path} to={link.path}
-                        className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all group relative ${isActive(link.path.split('/').slice(0, 2).join('/')) ? 'bg-[var(--color-bg-tertiary)]' : 'hover:bg-[var(--color-bg-tertiary)]/30'}`}
+                        className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all group relative ${isActive(link.path.split('/').slice(0, 2).join('/')) ? 'bg-bg-tertiary' : 'hover:bg-bg-tertiary/30'}`}
                         style={{ color: isActive(link.path.split('/').slice(0, 2).join('/')) ? link.color : 'var(--color-white)' }}>
                         {link.icon}
-                        <div className="absolute left-14 px-2 py-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-sm"
+                        <div className="absolute left-14 px-2 py-1 bg-bg-secondary border border-border rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-sm"
                             style={{ color: link.color }}>
                             {link.label}
                         </div>
@@ -51,7 +51,7 @@ function NavBar() {
                 ))}
             </div>
 
-            <div className="font-display text-[8px] text-[var(--color-text-muted)] text-center leading-tight tracking-tight">
+            <div className="font-display text-[8px] text-text-muted text-center leading-tight tracking-tight">
                 Fed<br />Fair<br />GNN
             </div>
         </nav>
@@ -63,7 +63,7 @@ export default function App() {
         <BrowserRouter>
             <div className="flex h-screen overflow-hidden text-foreground bg-linear-to-b from-cobalt/70 via-cobalt/30 to-cobalt/0 dark:from-primary/5 dark:to-background">
                 <NavBar />
-                <main className="flex-1 pt-2 pl-2">
+                <main className="flex-1 min-h-0 mt-2">
                     <Routes>
                         <Route path="/" element={<Navigate to="/hospital/H1/dashboard" replace />} />
                         <Route path="/hospital/:hospitalId/dashboard" element={<HospitalDashboard />} />

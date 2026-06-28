@@ -93,12 +93,12 @@ export default function KnowledgeGraph({ hospitalId }: { hospitalId?: string }) 
             </div>
             <svg ref={svgRef} className="w-full h-full" />
             {tooltip && (
-                <div className="fixed z-50 px-3 py-2 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg text-xs shadow-lg pointer-events-none"
+                <div className="fixed z-50 px-3 py-2 bg-bg-secondary border border-border rounded-lg text-xs shadow-lg pointer-events-none"
                     style={{ left: tooltip.x + 10, top: tooltip.y - 10 }}>
                     <div className="font-bold" style={{ color: NODE_COLORS[tooltip.node.type] }}>{tooltip.node.type.toUpperCase()}</div>
                     <div>{tooltip.node.label}</div>
                     {tooltip.node.properties && Object.entries(tooltip.node.properties).slice(0, 3).map(([k, v]) => (
-                        <div key={k} className="text-[var(--color-text-muted)]">{k}: {String(v)}</div>
+                        <div key={k} className="text-text-muted">{k}: {String(v)}</div>
                     ))}
                 </div>
             )}

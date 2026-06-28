@@ -42,7 +42,7 @@ export default function TrainingCharts() {
 
     if (chartData.length === 0) {
         return (
-            <div className="glass-card p-6 text-center text-[var(--color-text-muted)]">
+            <div className="glass-card p-6 text-center text-text-muted">
                 Start federation training to see metrics charts
             </div>
         );
@@ -52,7 +52,7 @@ export default function TrainingCharts() {
         <div className="grid grid-cols-2 gap-4">
             {charts.map(chart => (
                 <div key={chart.title} className="glass-card p-4">
-                    <h4 className="text-xs font-medium text-[var(--color-text-muted)] uppercase tracking-wider mb-2">{chart.title}</h4>
+                    <h4 className="text-xs font-medium text-text-muted uppercase tracking-wider mb-2">{chart.title}</h4>
                     <ResponsiveContainer width="100%" height={200}>
                         <LineChart data={chartData} margin={{ top: 5, right: 5, bottom: 5, left: 5 }}>
                             <CartesianGrid strokeDasharray="3 3" stroke="#334155" />

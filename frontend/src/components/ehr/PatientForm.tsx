@@ -91,9 +91,9 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
             </div>
             <div className="flex flex-wrap gap-1 mt-2">
                 {form[field].map((tag: string) => (
-                    <span key={tag} className="px-2 py-1 bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] text-xs rounded-full flex items-center gap-1">
+                    <span key={tag} className="px-2 py-1 bg-bg-tertiary text-text-primary text-xs rounded-full flex items-center gap-1">
                         {tag}
-                        <Button size="icon-sm" variant="ghost" onClick={() => removeTag(field, tag)} className="text-[var(--color-accent-red)] hover:text-red-400">✕</Button>
+                        <Button size="icon-sm" variant="ghost" onClick={() => removeTag(field, tag)} className="text-accent-red hover:text-red-400">✕</Button>
                     </span>
                 ))}
             </div>
@@ -107,12 +107,12 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 {STEPS.map((s, i) => (
                     <React.Fragment key={s}>
                         <div className="flex items-center gap-2 cursor-pointer" onClick={() => i <= step && setStep(i)}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${i < step ? 'bg-[var(--color-accent-green)] text-white' : i === step ? 'bg-[var(--color-accent-blue)] text-white animate-pulse-glow' : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-muted)]'}`}>
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${i < step ? 'bg-accent-green text-white' : i === step ? 'bg-accent-blue text-white animate-pulse-glow' : 'bg-bg-tertiary text-text-muted'}`}>
                                 {i < step ? <Check size={14} /> : i + 1}
                             </div>
-                            <span className={`text-xs hidden sm:block ${i === step ? 'text-[var(--color-text-primary)]' : 'text-[var(--color-text-muted)]'}`}>{s}</span>
+                            <span className={`text-xs hidden sm:block ${i === step ? 'text-text-primary' : 'text-text-muted'}`}>{s}</span>
                         </div>
-                        {i < STEPS.length - 1 && <div className={`flex-1 h-px mx-2 ${i < step ? 'bg-[var(--color-accent-green)]' : 'bg-[var(--color-border)]'}`} />}
+                        {i < STEPS.length - 1 && <div className={`flex-1 h-px mx-2 ${i < step ? 'bg-accent-green' : 'bg-border'}`} />}
                     </React.Fragment>
                 ))}
             </div>
@@ -122,12 +122,12 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 {step === 0 && (
                     <div className="space-y-4">
                         <div className="flex items-center gap-2 mb-4">
-                            <Lock size={16} className="text-[var(--color-accent-yellow)]" />
-                            <span className="text-xs text-[var(--color-accent-yellow)]">Demographic fields are used only for fairness evaluation. They are never transmitted during federated learning.</span>
+                            <Lock size={16} className="text-accent-yellow" />
+                            <span className="text-xs text-accent-yellow">Demographic fields are used only for fairness evaluation. They are never transmitted during federated learning.</span>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Age Group *</label>
+                                <label className="block text-sm font-medium text-text-secondary mb-1">Age Group *</label>
                                 <Select value={form.age_group} onValueChange={v => update('age_group', v)}>
                                     <SelectTrigger placeholder="Select..." className="w-full" />
                                     <SelectContent>
@@ -137,7 +137,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                                 </Select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Sex *</label>
+                                <label className="block text-sm font-medium text-text-secondary mb-1">Sex *</label>
                                 <Select value={form.sex} onValueChange={v => update('sex', v)}>
                                     <SelectTrigger placeholder="Select..." className="w-full" />
                                     <SelectContent>
@@ -147,7 +147,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                                 </Select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Ethnicity *</label>
+                                <label className="block text-sm font-medium text-text-secondary mb-1">Ethnicity *</label>
                                 <Select value={form.ethnicity} onValueChange={v => update('ethnicity', v)}>
                                     <SelectTrigger placeholder="Select..." className="w-full" />
                                     <SelectContent>
@@ -157,7 +157,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                                 </Select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Socioeconomic Status</label>
+                                <label className="block text-sm font-medium text-text-secondary mb-1">Socioeconomic Status</label>
                                 <Select value={form.ses} onValueChange={v => update('ses', v)}>
                                     <SelectTrigger placeholder="Select..." className="w-full" />
                                     <SelectContent>
@@ -178,14 +178,14 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                                     value={form.chief_complaint} onChange={v => update('chief_complaint', v.slice(0, 200))}
                                     placeholder="Describe the chief complaint..." maxLength={200} />
                             </InputGroup>
-                            <span className="text-xs text-[var(--color-text-muted)]">{form.chief_complaint.length}/200</span>
+                            <span className="text-xs text-text-muted">{form.chief_complaint.length}/200</span>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2">Symptoms</label>
+                            <label className="block text-sm font-medium text-text-secondary mb-2">Symptoms</label>
                             <SymptomSelector selected={form.symptoms} onChange={s => update('symptoms', s)} />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2">Vital Signs</label>
+                            <label className="block text-sm font-medium text-text-secondary mb-2">Vital Signs</label>
                             <InputGroup className="grid grid-cols-3 gap-3 w-full">
                                 {[
                                     { key: 'heart_rate', label: 'Heart Rate (bpm)', ph: '72' },
@@ -211,7 +211,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         {renderTagInput('Current Medications', 'current_medications', 'medications')}
                         {renderTagInput('Allergies', 'allergies', 'allergies')}
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Surgical History</label>
+                            <label className="block text-sm font-medium text-text-secondary mb-1">Surgical History</label>
                             <Textarea value={form.surgical_history} onChange={e => update('surgical_history', e.target.value)}
                                 rows={4} placeholder="Describe prior surgeries..." />
                         </div>
@@ -221,17 +221,17 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 {/* Step 4: Review */}
                 {step === 3 && (
                     <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-[var(--color-accent-blue)]">Review Patient Data</h3>
+                        <h3 className="text-lg font-semibold text-accent-blue">Review Patient Data</h3>
                         <div className="grid grid-cols-2 gap-4 text-sm">
                             <div className="glass-card p-3">
-                                <h4 className="text-xs text-[var(--color-text-muted)] mb-1 flex items-center gap-1"><Lock size={10} /> Demographics</h4>
+                                <h4 className="text-xs text-text-muted mb-1 flex items-center gap-1"><Lock size={10} /> Demographics</h4>
                                 <p><strong>Age:</strong> {form.age_group}</p>
                                 <p><strong>Sex:</strong> {form.sex}</p>
                                 <p><strong>Ethnicity:</strong> {form.ethnicity}</p>
                                 <p><strong>SES:</strong> {form.ses}</p>
                             </div>
                             <div className="glass-card p-3">
-                                <h4 className="text-xs text-[var(--color-text-muted)] mb-1">Vitals</h4>
+                                <h4 className="text-xs text-text-muted mb-1">Vitals</h4>
                                 <p><strong>HR:</strong> {form.heart_rate || '-'} bpm</p>
                                 <p><strong>BP:</strong> {form.bp_systolic || '-'}/{form.bp_diastolic || '-'} mmHg</p>
                                 <p><strong>Temp:</strong> {form.temperature || '-'} °C</p>
@@ -240,15 +240,15 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         </div>
                         {form.chief_complaint && (
                             <div className="glass-card p-3">
-                                <h4 className="text-xs text-[var(--color-text-muted)] mb-1">Chief Complaint</h4>
+                                <h4 className="text-xs text-text-muted mb-1">Chief Complaint</h4>
                                 <p className="text-sm">{form.chief_complaint}</p>
                             </div>
                         )}
                         <div className="glass-card p-3">
-                            <h4 className="text-xs text-[var(--color-text-muted)] mb-1">Symptoms ({form.symptoms.length})</h4>
+                            <h4 className="text-xs text-text-muted mb-1">Symptoms ({form.symptoms.length})</h4>
                             <div className="flex flex-wrap gap-1">
                                 {form.symptoms.map((s: any) => (
-                                    <span key={s.symptom_id} className="px-2 py-1 bg-[var(--color-node-symptom)]/20 text-[var(--color-node-symptom)] text-xs rounded-full">
+                                    <span key={s.symptom_id} className="px-2 py-1 bg-node-symptom/20 text-node-symptom text-xs rounded-full">
                                         {s.name} (severity: {s.severity})
                                     </span>
                                 ))}
@@ -256,7 +256,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         </div>
                         {(form.pre_existing_conditions.length > 0 || form.current_medications.length > 0 || form.allergies.length > 0) && (
                             <div className="glass-card p-3">
-                                <h4 className="text-xs text-[var(--color-text-muted)] mb-1">History</h4>
+                                <h4 className="text-xs text-text-muted mb-1">History</h4>
                                 {form.pre_existing_conditions.length > 0 && <p className="text-sm"><strong>Conditions:</strong> {form.pre_existing_conditions.join(', ')}</p>}
                                 {form.current_medications.length > 0 && <p className="text-sm"><strong>Medications:</strong> {form.current_medications.join(', ')}</p>}
                                 {form.allergies.length > 0 && <p className="text-sm"><strong>Allergies:</strong> {form.allergies.join(', ')}</p>}
@@ -266,9 +266,9 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 )}
 
                 {/* Navigation */}
-                <div className="flex justify-between mt-6 pt-4 border-t border-[var(--color-border)]">
+                <div className="flex justify-between mt-6 pt-4 border-t border-border">
                     <Button variant="tertiary" leadingIcon={ChevronLeft} onClick={() => setStep(s => s - 1)} disabled={step === 0}
-                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+                        className="text-text-secondary hover:text-text-primary">
                         Back
                     </Button>
                     {step < 3 ? (

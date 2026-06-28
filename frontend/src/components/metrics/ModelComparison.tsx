@@ -40,7 +40,7 @@ export default function ModelComparison() {
     }, [dataset]);
 
     const fmt = (v?: number, pct = true) => {
-        if (v == null) return <span className="text-[var(--color-text-muted)]">—</span>;
+        if (v == null) return <span className="text-text-muted">—</span>;
         return pct ? `${(v * 100).toFixed(1)}%` : v.toFixed(4);
     };
 
@@ -50,7 +50,7 @@ export default function ModelComparison() {
         <div className="glass-card p-4">
             <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-bold text-[var(--color-text-primary)]">Model Comparison</h3>
+                    <h3 className="text-sm font-bold text-text-primary">Model Comparison</h3>
                     <Badge variant="dot" size="sm" color={isLive ? 'blue' : 'gray'}>
                         {isLive ? 'live (this session)' : 'paper benchmark'}
                     </Badge>
@@ -72,8 +72,8 @@ export default function ModelComparison() {
                         title={d.description}
                         className={
                             dataset === d.id
-                                ? 'bg-[var(--color-cobalt-tint)] border-[var(--color-cobalt)] text-[var(--color-cobalt-deep)]'
-                                : 'border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-cobalt)]'
+                                ? 'bg-cobalt-tint border-cobalt text-cobalt-deep'
+                                : 'border-border text-text-secondary hover:border-cobalt'
                         }>
                         {d.name}
                     </Button>
@@ -83,18 +83,18 @@ export default function ModelComparison() {
             <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                     <thead>
-                        <tr className="border-b border-[var(--color-border)]">
+                        <tr className="border-b border-border">
                             {['Model', 'Accuracy', 'F1-Score', 'AUC', 'ΔSP', 'ΔEO', 'Privacy', 'Comm. Cost'].map((h, i) => (
-                                <th key={h} className={`${i === 0 ? 'text-left' : 'text-center'} py-2 px-3 text-[var(--color-text-muted)] text-xs uppercase tracking-wide`}>{h}</th>
+                                <th key={h} className={`${i === 0 ? 'text-left' : 'text-center'} py-2 px-3 text-text-muted text-xs uppercase tracking-wide`}>{h}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody>
                         {models.map(m => (
-                            <tr key={m.model} className={`border-b border-[var(--color-border)]/40 ${m.is_proposed ? 'bg-[var(--color-cobalt-tint)]/60' : ''}`}>
+                            <tr key={m.model} className={`border-b border-border/40 ${m.is_proposed ? 'bg-cobalt-tint/60' : ''}`}>
                                 <td className="py-2 px-3 font-medium">
                                     {m.model}{' '}
-                                    {m.is_proposed && <span className="text-[var(--color-cobalt)] text-xs" title="Proposed model">★</span>}
+                                    {m.is_proposed && <span className="text-cobalt text-xs" title="Proposed model">★</span>}
                                 </td>
                                 <td className="py-2 px-3 text-center font-bold animate-count-up">{fmt(m.accuracy)}</td>
                                 <td className="py-2 px-3 text-center animate-count-up">{fmt(m.f1_score)}</td>
@@ -106,14 +106,14 @@ export default function ModelComparison() {
                                         {m.privacy}
                                     </Badge>
                                 </td>
-                                <td className="py-2 px-3 text-center text-xs text-[var(--color-text-muted)]">{m.comm_cost}</td>
+                                <td className="py-2 px-3 text-center text-xs text-text-muted">{m.comm_cost}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
 
-            <div className="mt-4 space-y-2 text-xs text-[var(--color-text-muted)]">
+            <div className="mt-4 space-y-2 text-xs text-text-muted">
                 <div className="glass-card p-3">
                     <strong>ΔSP</strong> = |P(Ŷ=1 | A=0) − P(Ŷ=1 | A=1)| — Statistical Parity Difference (lower is fairer; target {'<'} 0.05)
                 </div>
