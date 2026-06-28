@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import PatientList from '../components/ehr/PatientList';
 import PatientForm from '../components/ehr/PatientForm';
 import PatientDetail from '../components/ehr/PatientDetail';
 import KnowledgeGraph from '../components/graph/KnowledgeGraph';
 import { fetchHospitals } from '../api/client';
-import { Plus, Users, Network, X } from 'lucide-react';
+import { Plus, Network, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
-import { TabsSubtle, TabsSubtleItem } from '@/components/ui/tabs-subtle';
 import PageHeader from '../components/layout/PageHeader';
 
-const TABS = [
-    { key: 'list' as const, label: 'Patient List', icon: Users },
-];
-
 export default function HospitalDashboard() {
-    const { hospitalId = 'H1' } = useParams();
+    const { hospitalId = 'H1', patientId } = useParams();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [view, setView] = useState<'list' | 'form' | 'detail' | 'graph'>('list');
     const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
     const [hospitals, setHospitals] = useState<any[]>([]);
@@ -25,6 +21,21 @@ export default function HospitalDashboard() {
     useEffect(() => {
         fetchHospitals().then(setHospitals);
     }, []);
+
+    // Honor deep links from global search / routing:
+    //   /hospital/:id/patients/:patientId → open that patient's detail
+    //   /hospital/:id/patients/new        → open the new-patient form
+    //   ?view=graph                        → open the knowledge graph
+    useEffect(() => {
+        if (patientId) {
+            setSelectedPatientId(patientId);
+            setView('detail');
+        } else if (window.location.pathname.endsWith('/patients/new')) {
+            setView('form');
+        } else if (searchParams.get('view') === 'graph') {
+            setView('graph');
+        }
+    }, [patientId, searchParams]);
 
     const handleSelectPatient = (id: string) => {
         setSelectedPatientId(id);
@@ -56,16 +67,7 @@ export default function HospitalDashboard() {
                         </Button>
                     </>
                 }
-            >
-                <TabsSubtle
-                    selectedIndex={Math.max(0, TABS.findIndex(t => t.key === view))}
-                    onSelect={(i) => setView(TABS[i].key)}
-                >
-                    {TABS.map((tab, i) => (
-                        <TabsSubtleItem key={tab.key} index={i} label={tab.label} icon={tab.icon} />
-                    ))}
-                </TabsSubtle>
-            </PageHeader>
+            />
 
             {/* Main Content */}
             <main className="flex-1 min-h-0 overflow-y-auto p-6">

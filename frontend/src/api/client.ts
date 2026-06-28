@@ -42,6 +42,10 @@ export const fetchDiseaseGraph = (diseaseId: string) =>
 
 export const fetchGraphStats = () => api.get('/graph/stats').then(r => r.data);
 
+// --- Global search ---
+export const searchAll = (q: string) =>
+  api.get('/search', { params: { q } }).then(r => r.data);
+
 // --- Datasets (benchmark selector) ---
 export const fetchDatasets = () => api.get('/metrics/datasets').then(r => r.data);
 

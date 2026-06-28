@@ -128,7 +128,7 @@
     box-sizing: border-box;
   }
   * {
-    @apply border-border outline-ring/50;
+    @apply border-cobalt-tint outline-ring/50;
   }
   body {
     @apply text-foreground;

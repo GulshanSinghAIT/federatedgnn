@@ -6,6 +6,7 @@ import MetricsDashboard from './pages/MetricsDashboard';
 import { Stethoscope, Zap, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip } from '@/components/ui/tooltip';
+import GlobalSearch from './components/layout/GlobalSearch';
 
 /** Brand node-glyph: a cobalt core linked to three satellite nodes
  *  (the federated-aggregation motif from frontend/brand.html). */
@@ -18,7 +19,7 @@ function BrandGlyph({ size = 26 }: { size?: number }) {
             <circle cx="50" cy="20" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
             <circle cx="24" cy="72" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
             <circle cx="76" cy="72" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <circle cx="50" cy="50" r="11" fill="var(--color-cobalt)" />
+            <circle cx="50" cy="50" r="11" fill="#7efffe" />
         </svg>
     );
 }
@@ -35,8 +36,8 @@ function NavBar() {
     ];
 
     return (
-        <nav className="left-0 top-0 bottom-0 w-16 bg-transparent flex flex-col items-center py-4 z-50">
-            <Link to="/" title="FedFairGNN" className="w-10 h-10 rounded-xl flex items-center justify-center mb-6">
+        <nav className="left-0 top-0 bottom-0 w-16 bg-transparent flex flex-col items-center py-2.5 z-50">
+            <Link to="/" title="FedFairGNN" className="w-10 h-10 rounded-xl flex items-center justify-center mb-2">
                 <BrandGlyph size={26} />
             </Link>
 
@@ -68,15 +69,21 @@ export default function App() {
         <BrowserRouter>
             <div className="flex h-screen overflow-hidden text-foreground bg-linear-to-b from-cobalt/70 via-cobalt/30 to-cobalt/0 dark:from-primary/5 dark:to-background">
                 <NavBar />
-                <main className="flex-1 min-h-0 mt-2">
-                    <Routes>
-                        <Route path="/" element={<Navigate to="/hospital/H1/dashboard" replace />} />
-                        <Route path="/hospital/:hospitalId/dashboard" element={<HospitalDashboard />} />
-                        <Route path="/hospital/:hospitalId/patients/new" element={<HospitalDashboard />} />
-                        <Route path="/hospital/:hospitalId/patients/:patientId" element={<HospitalDashboard />} />
-                        <Route path="/federation/dashboard" element={<FederationDashboard />} />
-                        <Route path="/research/metrics" element={<MetricsDashboard />} />
-                    </Routes>
+                <main className="flex-1 min-h-0 mt-2 flex flex-col">
+                    {/* Global search bar */}
+                    <div className="shrink-0 flex items-center justify-center px-4 pb-2">
+                        <GlobalSearch />
+                    </div>
+                    <div className="flex-1 min-h-0">
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/hospital/H1/dashboard" replace />} />
+                            <Route path="/hospital/:hospitalId/dashboard" element={<HospitalDashboard />} />
+                            <Route path="/hospital/:hospitalId/patients/new" element={<HospitalDashboard />} />
+                            <Route path="/hospital/:hospitalId/patients/:patientId" element={<HospitalDashboard />} />
+                            <Route path="/federation/dashboard" element={<FederationDashboard />} />
+                            <Route path="/research/metrics" element={<MetricsDashboard />} />
+                        </Routes>
+                    </div>
                 </main>
             </div>
         </BrowserRouter>

@@ -280,3 +280,91 @@ def list_treatments():
         return [{"id": t.id, "name": t.name, "type": t.type, "evidence_level": t.evidence_level} for t in treatments]
     finally:
         session.close()
+
+
+@app.get("/api/search")
+def global_search(q: str = "", limit: int = 6):
+    """Server-driven global search across hospitals, the knowledge graph
+    (diseases / symptoms / treatments), and patients in every hospital DB.
+
+    Returns flat, ranked result groups; each item carries enough to navigate.
+    """
+    from sqlalchemy import or_
+
+    query = (q or "").strip()
+    empty = {"query": query, "groups": [], "total": 0}
+    if len(query) < 1:
+        return empty
+    like = f"%{query}%"
+
+    groups = []
+
+    gs = get_session("global")
+    try:
+        hospitals = gs.query(Hospital).filter(
+            or_(Hospital.name.ilike(like), Hospital.location.ilike(like), Hospital.id.ilike(like))
+        ).limit(limit).all()
+        if hospitals:
+            groups.append({"type": "hospital", "label": "Hospitals", "items": [
+                {"id": h.id, "title": h.name, "subtitle": h.location, "hospital_id": h.id}
+                for h in hospitals
+            ]})
+
+        diseases = gs.query(Disease).filter(
+            or_(Disease.name.ilike(like), Disease.icd10_code.ilike(like), Disease.category.ilike(like))
+        ).limit(limit).all()
+        if diseases:
+            groups.append({"type": "disease", "label": "Diseases", "items": [
+                {"id": d.id, "title": d.name, "subtitle": f"{d.icd10_code} · {d.category}"}
+                for d in diseases
+            ]})
+
+        symptoms = gs.query(Symptom).filter(
+            or_(Symptom.name.ilike(like), Symptom.body_system.ilike(like))
+        ).limit(limit).all()
+        if symptoms:
+            groups.append({"type": "symptom", "label": "Symptoms", "items": [
+                {"id": s.id, "title": s.name, "subtitle": s.body_system} for s in symptoms
+            ]})
+
+        treatments = gs.query(Treatment).filter(
+            or_(Treatment.name.ilike(like), Treatment.type.ilike(like))
+        ).limit(limit).all()
+        if treatments:
+            groups.append({"type": "treatment", "label": "Treatments", "items": [
+                {"id": t.id, "title": t.name, "subtitle": f"{t.type} · evidence {t.evidence_level}"}
+                for t in treatments
+            ]})
+    finally:
+        gs.close()
+
+    # Patients live in per-hospital DBs (never centralized) — search each.
+    patient_items = []
+    for h in HOSPITALS:
+        hid = h["id"]
+        ps = get_session(hid)
+        try:
+            rows = ps.query(Patient).filter(
+                Patient.hospital_id == hid,
+                or_(
+                    Patient.id.ilike(like),
+                    Patient.chief_complaint.ilike(like),
+                    Patient.age_group.ilike(like),
+                    Patient.ethnicity.ilike(like),
+                    Patient.sex.ilike(like),
+                ),
+            ).limit(limit).all()
+            for p in rows:
+                patient_items.append({
+                    "id": p.id,
+                    "title": f"Patient {p.id[:8]}",
+                    "subtitle": f"{h['name']} · {p.age_group or ''} · {p.ethnicity or ''}".strip(" ·"),
+                    "hospital_id": hid,
+                })
+        finally:
+            ps.close()
+    if patient_items:
+        groups.insert(0, {"type": "patient", "label": "Patients", "items": patient_items[: limit * 2]})
+
+    total = sum(len(g["items"]) for g in groups)
+    return {"query": query, "groups": groups, "total": total}

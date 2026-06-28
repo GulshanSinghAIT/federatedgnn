@@ -189,7 +189,7 @@ function ValueDisplay({
               }}
               aria-label={`Edit slider value${isRange ? (index === 0 ? " (start)" : " (end)") : ""}`}
               className={cn(
-                "w-[5ch] bg-transparent text-foreground outline-none border-b border-border text-center",
+                "w-[5ch] bg-transparent text-foreground outline-none border-b text-center",
                 shape.input
               )}
               style={{ fontVariationSettings: fontWeights.medium }}

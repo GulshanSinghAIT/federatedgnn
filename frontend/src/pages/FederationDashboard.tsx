@@ -110,11 +110,11 @@ export default function FederationDashboard() {
 
             <div className="flex-1 min-h-0 overflow-y-auto p-6 space-y-4">
                 {/* Top: Network + Metrics Feed */}
-                <div className="grid grid-cols-12 gap-4" style={{ height: '420px' }}>
-                    <div className="col-span-9 glass-card overflow-hidden">
+                <div className="grid grid-cols-12 gap-4">
+                    <div className="col-span-9 h-full max-h-120 glass-card overflow-hidden">
                         <HospitalNetwork />
                     </div>
-                    <div className="col-span-3">
+                    <div className="col-span-3 h-full min-h-120 max-h-120">
                         <MetricsFeed />
                     </div>
                 </div>

@@ -266,7 +266,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 )}
 
                 {/* Navigation */}
-                <div className="flex justify-between mt-6 pt-4 border-t border-border">
+                <div className="flex justify-between mt-6 pt-4 border-t">
                     <Button variant="tertiary" leadingIcon={ChevronLeft} onClick={() => setStep(s => s - 1)} disabled={step === 0}
                         className="text-text-secondary hover:text-text-primary">
                         Back
