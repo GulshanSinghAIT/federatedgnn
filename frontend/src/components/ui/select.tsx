@@ -439,7 +439,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
           >
           <Elevated
             offset={2}
-            shadowLevel={3}
+            shadowLevel={2}
             ref={(node) => {
               (
                 containerRef as React.MutableRefObject<HTMLDivElement | null>
@@ -480,7 +480,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
             }}
             onKeyDown={handleKeyDown}
             className={cn(
-              `relative flex flex-col gap-0.5 max-h-[300px] overflow-y-auto ${shape.container} p-1 select-none outline-none`,
+              `relative no-scrollbar flex flex-col gap-0.5 max-h-75 overflow-y-auto border border-border/50 ${shape.container} p-1 select-none outline-none`,
               className
             )}
           >
@@ -558,11 +558,14 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
 
             {/* Cues read the elevated surface level from Elevated's provider,
                 so the gradient matches the menu background at any depth. */}
-            {scrollFade && <ScrollEdgeCue edge="top" visible={edges.top} />}
+            {/* Only mount the cue anchors when the list actually overflows —
+                otherwise their zero-height sticky nodes still consume the
+                container's flex `gap`, adding stray top/bottom spacing. */}
+            {scrollFade && edges.top && <ScrollEdgeCue edge="top" visible={edges.top} />}
 
             {children}
 
-            {scrollFade && (
+            {scrollFade && edges.bottom && (
               <ScrollEdgeCue edge="bottom" visible={edges.bottom} />
             )}
           </Elevated>

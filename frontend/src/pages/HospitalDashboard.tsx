@@ -34,12 +34,12 @@ export default function HospitalDashboard() {
     const HOSPITAL_COLORS: Record<string, string> = { H1: '#38bdf8', H2: '#a78bfa', H3: '#2dd4bf' };
 
     return (
-        <div className="min-h-screen bg-[var(--color-bg-primary)]">
+        <div className="min-h-screen shadow-xl rounded-tl-2xl bg-[var(--color-bg-primary)]">
             {/* Header */}
-            <header className="border-b border-[var(--color-border)] px-6 py-4">
+            <header className="border-b pl-4 p-2 bg-white rounded-tl-2xl">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-xl font-bold" style={{ color: HOSPITAL_COLORS[hospitalId] }}>
+                        <h1 className="text-xl font-medium tracking-tighter " style={{ color: HOSPITAL_COLORS[hospitalId] }}>
                             {hospital?.name || hospitalId}
                         </h1>
                         <p className="text-xs text-[var(--color-text-muted)]">{hospital?.location} • {hospital?.patient_count || 0} patients</p>
@@ -52,12 +52,10 @@ export default function HospitalDashboard() {
                                 {hospitals.map((h, i) => <SelectItem key={h.id} index={i} value={h.id}>{h.name}</SelectItem>)}
                             </SelectContent>
                         </Select>
-                        <Button variant="tertiary" size="md" leadingIcon={Network} onClick={() => setView('graph')}
-                            className={view === 'graph' ? 'bg-[var(--color-accent-blue)] text-white' : 'text-[var(--color-text-secondary)]'}>
+                        <Button variant={view === 'graph' ? 'accent' : 'tertiary'} size="md" leadingIcon={Network} onClick={() => setView('graph')}>
                             Knowledge Graph
                         </Button>
-                        <Button variant="ghost" size="md" leadingIcon={view === 'form' ? X : Plus} onClick={() => setView(view === 'form' ? 'list' : 'form')}
-                            className="text-white" style={{ backgroundColor: 'var(--color-accent-green)' }}>
+                        <Button variant={view === 'form' ? 'tertiary' : 'accent'} size="md" leadingIcon={view === 'form' ? X : Plus} onClick={() => setView(view === 'form' ? 'list' : 'form')}>
                             {view === 'form' ? 'Cancel' : 'Add Patient'}
                         </Button>
                     </div>
@@ -76,7 +74,7 @@ export default function HospitalDashboard() {
             </header>
 
             {/* Main Content */}
-            <main className="p-6">
+            <main className="p-6 overflow-auto">
                 {view === 'list' && <PatientList hospitalId={hospitalId} onSelectPatient={handleSelectPatient} />}
                 {view === 'form' && <PatientForm hospitalId={hospitalId} onComplete={() => setView('list')} />}
                 {view === 'detail' && selectedPatientId && (

@@ -42,7 +42,7 @@ export default function PatientList({ hospitalId, onSelectPatient }: Props) {
         <div className="space-y-4">
             <div className="flex items-center gap-3">
                 <InputGroup className="flex-1 w-auto">
-                    <InputField label="Search" index={0} value={search} onChange={setSearch} placeholder="Search by ID or complaint..." icon={Search} />
+                    <InputField hideLabel label="Search" index={0} value={search} onChange={setSearch} placeholder="Search by ID or complaint..." icon={Search} />
                 </InputGroup>
                 <Select value={filterAge} onValueChange={setFilterAge}>
                     <SelectTrigger placeholder="All Ages" />

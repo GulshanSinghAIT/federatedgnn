@@ -87,7 +87,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag(field, inputKey))}
                         placeholder={`Add ${label.toLowerCase()}...`} />
                 </InputGroup>
-                <Button variant="ghost" onClick={() => addTag(field, inputKey)} className="text-white" style={{ backgroundColor: 'var(--color-accent-blue)' }}>Add</Button>
+                <Button variant="accent" onClick={() => addTag(field, inputKey)}>Add</Button>
             </div>
             <div className="flex flex-wrap gap-1 mt-2">
                 {form[field].map((tag: string) => (
@@ -272,14 +272,12 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         Back
                     </Button>
                     {step < 3 ? (
-                        <Button variant="ghost" trailingIcon={ChevronRight} onClick={() => setStep(s => s + 1)}
-                            disabled={step === 0 && (!form.age_group || !form.sex || !form.ethnicity)}
-                            className="text-white font-medium" style={{ backgroundColor: 'var(--color-accent-blue)' }}>
+                        <Button variant="accent" trailingIcon={ChevronRight} onClick={() => setStep(s => s + 1)}
+                            disabled={step === 0 && (!form.age_group || !form.sex || !form.ethnicity)}>
                             Next
                         </Button>
                     ) : (
-                        <Button variant="ghost" onClick={handleSubmit} disabled={submitting}
-                            className="text-white font-medium" style={{ backgroundColor: 'var(--color-accent-green)' }}>
+                        <Button variant="success" onClick={handleSubmit} disabled={submitting}>
                             {submitting ? 'Submitting...' : '✓ Submit Patient'}
                         </Button>
                     )}

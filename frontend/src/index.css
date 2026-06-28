@@ -99,7 +99,7 @@
   --font-body: 'IBM Plex Sans', 'Geist Variable', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
-  --radius-brand: 14px;
+  --radius-brand: 6px;
 }
 
 /* Raw (non-prefixed) tokens read inline by some components/ui/* (e.g. Badge
@@ -121,7 +121,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
   html {
     @apply font-sans;

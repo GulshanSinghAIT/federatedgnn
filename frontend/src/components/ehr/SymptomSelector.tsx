@@ -63,6 +63,7 @@ export default function SymptomSelector({ selected, onChange }: Props) {
             <div className="relative">
                 <InputGroup className="w-full">
                     <InputField
+                        hideLabel
                         label="Search symptoms"
                         index={0}
                         placeholder="Search symptoms..."

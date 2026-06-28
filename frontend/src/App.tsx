@@ -32,7 +32,7 @@ function NavBar() {
     ];
 
     return (
-        <nav className="left-0 top-0 bottom-0 w-16 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)] flex flex-col items-center py-4 z-50">
+        <nav className="left-0 top-0 bottom-0 w-16 bg-transparent flex flex-col items-center py-4 z-50">
             <Link to="/" title="FedFairGNN" className="w-10 h-10 rounded-xl flex items-center justify-center mb-6">
                 <BrandGlyph size={26} />
             </Link>
@@ -40,8 +40,8 @@ function NavBar() {
             <div className="flex flex-col gap-3 flex-1">
                 {links.map(link => (
                     <Link key={link.path} to={link.path}
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all group relative ${isActive(link.path.split('/').slice(0, 2).join('/')) ? 'bg-[var(--color-bg-tertiary)]' : 'hover:bg-[var(--color-bg-tertiary)]/50'}`}
-                        style={{ color: isActive(link.path.split('/').slice(0, 2).join('/')) ? link.color : 'var(--color-text-muted)' }}>
+                        className={`w-9 h-9 rounded-lg flex items-center justify-center transition-all group relative ${isActive(link.path.split('/').slice(0, 2).join('/')) ? 'bg-[var(--color-bg-tertiary)]' : 'hover:bg-[var(--color-bg-tertiary)]/30'}`}
+                        style={{ color: isActive(link.path.split('/').slice(0, 2).join('/')) ? link.color : 'var(--color-white)' }}>
                         {link.icon}
                         <div className="absolute left-14 px-2 py-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-sm"
                             style={{ color: link.color }}>
@@ -61,9 +61,9 @@ function NavBar() {
 export default function App() {
     return (
         <BrowserRouter>
-            <div className="flex min-h-screen">
+            <div className="flex h-screen overflow-hidden text-foreground bg-linear-to-b from-cobalt/70 via-cobalt/30 to-cobalt/0 dark:from-primary/5 dark:to-background">
                 <NavBar />
-                <main className="flex-1">
+                <main className="flex-1 pt-2 pl-2">
                     <Routes>
                         <Route path="/" element={<Navigate to="/hospital/H1/dashboard" replace />} />
                         <Route path="/hospital/:hospitalId/dashboard" element={<HospitalDashboard />} />

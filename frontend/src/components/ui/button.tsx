@@ -13,7 +13,7 @@ const buttonVariants = cva(
     "text-box-trim-both text-box-edge-cap-alphabetic",
     "transition-colors duration-80",
     "disabled:opacity-50 disabled:pointer-events-none",
-    "focus-visible:ring-1 focus-visible:ring-[#6B97FF]",
+    "focus-visible:ring-2 focus-visible:ring-[var(--color-cobalt)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-paper)]",
   ],
   {
     variants: {
@@ -22,6 +22,9 @@ const buttonVariants = cva(
         secondary: "text-foreground",
         tertiary: "border border-border text-foreground",
         ghost: "text-muted-foreground hover:text-foreground",
+        accent: "text-white",
+        success: "text-white",
+        danger: "text-white",
       },
       size: {
         sm: "h-7 px-3 text-[12px] gap-1",
@@ -67,6 +70,9 @@ const bgVariants: Record<string, string> = {
   secondary: "bg-accent group-hover:bg-accent/80 group-active:bg-accent",
   tertiary: "bg-transparent group-hover:bg-hover group-active:bg-active",
   ghost: "bg-transparent group-hover:bg-hover group-active:bg-active",
+  accent: "bg-[var(--color-cobalt)] group-hover:bg-[var(--color-cobalt-deep)] group-active:bg-[var(--color-cobalt-deep)]",
+  success: "bg-[var(--color-accent-green)] group-hover:bg-[var(--color-accent-green)]/90 group-active:bg-[var(--color-accent-green)]/80",
+  danger: "bg-[var(--color-accent-red)] group-hover:bg-[var(--color-accent-red)]/90 group-active:bg-[var(--color-accent-red)]/80",
 };
 
 const activeBgVariants: Record<string, string> = {
@@ -74,6 +80,9 @@ const activeBgVariants: Record<string, string> = {
   secondary: "bg-accent",
   tertiary: "bg-active",
   ghost: "bg-active",
+  accent: "bg-[var(--color-cobalt-deep)]",
+  success: "bg-[var(--color-accent-green)]/80",
+  danger: "bg-[var(--color-accent-red)]/80",
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(

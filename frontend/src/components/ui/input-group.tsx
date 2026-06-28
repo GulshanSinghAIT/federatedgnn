@@ -106,6 +106,9 @@ interface InputFieldProps
   error?: string;
   disabled?: boolean;
   className?: string;
+  /** Drop the stacked label row (keeps it as aria-label) so the field sits at
+   *  a single control height — for inline filter bars / toolbars. */
+  hideLabel?: boolean;
 }
 
 const InputField = forwardRef<HTMLLabelElement, InputFieldProps>(
@@ -120,6 +123,7 @@ const InputField = forwardRef<HTMLLabelElement, InputFieldProps>(
       error,
       disabled,
       className,
+      hideLabel,
       ...props
     },
     ref
@@ -181,27 +185,29 @@ const InputField = forwardRef<HTMLLabelElement, InputFieldProps>(
           className
         )}
       >
-        {/* Label */}
-        <span className="inline-grid text-[13px] pl-3">
-          <span
-            className="col-start-1 row-start-1 invisible"
-            style={{ fontVariationSettings: fontWeights.semibold }}
-            aria-hidden="true"
-          >
-            {label}
+        {/* Label (omitted for inline/toolbar fields; kept as aria-label) */}
+        {!hideLabel && (
+          <span className="inline-grid text-[13px] pl-3">
+            <span
+              className="col-start-1 row-start-1 invisible"
+              style={{ fontVariationSettings: fontWeights.semibold }}
+              aria-hidden="true"
+            >
+              {label}
+            </span>
+            <span
+              className={cn(
+                "col-start-1 row-start-1",
+                error ? "text-destructive" : "text-muted-foreground"
+              )}
+              style={{
+                fontVariationSettings: fontWeights.normal,
+              }}
+            >
+              {label}
+            </span>
           </span>
-          <span
-            className={cn(
-              "col-start-1 row-start-1",
-              error ? "text-destructive" : "text-muted-foreground"
-            )}
-            style={{
-              fontVariationSettings: fontWeights.normal,
-            }}
-          >
-            {label}
-          </span>
-        </span>
+        )}
 
         {/* Input container */}
         <div
@@ -231,6 +237,7 @@ const InputField = forwardRef<HTMLLabelElement, InputFieldProps>(
             onBlur={handleBlur}
             placeholder={placeholder}
             disabled={disabled}
+            aria-label={hideLabel ? label : undefined}
             aria-invalid={!!error || undefined}
             aria-describedby={errorId}
             className="w-full bg-transparent text-[13px] text-foreground placeholder:text-muted-foreground outline-none font-[inherit]"

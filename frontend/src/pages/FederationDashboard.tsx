@@ -52,12 +52,12 @@ export default function FederationDashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-[var(--color-bg-primary)]">
+        <div className="min-h-screen shadow-xl rounded-tl-2xl bg-[var(--color-bg-primary)]">
             {/* Top Bar */}
-            <header className="border-b border-[var(--color-border)] px-6 py-4">
+            <header className="border-b pl-4 p-2 bg-white rounded-tl-2xl">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <h1 className="text-xl font-bold text-[var(--color-text-primary)] flex items-center gap-2">
+                        <h1 className="text-xl font-medium tracking-tighter text-[var(--color-text-primary)] flex items-center gap-2">
                             <Zap size={20} className="text-[var(--color-accent-blue)]" />
                             Federated Learning Network
                         </h1>
@@ -92,19 +92,17 @@ export default function FederationDashboard() {
                             </SelectContent>
                         </Select>
                         <InputGroup className="w-24">
-                            <InputField label="Rounds" index={0} type="number" min={5} max={50}
+                            <InputField hideLabel label="Rounds" index={0} type="number" min={5} max={50}
                                 value={String(rounds)} onChange={v => setRounds(parseInt(v) || 10)}
                                 disabled={isRunning} placeholder="Rounds" />
                         </InputGroup>
 
                         {!isRunning ? (
-                            <Button variant="ghost" size="md" leadingIcon={Play} onClick={handleStart}
-                                className="text-white" style={{ backgroundColor: 'var(--color-accent-green)' }}>
+                            <Button variant="success" size="md" leadingIcon={Play} onClick={handleStart}>
                                 Start Federation
                             </Button>
                         ) : (
-                            <Button variant="ghost" size="md" leadingIcon={Square} onClick={handleStop}
-                                className="text-white" style={{ backgroundColor: 'var(--color-accent-red)' }}>
+                            <Button variant="danger" size="md" leadingIcon={Square} onClick={handleStop}>
                                 Stop
                             </Button>
                         )}
@@ -116,7 +114,7 @@ export default function FederationDashboard() {
                 </div>
             </header>
 
-            <div className="p-6 space-y-4">
+            <div className="p-6 space-y-4 overflow-auto">
                 {/* Top: Network + Metrics Feed */}
                 <div className="grid grid-cols-12 gap-4" style={{ height: '420px' }}>
                     <div className="col-span-9 glass-card overflow-hidden">
