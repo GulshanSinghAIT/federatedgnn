@@ -6,6 +6,7 @@ import { Lock, ChevronRight, ChevronLeft, Check, AlertTriangle } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import { InputGroup, InputField } from '@/components/ui/input-group';
+import { Textarea } from '@/components/ui/textarea';
 
 const AGE_GROUPS = ['Pediatric (<18)', 'Young Adult (18-35)', 'Middle-Aged (36-60)', 'Senior (60+)'];
 const SEXES = ['Male', 'Female', 'Non-binary / Other', 'Prefer not to say'];
@@ -211,9 +212,8 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         {renderTagInput('Allergies', 'allergies', 'allergies')}
                         <div>
                             <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Surgical History</label>
-                            <textarea value={form.surgical_history} onChange={e => update('surgical_history', e.target.value)}
-                                className="w-full px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none h-24 resize-none"
-                                placeholder="Describe prior surgeries..." />
+                            <Textarea value={form.surgical_history} onChange={e => update('surgical_history', e.target.value)}
+                                rows={4} placeholder="Describe prior surgeries..." />
                         </div>
                     </div>
                 )}

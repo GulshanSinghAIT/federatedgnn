@@ -23,7 +23,12 @@
       "Bash(python3 -m pip list)",
       "Bash(python3 -m py_compile backend/gnn/models.py backend/gnn/federated_engine.py backend/gnn/real_engine.py backend/data/datasets.py backend/routers/metrics.py backend/routers/federation.py backend/models/schemas.py models/__init__.py models/secure_avg.py models/fair_gnn.py models/fair_gcn.py models/federated_fairgnn.py models/smpc_lp.py models/base_gnn.py models/gradient_reversal.py)",
       "Bash(rtk tsc *)",
-      "Bash(rtk npm *)"
+      "Bash(rtk npm *)",
+      "Bash(python3.11 -m venv .venv)",
+      "Bash(.venv/bin/python -m pip install --quiet --upgrade pip)",
+      "Bash(.venv/bin/pip install *)",
+      "Bash(.venv/bin/pip list *)",
+      "Bash(.venv/bin/python -c \"import main; print\\('✅ app imports OK — routers, gnn engine, datasets all load'\\)\")"
     ]
   }
 }
