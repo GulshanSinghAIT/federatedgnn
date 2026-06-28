@@ -1,25 +1,38 @@
-"""Federated training engine: orchestrates multi-hospital training simulation."""
+"""Federated training engine: orchestrates multi-hospital training.
+
+Default engine is the dependency-free simulation (gnn/models.py). When
+``engine="real"`` is requested AND torch/torch_geometric are installed, each
+round runs genuine GNN training + secure aggregation via gnn/real_engine.py.
+If the real engine is unavailable or errors mid-run, the round transparently
+falls back to simulation so the live demo never breaks.
+"""
 import threading
 import time
 import asyncio
 import json
-import random
-import numpy as np
 from datetime import datetime
 from typing import Dict, List, Optional, Set
 from copy import deepcopy
 
 from gnn.models import get_model, add_smpc_noise, federated_average, BaseGNNModel
+from gnn import real_engine
+from data.datasets import DEFAULT_DATASET, is_valid_dataset, MODELS
+
+# Per-hospital accuracy offsets so the three clients differ realistically (sim).
+_HOSPITAL_NOISE = {"H1": 0.01, "H2": -0.005, "H3": 0.008}
 
 
 class FederationState:
     """Singleton state for the federation engine."""
-    
+
     def __init__(self):
         self.is_running = False
         self.current_round = 0
         self.total_rounds = 0
         self.active_model_name = "FedFairGNN"
+        self.dataset = DEFAULT_DATASET
+        self.engine = "sim"            # requested: "sim" | "real"
+        self.effective_engine = "sim"  # what actually ran (after availability check)
         self.hospitals = ["H1", "H2", "H3"]
         self.hospital_patient_counts = {"H1": 0, "H2": 0, "H3": 0}
         self.models: Dict[str, BaseGNNModel] = {}
@@ -29,7 +42,7 @@ class FederationState:
         self._thread: Optional[threading.Thread] = None
         self._stop_event = threading.Event()
         self._loop: Optional[asyncio.AbstractEventLoop] = None
-    
+
     def reset(self):
         self.is_running = False
         self.current_round = 0
@@ -39,7 +52,6 @@ class FederationState:
         self.models = {}
 
 
-# Global federation state
 federation_state = FederationState()
 
 
@@ -58,224 +70,144 @@ async def broadcast_ws(message: dict):
 
 
 def _broadcast_sync(message: dict):
-    """Synchronous wrapper to broadcast WebSocket messages from background thread."""
+    """Broadcast WebSocket messages from the background training thread."""
     loop = federation_state._loop
     if loop and loop.is_running():
         asyncio.run_coroutine_threadsafe(broadcast_ws(message), loop)
 
 
-def run_training_all_models(hospitals: List[str], total_rounds: int, 
-                             patient_counts: Dict[str, int]):
-    """Run training for all 4 models sequentially for comparison."""
-    model_names = ["FairGCN", "FairGNN", "SMPC-LP", "FedFairGNN"]
-    
-    for model_name in model_names:
+def _record_and_broadcast(model_name, round_num, hospital_id, metrics):
+    """Append a round metric to history and push it to the frontend."""
+    row = {
+        "model_name": model_name,
+        "round_num": round_num,
+        "hospital_id": hospital_id,
+        "dataset": federation_state.dataset,
+        **metrics,
+        "timestamp": datetime.utcnow().isoformat(),
+    }
+    federation_state.history.append(row)
+    if hospital_id == "global":
+        federation_state.global_metrics = row
+        _broadcast_sync({
+            "event": "global_aggregation_complete",
+            "model": model_name, "round": round_num,
+            "global_accuracy": metrics["accuracy"], "global_f1": metrics["f1_score"],
+            "sp_difference": metrics["sp_difference"], "eo_difference": metrics["eo_difference"],
+        })
+    else:
+        _broadcast_sync({
+            "event": "hospital_round_complete",
+            "hospital_id": hospital_id, "model": model_name,
+            "round": round_num, **metrics,
+        })
+
+
+def _train_model(model_name: str, hospitals: List[str], total_rounds: int,
+                 patient_counts: Dict[str, int]):
+    """Train one model for total_rounds federated rounds (sim or real)."""
+    dataset = federation_state.dataset
+    use_real = (federation_state.engine == "real" and real_engine.is_available())
+    federation_state.effective_engine = "real" if use_real else "sim"
+
+    federation_state.active_model_name = model_name
+    sim_model = get_model(model_name)
+    federation_state.models[model_name] = sim_model
+    real_global = None
+
+    _broadcast_sync({
+        "event": "model_training_start", "model": model_name,
+        "total_rounds": total_rounds, "dataset": dataset,
+        "engine": federation_state.effective_engine,
+    })
+
+    for round_num in range(1, total_rounds + 1):
         if federation_state._stop_event.is_set():
             break
-            
-        federation_state.active_model_name = model_name
-        model = get_model(model_name)
-        federation_state.models[model_name] = model
-        
-        _broadcast_sync({
-            "event": "model_training_start",
-            "model": model_name,
-            "total_rounds": total_rounds
-        })
-        
-        for round_num in range(1, total_rounds + 1):
-            if federation_state._stop_event.is_set():
-                break
-            
-            federation_state.current_round = round_num
-            local_updates = []
-            
-            # Each hospital trains locally
-            for hospital_id in hospitals:
-                num_patients = patient_counts.get(hospital_id, 50)
-                
-                # Simulate local training with hospital-specific noise
-                local_model = deepcopy(model)
-                metrics = local_model.simulate_round(round_num, num_patients)
-                
-                # Add per-hospital variation
-                hospital_noise = {"H1": 0.01, "H2": -0.005, "H3": 0.008}.get(hospital_id, 0)
-                metrics["accuracy"] = round(metrics["accuracy"] + hospital_noise, 4)
-                metrics["f1_score"] = round(metrics["f1_score"] + hospital_noise * 0.8, 4)
-                
-                local_updates.append(add_smpc_noise(local_model.state_dict()))
-                
-                # Record hospital round metric
-                round_metric = {
-                    "model_name": model_name,
-                    "round_num": round_num,
-                    "hospital_id": hospital_id,
-                    **metrics,
-                    "timestamp": datetime.utcnow().isoformat()
-                }
-                federation_state.history.append(round_metric)
-                
-                # Broadcast hospital round complete
+        federation_state.current_round = round_num
+
+        ran_real = False
+        if use_real:
+            try:
+                per_hospital, glob, real_global = real_engine.run_round(
+                    model_name, round_num, hospitals, patient_counts,
+                    dataset=dataset, global_model=real_global)
+                for hid in hospitals:
+                    if hid in per_hospital:
+                        _record_and_broadcast(model_name, round_num, hid, per_hospital[hid])
+                        time.sleep(0.15)
+                _record_and_broadcast(model_name, round_num, "global", glob)
+                ran_real = True
+            except Exception as exc:  # fall back to sim for the rest of the run
+                use_real = False
+                federation_state.effective_engine = "sim"
                 _broadcast_sync({
-                    "event": "hospital_round_complete",
-                    "hospital_id": hospital_id,
-                    "model": model_name,
-                    "round": round_num,
-                    **metrics
+                    "event": "engine_fallback", "model": model_name,
+                    "round": round_num, "reason": str(exc)[:200],
                 })
-                
-                time.sleep(0.3)  # Simulate computation time
-            
-            # Global aggregation
-            global_weights = federated_average(local_updates)
-            model.load_state_dict(global_weights)
-            model.round_num = round_num
-            
-            # Compute global metrics
-            global_metrics = model.simulate_round(round_num, sum(patient_counts.values()))
-            global_round = {
-                "model_name": model_name,
-                "round_num": round_num,
-                "hospital_id": "global",
-                **global_metrics,
-                "timestamp": datetime.utcnow().isoformat()
-            }
-            federation_state.history.append(global_round)
-            federation_state.global_metrics = global_round
-            
-            # Broadcast global aggregation complete
-            _broadcast_sync({
-                "event": "global_aggregation_complete",
-                "model": model_name,
-                "round": round_num,
-                "global_accuracy": global_metrics["accuracy"],
-                "global_f1": global_metrics["f1_score"],
-                "sp_difference": global_metrics["sp_difference"],
-                "eo_difference": global_metrics["eo_difference"]
-            })
-            
+
+        if not ran_real:
+            local_updates = []
+            for hid in hospitals:
+                n = patient_counts.get(hid, 50)
+                local = deepcopy(sim_model)
+                metrics = local.simulate_round(round_num, n, dataset)
+                off = _HOSPITAL_NOISE.get(hid, 0)
+                metrics["accuracy"] = round(metrics["accuracy"] + off, 4)
+                metrics["f1_score"] = round(metrics["f1_score"] + off * 0.8, 4)
+                local_updates.append(add_smpc_noise(local.state_dict()))
+                _record_and_broadcast(model_name, round_num, hid, metrics)
+                time.sleep(0.3)
+            sim_model.load_state_dict(federated_average(local_updates))
+            sim_model.round_num = round_num
+            glob = sim_model.simulate_round(round_num, sum(patient_counts.values()), dataset)
+            _record_and_broadcast(model_name, round_num, "global", glob)
             time.sleep(0.2)
-        
-        # Model training complete
-        _broadcast_sync({
-            "event": "model_training_complete",
-            "model": model_name
-        })
-    
+
+    _broadcast_sync({"event": "model_training_complete", "model": model_name})
+
+
+def run_training_all_models(hospitals, total_rounds, patient_counts):
+    """Train all four models sequentially for comparison."""
+    for model_name in MODELS:
+        if federation_state._stop_event.is_set():
+            break
+        _train_model(model_name, hospitals, total_rounds, patient_counts)
     federation_state.is_running = False
     _broadcast_sync({"event": "federation_complete"})
 
 
-def run_single_model(model_name: str, hospitals: List[str], total_rounds: int,
-                      patient_counts: Dict[str, int]):
-    """Run training for a single specified model."""
-    federation_state.active_model_name = model_name
-    model = get_model(model_name)
-    federation_state.models[model_name] = model
-    
-    _broadcast_sync({
-        "event": "model_training_start",
-        "model": model_name,
-        "total_rounds": total_rounds
-    })
-    
-    for round_num in range(1, total_rounds + 1):
-        if federation_state._stop_event.is_set():
-            break
-        
-        federation_state.current_round = round_num
-        local_updates = []
-        
-        for hospital_id in hospitals:
-            num_patients = patient_counts.get(hospital_id, 50)
-            local_model = deepcopy(model)
-            metrics = local_model.simulate_round(round_num, num_patients)
-            
-            hospital_noise = {"H1": 0.01, "H2": -0.005, "H3": 0.008}.get(hospital_id, 0)
-            metrics["accuracy"] = round(metrics["accuracy"] + hospital_noise, 4)
-            metrics["f1_score"] = round(metrics["f1_score"] + hospital_noise * 0.8, 4)
-            
-            local_updates.append(add_smpc_noise(local_model.state_dict()))
-            
-            round_metric = {
-                "model_name": model_name,
-                "round_num": round_num,
-                "hospital_id": hospital_id,
-                **metrics,
-                "timestamp": datetime.utcnow().isoformat()
-            }
-            federation_state.history.append(round_metric)
-            
-            _broadcast_sync({
-                "event": "hospital_round_complete",
-                "hospital_id": hospital_id,
-                "model": model_name,
-                "round": round_num,
-                **metrics
-            })
-            
-            time.sleep(0.3)
-        
-        global_weights = federated_average(local_updates)
-        model.load_state_dict(global_weights)
-        model.round_num = round_num
-        
-        global_metrics = model.simulate_round(round_num, sum(patient_counts.values()))
-        global_round = {
-            "model_name": model_name,
-            "round_num": round_num,
-            "hospital_id": "global",
-            **global_metrics,
-            "timestamp": datetime.utcnow().isoformat()
-        }
-        federation_state.history.append(global_round)
-        federation_state.global_metrics = global_round
-        
-        _broadcast_sync({
-            "event": "global_aggregation_complete",
-            "model": model_name,
-            "round": round_num,
-            "global_accuracy": global_metrics["accuracy"],
-            "global_f1": global_metrics["f1_score"],
-            "sp_difference": global_metrics["sp_difference"],
-            "eo_difference": global_metrics["eo_difference"]
-        })
-        
-        time.sleep(0.2)
-    
-    _broadcast_sync({
-        "event": "model_training_complete",
-        "model": model_name
-    })
-    
+def run_single_model(model_name, hospitals, total_rounds, patient_counts):
+    """Train a single specified model."""
+    _train_model(model_name, hospitals, total_rounds, patient_counts)
     federation_state.is_running = False
     _broadcast_sync({"event": "federation_complete"})
 
 
 def start_federation(model: str, rounds: int, hospitals: List[str],
-                      patient_counts: Dict[str, int], loop: asyncio.AbstractEventLoop,
-                      train_all: bool = False):
-    """Start the federated training in a background thread."""
+                     patient_counts: Dict[str, int], loop: asyncio.AbstractEventLoop,
+                     train_all: bool = False, dataset: str = DEFAULT_DATASET,
+                     engine: str = "sim"):
+    """Start federated training in a background thread."""
     if federation_state.is_running:
         return False, "Federation already running"
-    
+
     federation_state.is_running = True
     federation_state.total_rounds = rounds
     federation_state.hospitals = hospitals
     federation_state.hospital_patient_counts = patient_counts
+    federation_state.dataset = dataset if is_valid_dataset(dataset) else DEFAULT_DATASET
+    federation_state.engine = "real" if engine == "real" else "sim"
     federation_state._stop_event.clear()
     federation_state._loop = loop
-    
+
     if train_all:
-        target = run_training_all_models
-        args = (hospitals, rounds, patient_counts)
+        target, args = run_training_all_models, (hospitals, rounds, patient_counts)
     else:
-        target = run_single_model
-        args = (model, hospitals, rounds, patient_counts)
-    
+        target, args = run_single_model, (model, hospitals, rounds, patient_counts)
+
     federation_state._thread = threading.Thread(target=target, args=args, daemon=True)
     federation_state._thread.start()
-    
     return True, "Federation started"
 
 

@@ -17,47 +17,77 @@ from models.schemas import (
 )
 from gnn.federated_engine import federation_state
 from gnn.models import get_model
+from data.datasets import (
+    MODELS, MODEL_PROFILE, DEFAULT_DATASET, target_metrics, benchmark_table,
+    DATASETS, is_valid_dataset,
+)
 
 router = APIRouter(prefix="/api/metrics", tags=["metrics"])
 
 
 @router.get("/compare")
-def compare_models():
-    """Side-by-side metrics for all 4 models."""
-    model_configs = {
-        "FairGCN": {"privacy": "None", "comm_cost": "N/A"},
-        "FairGNN": {"privacy": "None", "comm_cost": "N/A"},
-        "SMPC-LP": {"privacy": "High", "comm_cost": "High"},
-        "FedFairGNN": {"privacy": "High", "comm_cost": "Low"},
-    }
-    
+def compare_models(dataset: Optional[str] = None):
+    """Side-by-side metrics for the four trainable models on a dataset.
+
+    Uses this session's live global metrics where available; otherwise falls
+    back to the paper's Table 1 targets so the table is always populated.
+    """
+    ds = dataset if (dataset and is_valid_dataset(dataset)) else (
+        federation_state.dataset or DEFAULT_DATASET)
+
     results = []
-    for model_name, config in model_configs.items():
-        # Get latest global metrics for this model
-        model_history = [
+    for model_name in MODELS:
+        profile = MODEL_PROFILE.get(model_name, {})
+        # Latest live global metric for this (model, dataset) this session.
+        live = [
             h for h in federation_state.history
-            if h.get("model_name") == model_name and h.get("hospital_id") == "global"
+            if h.get("model_name") == model_name
+            and h.get("hospital_id") == "global"
+            and h.get("dataset", DEFAULT_DATASET) == ds
         ]
-        
-        if model_history:
-            latest = model_history[-1]
+        if live:
+            latest = live[-1]
             results.append(ModelComparisonOut(
                 model=model_name,
+                dataset=ds,
                 accuracy=latest.get("accuracy"),
                 f1_score=latest.get("f1_score"),
+                auc=latest.get("auc"),
                 sp_difference=latest.get("sp_difference"),
                 eo_difference=latest.get("eo_difference"),
-                privacy=config["privacy"],
-                comm_cost=config["comm_cost"]
+                privacy=profile.get("privacy", "None"),
+                comm_cost=profile.get("comm_cost", "N/A"),
+                is_proposed=model_name == "FedFairGNN",
+                source="live",
             ))
         else:
+            t = target_metrics(ds, model_name)
             results.append(ModelComparisonOut(
                 model=model_name,
-                privacy=config["privacy"],
-                comm_cost=config["comm_cost"]
+                dataset=ds,
+                accuracy=t["accuracy"],
+                f1_score=t["f1_score"],
+                auc=t["auc"],
+                sp_difference=t["sp_difference"],
+                eo_difference=t["eo_difference"],
+                privacy=profile.get("privacy", "None"),
+                comm_cost=profile.get("comm_cost", "N/A"),
+                is_proposed=model_name == "FedFairGNN",
+                source="benchmark",
             ))
-    
     return results
+
+
+@router.get("/benchmark")
+def get_benchmark(dataset: Optional[str] = None):
+    """Full paper Table 1 (all datasets + baselines) for the research view."""
+    return benchmark_table(dataset if dataset and is_valid_dataset(dataset) else None)
+
+
+@router.get("/datasets")
+def list_datasets():
+    """Available benchmark datasets (for the dataset selector)."""
+    return DATASETS
 
 
 @router.get("/demographics/{hospital_id}")

@@ -15,8 +15,8 @@ from typing import Callable
 import torch
 from torch_geometric.data import HeteroData
 
-from ml.models.base_gnn import MedicalGNN
-from ml.aggregation.secure_avg import secure_average
+from .base_gnn import MedicalGNN
+from .secure_avg import secure_average
 
 
 def train_local_model(

@@ -15,8 +15,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.data import HeteroData
 
-from ml.models.base_gnn import MedicalGNN
-from ml.models.gradient_reversal import gradient_reverse
+from .base_gnn import MedicalGNN
+from .gradient_reversal import gradient_reverse
 
 
 class FairGNN(nn.Module):

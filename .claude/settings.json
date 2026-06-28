@@ -18,7 +18,10 @@
       "Bash(awk 'NR>=1900 && NR<=2400' report.txt)",
       "Bash(grep -v '^\\\\s*$')",
       "Bash(rtk read *)",
-      "Bash(python3 -c \"import torch, torch_geometric; print\\('torch', torch.__version__, 'pyg', torch_geometric.__version__\\)\")"
+      "Bash(python3 -c \"import torch, torch_geometric; print\\('torch', torch.__version__, 'pyg', torch_geometric.__version__\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -m pip list)",
+      "Bash(python3 -m py_compile backend/gnn/models.py backend/gnn/federated_engine.py backend/gnn/real_engine.py backend/data/datasets.py backend/routers/metrics.py backend/routers/federation.py backend/models/schemas.py models/__init__.py models/secure_avg.py models/fair_gnn.py models/fair_gcn.py models/federated_fairgnn.py models/smpc_lp.py models/base_gnn.py models/gradient_reversal.py)"
     ]
   }
 }

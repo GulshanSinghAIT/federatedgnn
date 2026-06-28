@@ -1,0 +1,10 @@
+# OPTIONAL — only needed to run the REAL training engine (engine="real").
+# The default simulation engine needs none of this; the app boots fine without it.
+#
+#   pip install -r requirements.txt          # always
+#   pip install -r requirements-ml.txt       # only for real GNN training
+#
+# PyTorch Geometric wheels are platform-specific; if the plain install fails,
+# follow https://pytorch-geometric.readthedocs.io/en/latest/install/installation.html
+torch>=2.1
+torch-geometric>=2.4

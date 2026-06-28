@@ -32,13 +32,19 @@ async def start_fed(request: FederationStartRequest):
         hospitals=request.hospitals,
         patient_counts=patient_counts,
         loop=loop,
-        train_all=train_all
+        train_all=train_all,
+        dataset=request.dataset,
+        engine=request.engine,
     )
-    
+
     if not success:
         raise HTTPException(status_code=409, detail=msg)
-    
-    return {"status": "started", "message": msg, "model": request.model, "rounds": request.rounds}
+
+    return {
+        "status": "started", "message": msg, "model": request.model,
+        "rounds": request.rounds, "dataset": federation_state.dataset,
+        "engine": federation_state.engine,
+    }
 
 
 @router.post("/stop")
@@ -65,6 +71,9 @@ def get_status():
         total_rounds=federation_state.total_rounds,
         active_model=federation_state.active_model_name,
         hospitals=federation_state.hospitals,
+        dataset=federation_state.dataset,
+        engine=federation_state.engine,
+        effective_engine=federation_state.effective_engine,
         global_accuracy=federation_state.global_metrics.get("accuracy"),
         global_f1=federation_state.global_metrics.get("f1_score"),
         sp_difference=federation_state.global_metrics.get("sp_difference"),

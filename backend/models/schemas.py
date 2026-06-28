@@ -140,6 +140,8 @@ class FederationStartRequest(BaseModel):
     model: str = "FedFairGNN"
     rounds: int = Field(ge=5, le=50, default=10)
     hospitals: List[str] = ["H1", "H2", "H3"]
+    dataset: str = "MedGraph-S"
+    engine: str = "sim"  # "sim" (default, dependency-free) | "real" (torch)
 
 
 class FederationStatusOut(BaseModel):
@@ -148,6 +150,9 @@ class FederationStatusOut(BaseModel):
     total_rounds: int
     active_model: str
     hospitals: List[str]
+    dataset: Optional[str] = None
+    engine: Optional[str] = None             # requested engine
+    effective_engine: Optional[str] = None   # what actually ran (after fallback)
     global_accuracy: Optional[float] = None
     global_f1: Optional[float] = None
     sp_difference: Optional[float] = None
@@ -160,6 +165,7 @@ class RoundMetricOut(BaseModel):
     hospital_id: str
     accuracy: float
     f1_score: float
+    auc: Optional[float] = None
     loss: Optional[float] = None
     sp_difference: float
     eo_difference: float
@@ -169,12 +175,16 @@ class RoundMetricOut(BaseModel):
 
 class ModelComparisonOut(BaseModel):
     model: str
+    dataset: Optional[str] = None
     accuracy: Optional[float] = None
     f1_score: Optional[float] = None
+    auc: Optional[float] = None
     sp_difference: Optional[float] = None
     eo_difference: Optional[float] = None
     privacy: str = "None"
     comm_cost: str = "N/A"
+    is_proposed: bool = False
+    source: str = "benchmark"  # "live" once trained this session, else paper "benchmark"
 
 
 # --- Decision Support Schemas ---

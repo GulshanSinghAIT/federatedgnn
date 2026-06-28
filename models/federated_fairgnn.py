@@ -13,7 +13,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch_geometric.data import HeteroData
 
-from ml.models.fair_gnn import FairGNN
+from .fair_gnn import FairGNN
 
 
 class FederatedFairGNN(nn.Module):
