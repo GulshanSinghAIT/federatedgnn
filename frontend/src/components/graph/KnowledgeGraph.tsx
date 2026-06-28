@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { fetchKnowledgeGraph } from '../../api/client';
+import { Button } from '@/components/ui/button';
 
 const NODE_COLORS: Record<string, string> = {
     patient: '#38bdf8', disease: '#ef4444', symptom: '#4ade80', treatment: '#a78bfa',
@@ -83,11 +84,11 @@ export default function KnowledgeGraph({ hospitalId }: { hospitalId?: string }) 
         <div className="relative w-full h-full">
             <div className="absolute top-2 right-2 z-10 glass-card p-2 flex gap-2">
                 {Object.entries(NODE_COLORS).map(([type, color]) => (
-                    <button key={type} onClick={() => setFilters(f => ({ ...f, [type]: !f[type as keyof typeof filters] }))}
-                        className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-all ${filters[type as keyof typeof filters] ? 'opacity-100' : 'opacity-30'}`}>
+                    <Button key={type} variant="ghost" size="sm" onClick={() => setFilters(f => ({ ...f, [type]: !f[type as keyof typeof filters] }))}
+                        className={`px-2 transition-all ${filters[type as keyof typeof filters] ? 'opacity-100' : 'opacity-30'}`}>
                         <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
                         {type}
-                    </button>
+                    </Button>
                 ))}
             </div>
             <svg ref={svgRef} className="w-full h-full" />

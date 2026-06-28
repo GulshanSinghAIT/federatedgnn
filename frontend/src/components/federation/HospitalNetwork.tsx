@@ -6,6 +6,7 @@ import AggregatorNode from './AggregatorNode';
 import { useFederationStore } from '../../store/federationStore';
 import { fetchDemographics } from '../../api/client';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+import { Button } from '@/components/ui/button';
 
 const nodeTypes = { hospital: HospitalNode, aggregator: AggregatorNode };
 
@@ -53,7 +54,7 @@ export default function HospitalNetwork() {
                         <h3 className="text-sm font-bold text-[var(--color-text-primary)]">
                             🔒 Demographics — {demoPanel.hospital_id}
                         </h3>
-                        <button onClick={() => setDemoPanel(null)} className="text-[var(--color-text-muted)] hover:text-white">✕</button>
+                        <Button variant="ghost" size="icon-sm" onClick={() => setDemoPanel(null)} className="text-[var(--color-text-muted)] hover:text-white">✕</Button>
                     </div>
 
                     <p className="text-[10px] text-[var(--color-accent-yellow)] mb-3 italic">

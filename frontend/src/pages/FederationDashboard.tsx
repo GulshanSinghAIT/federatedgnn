@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import HospitalNetwork from '../components/federation/HospitalNetwork';
 import MetricsFeed from '../components/federation/MetricsFeed';
 import TrainingCharts from '../components/federation/TrainingCharts';
 import { useFederationStore } from '../store/federationStore';
 import { useWebSocket } from '../hooks/useWebSocket';
-import { startFederation, stopFederation, resetFederation } from '../api/client';
+import { startFederation, stopFederation, resetFederation, fetchDatasets } from '../api/client';
 import { Play, Square, RotateCcw, Zap } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
+import { InputGroup, InputField } from '@/components/ui/input-group';
 
 const MODELS = ['FedFairGNN', 'FairGCN', 'FairGNN', 'SMPC-LP', 'all'];
+const ENGINES = [{ id: 'sim', label: 'Simulation' }, { id: 'real', label: 'Real (PyTorch)' }];
 
 export default function FederationDashboard() {
     useWebSocket();
-    const { isRunning, currentRound, totalRounds, activeModel, setRunning, setRound, resetHistory } = useFederationStore();
+    const {
+        isRunning, currentRound, totalRounds, dataset, engine,
+        setRunning, setRound, resetHistory, setDataset, setEngine,
+    } = useFederationStore();
 
     const [selectedModel, setSelectedModel] = useState('FedFairGNN');
     const [rounds, setRounds] = useState(10);
+    const [datasets, setDatasets] = useState<Array<{ id: string; name: string; description: string }>>([]);
+
+    useEffect(() => {
+        fetchDatasets().then(setDatasets).catch(() => {});
+    }, []);
 
     const handleStart = async () => {
         try {
             resetHistory();
             setRunning(true);
             setRound(0, rounds);
-            await startFederation({ model: selectedModel, rounds, hospitals: ['H1', 'H2', 'H3'] });
+            await startFederation({ model: selectedModel, rounds, hospitals: ['H1', 'H2', 'H3'], dataset, engine });
         } catch (err) {
             setRunning(false);
             console.error('Failed to start:', err);
@@ -61,30 +73,45 @@ export default function FederationDashboard() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <select value={selectedModel} onChange={e => setSelectedModel(e.target.value)} disabled={isRunning}
-                            className="px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)] disabled:opacity-50">
-                            {MODELS.map(m => <option key={m} value={m}>{m === 'all' ? 'Train All Models' : m}</option>)}
-                        </select>
-                        <input type="number" min={5} max={50} value={rounds} onChange={e => setRounds(parseInt(e.target.value) || 10)}
-                            disabled={isRunning}
-                            className="w-20 px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)] disabled:opacity-50"
-                            placeholder="Rounds" />
+                        <Select value={dataset} onValueChange={setDataset} disabled={isRunning}>
+                            <SelectTrigger title="Benchmark dataset" />
+                            <SelectContent>
+                                {datasets.map((d, i) => <SelectItem key={d.id} index={i} value={d.id}>{d.name}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                        <Select value={engine} onValueChange={setEngine} disabled={isRunning}>
+                            <SelectTrigger title="Training engine — Simulation (default) or Real PyTorch (requires requirements-ml.txt)" />
+                            <SelectContent>
+                                {ENGINES.map((e, i) => <SelectItem key={e.id} index={i} value={e.id}>{e.label}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                        <Select value={selectedModel} onValueChange={setSelectedModel} disabled={isRunning}>
+                            <SelectTrigger />
+                            <SelectContent>
+                                {MODELS.map((m, i) => <SelectItem key={m} index={i} value={m}>{m === 'all' ? 'Train All Models' : m}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                        <InputGroup className="w-24">
+                            <InputField label="Rounds" index={0} type="number" min={5} max={50}
+                                value={String(rounds)} onChange={v => setRounds(parseInt(v) || 10)}
+                                disabled={isRunning} placeholder="Rounds" />
+                        </InputGroup>
 
                         {!isRunning ? (
-                            <button onClick={handleStart}
-                                className="flex items-center gap-1 px-4 py-2 bg-[var(--color-accent-green)] text-white rounded-lg text-sm font-medium hover:bg-[var(--color-accent-green)]/80 transition-colors">
-                                <Play size={14} /> Start Federation
-                            </button>
+                            <Button variant="ghost" size="md" leadingIcon={Play} onClick={handleStart}
+                                className="text-white" style={{ backgroundColor: 'var(--color-accent-green)' }}>
+                                Start Federation
+                            </Button>
                         ) : (
-                            <button onClick={handleStop}
-                                className="flex items-center gap-1 px-4 py-2 bg-[var(--color-accent-red)] text-white rounded-lg text-sm font-medium hover:bg-[var(--color-accent-red)]/80 transition-colors">
-                                <Square size={14} /> Stop
-                            </button>
+                            <Button variant="ghost" size="md" leadingIcon={Square} onClick={handleStop}
+                                className="text-white" style={{ backgroundColor: 'var(--color-accent-red)' }}>
+                                Stop
+                            </Button>
                         )}
-                        <button onClick={handleReset} disabled={isRunning}
-                            className="flex items-center gap-1 px-3 py-2 bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] rounded-lg text-sm hover:bg-[var(--color-bg-tertiary)]/80 disabled:opacity-30 transition-colors">
-                            <RotateCcw size={14} /> Reset
-                        </button>
+                        <Button variant="tertiary" size="md" leadingIcon={RotateCcw} onClick={handleReset} disabled={isRunning}
+                            className="text-[var(--color-text-secondary)]">
+                            Reset
+                        </Button>
                     </div>
                 </div>
             </header>

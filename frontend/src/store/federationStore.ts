@@ -4,8 +4,10 @@ export interface RoundMetric {
   model_name: string;
   round_num: number;
   hospital_id: string;
+  dataset?: string;
   accuracy: number;
   f1_score: number;
+  auc?: number;
   loss?: number;
   sp_difference: number;
   eo_difference: number;
@@ -18,6 +20,8 @@ export interface FederationState {
   currentRound: number;
   totalRounds: number;
   activeModel: string;
+  dataset: string;
+  engine: string;
   hospitals: string[];
   history: RoundMetric[];
   wsEvents: Array<{ timestamp: string; message: string; type: string }>;
@@ -39,6 +43,8 @@ export interface FederationState {
   setRunning: (running: boolean) => void;
   setRound: (round: number, total: number) => void;
   setActiveModel: (model: string) => void;
+  setDataset: (dataset: string) => void;
+  setEngine: (engine: string) => void;
   addRoundMetric: (metric: RoundMetric) => void;
   addWsEvent: (event: { timestamp: string; message: string; type: string }) => void;
   updateHospitalMetrics: (hospitalId: string, metrics: any) => void;
@@ -52,6 +58,8 @@ export const useFederationStore = create<FederationState>((set) => ({
   currentRound: 0,
   totalRounds: 0,
   activeModel: 'FedFairGNN',
+  dataset: 'MedGraph-S',
+  engine: 'sim',
   hospitals: ['H1', 'H2', 'H3'],
   history: [],
   wsEvents: [],
@@ -65,6 +73,8 @@ export const useFederationStore = create<FederationState>((set) => ({
   setRunning: (running) => set({ isRunning: running }),
   setRound: (round, total) => set({ currentRound: round, totalRounds: total }),
   setActiveModel: (model) => set({ activeModel: model }),
+  setDataset: (dataset) => set({ dataset }),
+  setEngine: (engine) => set({ engine }),
   addRoundMetric: (metric) => set((s) => ({ history: [...s.history, metric] })),
   addWsEvent: (event) => set((s) => ({
     wsEvents: [...s.wsEvents.slice(-100), event] // keep last 100

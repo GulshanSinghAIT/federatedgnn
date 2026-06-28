@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { fetchSymptoms } from '../../api/client';
+import { Button } from '@/components/ui/button';
+import { InputGroup, InputField } from '@/components/ui/input-group';
 
 interface Symptom {
     id: string;
@@ -59,20 +61,22 @@ export default function SymptomSelector({ selected, onChange }: Props) {
     return (
         <div className="space-y-4">
             <div className="relative">
-                <input
-                    type="text"
-                    placeholder="Search symptoms..."
-                    value={search}
-                    onChange={e => { setSearch(e.target.value); setIsOpen(true); }}
-                    onFocus={() => setIsOpen(true)}
-                    className="w-full px-4 py-3 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-accent-blue)] focus:outline-none transition-colors"
-                />
+                <InputGroup className="w-full">
+                    <InputField
+                        label="Search symptoms"
+                        index={0}
+                        placeholder="Search symptoms..."
+                        value={search}
+                        onChange={v => { setSearch(v); setIsOpen(true); }}
+                        onFocus={() => setIsOpen(true)}
+                    />
+                </InputGroup>
                 <div className="flex gap-1 mt-2 flex-wrap">
                     {BODY_SYSTEMS.map(sys => (
-                        <button key={sys} onClick={() => setActiveSystem(sys)}
-                            className={`px-2 py-1 text-xs rounded-full transition-all ${activeSystem === sys ? 'bg-[var(--color-accent-blue)] text-white' : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)]'}`}>
+                        <Button key={sys} variant="ghost" size="sm" onClick={() => setActiveSystem(sys)}
+                            className={`text-xs rounded-full transition-all ${activeSystem === sys ? 'bg-[var(--color-accent-blue)] text-white' : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-primary)]'}`}>
                             {sys}
-                        </button>
+                        </Button>
                     ))}
                 </div>
                 {isOpen && (
@@ -80,11 +84,11 @@ export default function SymptomSelector({ selected, onChange }: Props) {
                         {filtered.map(sym => {
                             const isSelected = selected.some(s => s.symptom_id === sym.id);
                             return (
-                                <button key={sym.id} onClick={() => toggle(sym)}
-                                    className={`w-full px-4 py-2 text-left text-sm flex justify-between items-center hover:bg-[var(--color-bg-tertiary)] transition-colors ${isSelected ? 'bg-[var(--color-accent-blue)]/10 text-[var(--color-accent-blue)]' : 'text-[var(--color-text-primary)]'}`}>
+                                <Button key={sym.id} variant="ghost" onClick={() => toggle(sym)}
+                                    className={`w-full px-4 py-2 justify-between rounded-none text-left text-sm hover:bg-[var(--color-bg-tertiary)] transition-colors ${isSelected ? 'bg-[var(--color-accent-blue)]/10 text-[var(--color-accent-blue)]' : 'text-[var(--color-text-primary)]'}`}>
                                     <span>{sym.name}</span>
                                     <span className="text-xs text-[var(--color-text-muted)]">{sym.body_system}</span>
-                                </button>
+                                </Button>
                             );
                         })}
                         {filtered.length === 0 && <div className="px-4 py-3 text-[var(--color-text-muted)] text-sm">No symptoms found</div>}
@@ -101,8 +105,8 @@ export default function SymptomSelector({ selected, onChange }: Props) {
                         <div key={sym.symptom_id} className="glass-card p-3 space-y-2 animate-fade-in">
                             <div className="flex justify-between items-center">
                                 <span className="text-sm font-medium">{sym.name}</span>
-                                <button onClick={() => toggle({ id: sym.symptom_id, name: sym.name, body_system: '', severity_weight: 0 })}
-                                    className="text-[var(--color-accent-red)] hover:text-red-400 text-xs">✕ Remove</button>
+                                <Button variant="ghost" size="sm" onClick={() => toggle({ id: sym.symptom_id, name: sym.name, body_system: '', severity_weight: 0 })}
+                                    className="text-[var(--color-accent-red)] hover:text-red-400 text-xs">✕ Remove</Button>
                             </div>
                             <div className="flex items-center gap-3">
                                 <label className="text-xs text-[var(--color-text-muted)] w-16">Severity</label>

@@ -42,8 +42,17 @@ export const fetchDiseaseGraph = (diseaseId: string) =>
 
 export const fetchGraphStats = () => api.get('/graph/stats').then(r => r.data);
 
+// --- Datasets (benchmark selector) ---
+export const fetchDatasets = () => api.get('/metrics/datasets').then(r => r.data);
+
+export const fetchBenchmark = (dataset?: string) =>
+  api.get('/metrics/benchmark', { params: dataset ? { dataset } : {} }).then(r => r.data);
+
 // --- Federation ---
-export const startFederation = (data: { model: string; rounds: number; hospitals: string[] }) =>
+export const startFederation = (data: {
+  model: string; rounds: number; hospitals: string[];
+  dataset?: string; engine?: string;
+}) =>
   api.post('/federate/start', data).then(r => r.data);
 
 export const stopFederation = () => api.post('/federate/stop').then(r => r.data);
@@ -56,7 +65,8 @@ export const fetchFederationHistory = (modelName?: string, hospitalId?: string) 
   api.get('/federate/history', { params: { model_name: modelName, hospital_id: hospitalId } }).then(r => r.data);
 
 // --- Metrics ---
-export const fetchModelComparison = () => api.get('/metrics/compare').then(r => r.data);
+export const fetchModelComparison = (dataset?: string) =>
+  api.get('/metrics/compare', { params: dataset ? { dataset } : {} }).then(r => r.data);
 
 export const fetchDemographics = (hospitalId: string) =>
   api.get(`/metrics/demographics/${hospitalId}`).then(r => r.data);

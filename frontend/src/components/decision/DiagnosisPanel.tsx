@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface Diagnosis {
     disease_id: string;
@@ -41,11 +42,12 @@ export default function DiagnosisPanel({ diagnoses }: { diagnoses: Diagnosis[] }
                                 style={{ width: `${d.confidence * 100}%`, backgroundColor: confColor(d.confidence) }} />
                         </div>
                         {d.contributing_symptoms.length > 0 && (
-                            <button onClick={() => setExpanded(expanded === d.disease_id ? null : d.disease_id)}
-                                className="flex items-center gap-1 mt-2 text-xs text-[var(--color-accent-blue)] hover:underline">
-                                {expanded === d.disease_id ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
+                            <Button variant="ghost" size="sm"
+                                leadingIcon={expanded === d.disease_id ? ChevronUp : ChevronDown}
+                                onClick={() => setExpanded(expanded === d.disease_id ? null : d.disease_id)}
+                                className="mt-2 px-0 text-[var(--color-accent-blue)] hover:underline">
                                 Why this prediction?
-                            </button>
+                            </Button>
                         )}
                         {expanded === d.disease_id && (
                             <div className="mt-2 p-2 bg-[var(--color-bg-primary)]/50 rounded text-xs animate-fade-in">

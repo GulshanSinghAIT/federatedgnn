@@ -3,6 +3,9 @@ import SymptomSelector from './SymptomSelector';
 import { createPatient } from '../../api/client';
 import { usePatientStore } from '../../store/patientStore';
 import { Lock, ChevronRight, ChevronLeft, Check, AlertTriangle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
+import { InputGroup, InputField } from '@/components/ui/input-group';
 
 const AGE_GROUPS = ['Pediatric (<18)', 'Young Adult (18-35)', 'Middle-Aged (36-60)', 'Senior (60+)'];
 const SEXES = ['Male', 'Female', 'Non-binary / Other', 'Prefer not to say'];
@@ -76,19 +79,20 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
 
     const renderTagInput = (label: string, field: 'pre_existing_conditions' | 'current_medications' | 'allergies', inputKey: 'conditions' | 'medications' | 'allergies') => (
         <div>
-            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">{label}</label>
-            <div className="flex gap-2">
-                <input value={tagInput[inputKey]} onChange={e => setTagInput(t => ({ ...t, [inputKey]: e.target.value }))}
-                    onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag(field, inputKey))}
-                    className="flex-1 px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none"
-                    placeholder={`Add ${label.toLowerCase()}...`} />
-                <button onClick={() => addTag(field, inputKey)} className="px-3 py-2 bg-[var(--color-accent-blue)] text-white rounded-lg text-sm hover:bg-[var(--color-accent-blue)]/80">Add</button>
+            <div className="flex gap-2 items-end">
+                <InputGroup className="flex-1 w-auto">
+                    <InputField label={label} index={0}
+                        value={tagInput[inputKey]} onChange={v => setTagInput(t => ({ ...t, [inputKey]: v }))}
+                        onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag(field, inputKey))}
+                        placeholder={`Add ${label.toLowerCase()}...`} />
+                </InputGroup>
+                <Button variant="ghost" onClick={() => addTag(field, inputKey)} className="text-white" style={{ backgroundColor: 'var(--color-accent-blue)' }}>Add</Button>
             </div>
             <div className="flex flex-wrap gap-1 mt-2">
                 {form[field].map((tag: string) => (
                     <span key={tag} className="px-2 py-1 bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)] text-xs rounded-full flex items-center gap-1">
                         {tag}
-                        <button onClick={() => removeTag(field, tag)} className="text-[var(--color-accent-red)] hover:text-red-400">✕</button>
+                        <Button size="icon-sm" variant="ghost" onClick={() => removeTag(field, tag)} className="text-[var(--color-accent-red)] hover:text-red-400">✕</Button>
                     </span>
                 ))}
             </div>
@@ -123,34 +127,42 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Age Group *</label>
-                                <select value={form.age_group} onChange={e => update('age_group', e.target.value)}
-                                    className="w-full px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none">
-                                    <option value="">Select...</option>
-                                    {AGE_GROUPS.map(a => <option key={a} value={a}>{a}</option>)}
-                                </select>
+                                <Select value={form.age_group} onValueChange={v => update('age_group', v)}>
+                                    <SelectTrigger placeholder="Select..." className="w-full" />
+                                    <SelectContent>
+                                        <SelectItem index={0} value="">Select...</SelectItem>
+                                        {AGE_GROUPS.map((a, i) => <SelectItem key={a} index={i + 1} value={a}>{a}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Sex *</label>
-                                <select value={form.sex} onChange={e => update('sex', e.target.value)}
-                                    className="w-full px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none">
-                                    <option value="">Select...</option>
-                                    {SEXES.map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
+                                <Select value={form.sex} onValueChange={v => update('sex', v)}>
+                                    <SelectTrigger placeholder="Select..." className="w-full" />
+                                    <SelectContent>
+                                        <SelectItem index={0} value="">Select...</SelectItem>
+                                        {SEXES.map((s, i) => <SelectItem key={s} index={i + 1} value={s}>{s}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Ethnicity *</label>
-                                <select value={form.ethnicity} onChange={e => update('ethnicity', e.target.value)}
-                                    className="w-full px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none">
-                                    <option value="">Select...</option>
-                                    {ETHNICITIES.map(e => <option key={e} value={e}>{e}</option>)}
-                                </select>
+                                <Select value={form.ethnicity} onValueChange={v => update('ethnicity', v)}>
+                                    <SelectTrigger placeholder="Select..." className="w-full" />
+                                    <SelectContent>
+                                        <SelectItem index={0} value="">Select...</SelectItem>
+                                        {ETHNICITIES.map((e, i) => <SelectItem key={e} index={i + 1} value={e}>{e}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Socioeconomic Status</label>
-                                <select value={form.ses} onChange={e => update('ses', e.target.value)}
-                                    className="w-full px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none">
-                                    {SES_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
+                                <Select value={form.ses} onValueChange={v => update('ses', v)}>
+                                    <SelectTrigger placeholder="Select..." className="w-full" />
+                                    <SelectContent>
+                                        {SES_OPTIONS.map((s, i) => <SelectItem key={s} index={i} value={s}>{s}</SelectItem>)}
+                                    </SelectContent>
+                                </Select>
                             </div>
                         </div>
                     </div>
@@ -160,10 +172,11 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                 {step === 1 && (
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1">Chief Complaint</label>
-                            <input value={form.chief_complaint} onChange={e => update('chief_complaint', e.target.value.slice(0, 200))}
-                                className="w-full px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none"
-                                placeholder="Describe the chief complaint..." maxLength={200} />
+                            <InputGroup className="w-full">
+                                <InputField label="Chief Complaint" index={0}
+                                    value={form.chief_complaint} onChange={v => update('chief_complaint', v.slice(0, 200))}
+                                    placeholder="Describe the chief complaint..." maxLength={200} />
+                            </InputGroup>
                             <span className="text-xs text-[var(--color-text-muted)]">{form.chief_complaint.length}/200</span>
                         </div>
                         <div>
@@ -172,7 +185,7 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-2">Vital Signs</label>
-                            <div className="grid grid-cols-3 gap-3">
+                            <InputGroup className="grid grid-cols-3 gap-3 w-full">
                                 {[
                                     { key: 'heart_rate', label: 'Heart Rate (bpm)', ph: '72' },
                                     { key: 'bp_systolic', label: 'BP Systolic (mmHg)', ph: '120' },
@@ -180,15 +193,12 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
                                     { key: 'temperature', label: 'Temperature (°C)', ph: '36.8' },
                                     { key: 'spo2', label: 'SpO₂ (%)', ph: '97' },
                                     { key: 'respiratory_rate', label: 'Resp. Rate (/min)', ph: '16' },
-                                ].map(v => (
-                                    <div key={v.key}>
-                                        <label className="block text-xs text-[var(--color-text-muted)] mb-1">{v.label}</label>
-                                        <input type="number" value={(form as any)[v.key]} onChange={e => update(v.key, e.target.value)}
-                                            className="w-full px-2 py-1.5 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded text-sm text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none"
-                                            placeholder={v.ph} />
-                                    </div>
+                                ].map((v, i) => (
+                                    <InputField key={v.key} label={v.label} index={i}
+                                        type="number" value={(form as any)[v.key]} onChange={val => update(v.key, val)}
+                                        placeholder={v.ph} />
                                 ))}
-                            </div>
+                            </InputGroup>
                         </div>
                     </div>
                 )}
@@ -257,21 +267,21 @@ export default function PatientForm({ hospitalId, onComplete }: Props) {
 
                 {/* Navigation */}
                 <div className="flex justify-between mt-6 pt-4 border-t border-[var(--color-border)]">
-                    <button onClick={() => setStep(s => s - 1)} disabled={step === 0}
-                        className="flex items-center gap-1 px-4 py-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] disabled:opacity-30 transition-colors">
-                        <ChevronLeft size={16} /> Back
-                    </button>
+                    <Button variant="tertiary" leadingIcon={ChevronLeft} onClick={() => setStep(s => s - 1)} disabled={step === 0}
+                        className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+                        Back
+                    </Button>
                     {step < 3 ? (
-                        <button onClick={() => setStep(s => s + 1)}
+                        <Button variant="ghost" trailingIcon={ChevronRight} onClick={() => setStep(s => s + 1)}
                             disabled={step === 0 && (!form.age_group || !form.sex || !form.ethnicity)}
-                            className="flex items-center gap-1 px-6 py-2 bg-[var(--color-accent-blue)] text-white rounded-lg text-sm font-medium hover:bg-[var(--color-accent-blue)]/80 disabled:opacity-30 transition-colors">
-                            Next <ChevronRight size={16} />
-                        </button>
+                            className="text-white font-medium" style={{ backgroundColor: 'var(--color-accent-blue)' }}>
+                            Next
+                        </Button>
                     ) : (
-                        <button onClick={handleSubmit} disabled={submitting}
-                            className="flex items-center gap-1 px-6 py-2 bg-[var(--color-accent-green)] text-white rounded-lg text-sm font-medium hover:bg-[var(--color-accent-green)]/80 disabled:opacity-50 transition-colors">
+                        <Button variant="ghost" onClick={handleSubmit} disabled={submitting}
+                            className="text-white font-medium" style={{ backgroundColor: 'var(--color-accent-green)' }}>
                             {submitting ? 'Submitting...' : '✓ Submit Patient'}
-                        </button>
+                        </Button>
                     )}
                 </div>
             </div>

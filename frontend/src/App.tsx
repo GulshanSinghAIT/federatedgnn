@@ -3,31 +3,47 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from 'react
 import HospitalDashboard from './pages/HospitalDashboard';
 import FederationDashboard from './pages/FederationDashboard';
 import MetricsDashboard from './pages/MetricsDashboard';
-import { Stethoscope, Zap, BarChart3, Shield } from 'lucide-react';
+import { Stethoscope, Zap, BarChart3 } from 'lucide-react';
+
+/** Brand node-glyph: a cobalt core linked to three satellite nodes
+ *  (the federated-aggregation motif from frontend/brand.html). */
+function BrandGlyph({ size = 26 }: { size?: number }) {
+    return (
+        <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
+            <line x1="50" y1="50" x2="50" y2="20" stroke="var(--color-cobalt)" strokeWidth="3" />
+            <line x1="50" y1="50" x2="24" y2="72" stroke="var(--color-cobalt)" strokeWidth="3" />
+            <line x1="50" y1="50" x2="76" y2="72" stroke="var(--color-cobalt)" strokeWidth="3" />
+            <circle cx="50" cy="20" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
+            <circle cx="24" cy="72" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
+            <circle cx="76" cy="72" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
+            <circle cx="50" cy="50" r="11" fill="var(--color-cobalt)" />
+        </svg>
+    );
+}
 
 function NavBar() {
     const location = useLocation();
     const isActive = (path: string) => location.pathname.startsWith(path);
 
     const links = [
-        { path: '/hospital/H1/dashboard', label: 'Hospital EHR', icon: <Stethoscope size={16} />, color: '#38bdf8' },
-        { path: '/federation/dashboard', label: 'Federation', icon: <Zap size={16} />, color: '#a78bfa' },
-        { path: '/research/metrics', label: 'Metrics', icon: <BarChart3 size={16} />, color: '#2dd4bf' },
+        { path: '/hospital/H1/dashboard', label: 'Hospital EHR', icon: <Stethoscope size={16} />, color: 'var(--color-hospital-h1)' },
+        { path: '/federation/dashboard', label: 'Federation', icon: <Zap size={16} />, color: 'var(--color-hospital-h2)' },
+        { path: '/research/metrics', label: 'Metrics', icon: <BarChart3 size={16} />, color: 'var(--color-hospital-h3)' },
     ];
 
     return (
         <nav className="left-0 top-0 bottom-0 w-16 bg-[var(--color-bg-secondary)] border-r border-[var(--color-border)] flex flex-col items-center py-4 z-50">
-            <div className="w-10 h-10 rounded-xl bg-(--color-muted-foreground) flex items-center justify-center mb-6">
-                <Shield size={20} className="text-white" />
-            </div>
+            <Link to="/" title="FedFairGNN" className="w-10 h-10 rounded-xl flex items-center justify-center mb-6">
+                <BrandGlyph size={26} />
+            </Link>
 
             <div className="flex flex-col gap-3 flex-1">
                 {links.map(link => (
                     <Link key={link.path} to={link.path}
                         className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all group relative ${isActive(link.path.split('/').slice(0, 2).join('/')) ? 'bg-[var(--color-bg-tertiary)]' : 'hover:bg-[var(--color-bg-tertiary)]/50'}`}
-                        style={{ color: isActive(link.path.split('/').slice(0, 2).join('/')) ? link.color : '#64748b' }}>
+                        style={{ color: isActive(link.path.split('/').slice(0, 2).join('/')) ? link.color : 'var(--color-text-muted)' }}>
                         {link.icon}
-                        <div className="absolute left-14 px-2 py-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity"
+                        <div className="absolute left-14 px-2 py-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-50 shadow-sm"
                             style={{ color: link.color }}>
                             {link.label}
                         </div>
@@ -35,7 +51,7 @@ function NavBar() {
                 ))}
             </div>
 
-            <div className="text-[8px] text-[var(--color-text-muted)] text-center leading-tight">
+            <div className="font-display text-[8px] text-[var(--color-text-muted)] text-center leading-tight tracking-tight">
                 Fed<br />Fair<br />GNN
             </div>
         </nav>

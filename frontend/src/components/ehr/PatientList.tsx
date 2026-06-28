@@ -2,6 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { fetchPatients } from '../../api/client';
 import { usePatientStore, Patient } from '../../store/patientStore';
 import { Search, Filter, Users } from 'lucide-react';
+import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
+import { InputGroup, InputField } from '@/components/ui/input-group';
 
 interface Props {
     hospitalId: string;
@@ -39,29 +41,30 @@ export default function PatientList({ hospitalId, onSelectPatient }: Props) {
     return (
         <div className="space-y-4">
             <div className="flex items-center gap-3">
-                <div className="relative flex-1">
-                    <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-                    <input value={search} onChange={e => setSearch(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)] focus:border-[var(--color-accent-blue)] focus:outline-none"
-                        placeholder="Search by ID or complaint..." />
-                </div>
-                <select value={filterAge} onChange={e => setFilterAge(e.target.value)}
-                    className="px-3 py-2.5 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)]">
-                    <option value="">All Ages</option>
-                    <option value="Pediatric (<18)">Pediatric</option>
-                    <option value="Young Adult (18-35)">Young Adult</option>
-                    <option value="Middle-Aged (36-60)">Middle-Aged</option>
-                    <option value="Senior (60+)">Senior</option>
-                </select>
-                <select value={filterEthnicity} onChange={e => setFilterEthnicity(e.target.value)}
-                    className="px-3 py-2.5 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)]">
-                    <option value="">All Ethnicities</option>
-                    <option value="Asian">Asian</option>
-                    <option value="Black / African American">Black</option>
-                    <option value="Hispanic / Latino">Hispanic</option>
-                    <option value="White / Caucasian">White</option>
-                    <option value="Mixed">Mixed</option>
-                </select>
+                <InputGroup className="flex-1 w-auto">
+                    <InputField label="Search" index={0} value={search} onChange={setSearch} placeholder="Search by ID or complaint..." icon={Search} />
+                </InputGroup>
+                <Select value={filterAge} onValueChange={setFilterAge}>
+                    <SelectTrigger placeholder="All Ages" />
+                    <SelectContent>
+                        <SelectItem index={0} value="">All Ages</SelectItem>
+                        <SelectItem index={1} value="Pediatric (<18)">Pediatric</SelectItem>
+                        <SelectItem index={2} value="Young Adult (18-35)">Young Adult</SelectItem>
+                        <SelectItem index={3} value="Middle-Aged (36-60)">Middle-Aged</SelectItem>
+                        <SelectItem index={4} value="Senior (60+)">Senior</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Select value={filterEthnicity} onValueChange={setFilterEthnicity}>
+                    <SelectTrigger placeholder="All Ethnicities" />
+                    <SelectContent>
+                        <SelectItem index={0} value="">All Ethnicities</SelectItem>
+                        <SelectItem index={1} value="Asian">Asian</SelectItem>
+                        <SelectItem index={2} value="Black / African American">Black</SelectItem>
+                        <SelectItem index={3} value="Hispanic / Latino">Hispanic</SelectItem>
+                        <SelectItem index={4} value="White / Caucasian">White</SelectItem>
+                        <SelectItem index={5} value="Mixed">Mixed</SelectItem>
+                    </SelectContent>
+                </Select>
             </div>
 
             <div className="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">

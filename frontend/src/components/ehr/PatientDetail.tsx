@@ -6,6 +6,7 @@ import DiagnosisPanel from '../decision/DiagnosisPanel';
 import TreatmentPanel from '../decision/TreatmentPanel';
 import FairnessAudit from '../decision/FairnessAudit';
 import { Lock, Heart, Thermometer, Wind, Activity } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface Props {
     hospitalId: string;
@@ -26,7 +27,7 @@ export default function PatientDetail({ hospitalId, patientId, onBack }: Props) 
 
     return (
         <div className="space-y-4">
-            <button onClick={onBack} className="text-sm text-[var(--color-accent-blue)] hover:underline">← Back to Patient List</button>
+            <Button variant="ghost" size="sm" onClick={onBack} className="px-0 text-[var(--color-accent-blue)] hover:underline">← Back to Patient List</Button>
 
             <div className="grid grid-cols-12 gap-4">
                 {/* Left Panel - Demographics */}

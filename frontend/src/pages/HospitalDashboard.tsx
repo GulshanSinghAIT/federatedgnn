@@ -6,6 +6,13 @@ import PatientDetail from '../components/ehr/PatientDetail';
 import KnowledgeGraph from '../components/graph/KnowledgeGraph';
 import { fetchHospitals } from '../api/client';
 import { Plus, Users, Network, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
+import { TabsSubtle, TabsSubtleItem } from '@/components/ui/tabs-subtle';
+
+const TABS = [
+    { key: 'list' as const, label: 'Patient List', icon: Users },
+];
 
 export default function HospitalDashboard() {
     const { hospitalId = 'H1' } = useParams();
@@ -39,30 +46,32 @@ export default function HospitalDashboard() {
                     </div>
                     <div className="flex items-center gap-3">
                         {/* Hospital Selector */}
-                        <select value={hospitalId} onChange={e => navigate(`/hospital/${e.target.value}/dashboard`)}
-                            className="px-3 py-2 bg-[var(--color-bg-tertiary)] border border-[var(--color-border)] rounded-lg text-sm text-[var(--color-text-primary)]">
-                            {hospitals.map(h => <option key={h.id} value={h.id}>{h.name}</option>)}
-                        </select>
-                        <button onClick={() => setView('graph')}
-                            className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm transition-colors ${view === 'graph' ? 'bg-[var(--color-accent-blue)] text-white' : 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-tertiary)]/80'}`}>
-                            <Network size={14} /> Knowledge Graph
-                        </button>
-                        <button onClick={() => setView(view === 'form' ? 'list' : 'form')}
-                            className="flex items-center gap-1 px-4 py-2 bg-[var(--color-accent-green)] text-white rounded-lg text-sm font-medium hover:bg-[var(--color-accent-green)]/80 transition-colors">
-                            {view === 'form' ? <><X size={14} /> Cancel</> : <><Plus size={14} /> Add Patient</>}
-                        </button>
+                        <Select value={hospitalId} onValueChange={val => navigate(`/hospital/${val}/dashboard`)}>
+                            <SelectTrigger />
+                            <SelectContent>
+                                {hospitals.map((h, i) => <SelectItem key={h.id} index={i} value={h.id}>{h.name}</SelectItem>)}
+                            </SelectContent>
+                        </Select>
+                        <Button variant="tertiary" size="md" leadingIcon={Network} onClick={() => setView('graph')}
+                            className={view === 'graph' ? 'bg-[var(--color-accent-blue)] text-white' : 'text-[var(--color-text-secondary)]'}>
+                            Knowledge Graph
+                        </Button>
+                        <Button variant="ghost" size="md" leadingIcon={view === 'form' ? X : Plus} onClick={() => setView(view === 'form' ? 'list' : 'form')}
+                            className="text-white" style={{ backgroundColor: 'var(--color-accent-green)' }}>
+                            {view === 'form' ? 'Cancel' : 'Add Patient'}
+                        </Button>
                     </div>
                 </div>
                 {/* Tab Bar */}
-                <div className="flex gap-4 mt-3">
-                    {[
-                        { key: 'list', label: 'Patient List', icon: <Users size={14} /> },
-                    ].map(tab => (
-                        <button key={tab.key} onClick={() => setView(tab.key as any)}
-                            className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-lg transition-colors ${view === tab.key ? 'bg-[var(--color-bg-tertiary)] text-[var(--color-text-primary)]' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]'}`}>
-                            {tab.icon} {tab.label}
-                        </button>
-                    ))}
+                <div className="mt-3">
+                    <TabsSubtle
+                        selectedIndex={Math.max(0, TABS.findIndex(t => t.key === view))}
+                        onSelect={(i) => setView(TABS[i].key)}
+                    >
+                        {TABS.map((tab, i) => (
+                            <TabsSubtleItem key={tab.key} index={i} label={tab.label} icon={tab.icon} />
+                        ))}
+                    </TabsSubtle>
                 </div>
             </header>
 
