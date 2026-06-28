@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk find *)",
+      "Bash(rtk ls *)",
+      "Bash(venv/bin/python -c \"import pdfplumber; print\\('pdfplumber ok'\\)\")",
+      "Bash(venv/bin/python -c \"import fitz; print\\('pymupdf ok'\\)\")",
+      "Bash(venv/bin/python -c \"import PyPDF2; print\\('pypdf2 ok'\\)\")",
+      "Bash(python3 -c \"import fitz; print\\('sys pymupdf ok'\\)\")",
+      "Bash(python3 -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(python3 -m pip install --quiet pymupdf)",
+      "Bash(python3 -c \"import fitz; print\\('pymupdf', fitz.__doc__[:30]\\)\")",
+      "Bash(rtk brew *)",
+      "Bash(pdftotext -layout IJITCS_Research_Paper.pdf -)",
+      "Bash(pdftotext -layout Report.pdf /private/tmp/claude-501/-Users-lokendrakushwah-PersonalFiles-federatedgnn/8dfea97c-c50b-45c9-be14-d231d4d50095/scratchpad/report.txt)",
+      "Bash(rtk wc *)",
+      "Bash(rtk grep *)",
+      "Bash(awk 'NR>=1900 && NR<=2400' report.txt)",
+      "Bash(grep -v '^\\\\s*$')",
+      "Bash(rtk read *)",
+      "Bash(python3 -c \"import torch, torch_geometric; print\\('torch', torch.__version__, 'pyg', torch_geometric.__version__\\)\")"
+    ]
+  }
+}
