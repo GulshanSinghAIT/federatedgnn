@@ -174,13 +174,13 @@ const TabsSubtle = forwardRef<HTMLDivElement, TabsSubtleProps>(
           {/* Selected pill */}
           {selectedRect && (
             <motion.div
-              className={cn("absolute bg-active pointer-events-none", shape.bg)}
+              className={cn("absolute bg-cobalt pointer-events-none", shape.bg)}
               initial={false}
               animate={{
                 left: selectedRect.left,
                 width: selectedRect.width,
-                top: selectedRect.top,
-                height: selectedRect.height,
+                top: selectedRect.top+2,
+                height: selectedRect.height-4,
                 opacity: isHovering ? 0.8 : 1,
               }}
               transition={{
@@ -294,7 +294,7 @@ const TabsSubtleItem = forwardRef<HTMLButtonElement, TabsSubtleItemProps>(
         <span
           className={cn(
             "col-start-1 row-start-1 transition-[color,font-variation-settings] duration-80",
-            isActive ? "text-foreground" : "text-muted-foreground"
+            isActive ? "text-background" : "text-muted-foreground"
           )}
           style={{
             fontVariationSettings: isSelected

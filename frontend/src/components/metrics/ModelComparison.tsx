@@ -3,6 +3,7 @@ import { fetchModelComparison, fetchDatasets, exportCSV } from '../../api/client
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
+import { TabsSubtle, TabsSubtleItem } from '@/components/ui/tabs-subtle';
 import { Download } from 'lucide-react';
 
 interface Model {
@@ -46,43 +47,35 @@ export default function ModelComparison() {
         return pct ? `${(v * 100).toFixed(1)}%` : v.toFixed(4);
     };
 
-    const liveEngine = models.find(m => m.source === 'live')?.engine;
-    const isLive = !!liveEngine;
+    // Per-row provenance tag: live (trained this session, sim or real) vs paper benchmark.
+    const sourceBadge = (m: Model) => m.source === 'live'
+        ? <Badge variant="dot" size="sm" color={m.engine === 'real' ? 'green' : 'blue'}
+            title={m.engine === 'real' ? 'Live — real model trained on the dataset' : 'Live — simulation'}>
+            {m.engine === 'real' ? 'live · real' : 'live · sim'}
+        </Badge>
+        : <Badge variant="dot" size="sm" color="gray" title="Paper Table-1 benchmark (not trained this session)">benchmark</Badge>;
 
     return (
         <div className="glass-card p-4">
             <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-                <div className="flex items-center gap-2">
-                    <h3 className="text-sm font-medium text-text-primary">Model Comparison</h3>
-                    <Badge variant="dot" size="sm" color={isLive ? (liveEngine === 'real' ? 'green' : 'blue') : 'gray'}>
-                        {isLive
-                            ? `live · ${liveEngine === 'real' ? 'real (trained on data)' : 'simulation'}`
-                            : 'paper benchmark'}
-                    </Badge>
-                </div>
+                <h3 className="text-sm font-medium text-text-primary">Model Comparison</h3>
                 <Button size="sm" variant="tertiary" leadingIcon={Download} onClick={() => exportCSV()}>
                     Export CSV
                 </Button>
             </div>
 
             {/* Dataset selector */}
-            <div className="flex items-center gap-1.5 mb-4 flex-wrap">
-                <span className="eyebrow mr-1">Dataset</span>
-                {datasets.map(d => (
-                    <Button
-                        key={d.id}
-                        variant="tertiary"
-                        size="sm"
-                        onClick={() => setDataset(d.id)}
-                        title={d.description}
-                        className={
-                            dataset === d.id
-                                ? 'bg-cobalt-tint border-cobalt text-cobalt-deep'
-                                : 'border-border text-text-secondary hover:border-cobalt'
-                        }>
-                        {d.name}
-                    </Button>
-                ))}
+            <div className="flex items-center gap-3 mb-4 flex-wrap">
+                <span className="eyebrow">Dataset</span>
+                {datasets.length > 0 && (
+                    <TabsSubtle
+                        selectedIndex={Math.max(0, datasets.findIndex(d => d.id === dataset))}
+                        onSelect={(i) => setDataset(datasets[i].id)}>
+                        {datasets.map((d, i) => (
+                            <TabsSubtleItem key={d.id} index={i} label={d.name} title={d.description} />
+                        ))}
+                    </TabsSubtle>
+                )}
             </div>
 
             <div className="overflow-x-auto border rounded-lg">
@@ -98,8 +91,13 @@ export default function ModelComparison() {
                         {models.map((m, i) => (
                             <TableRow key={m.model} index={i} className={m.is_proposed ? 'bg-cobalt-tint/60' : ''}>
                                 <TableCell className="font-medium">
-                                    {m.model}{' '}
-                                    {m.is_proposed && <span className="text-cobalt text-xs" title="Proposed model">★</span>}
+                                    <div className="flex items-center gap-2">
+                                        <span>
+                                            {m.model}
+                                            {m.is_proposed && <span className="text-cobalt text-xs" title="Proposed model"> ★</span>}
+                                        </span>
+                                        {sourceBadge(m)}
+                                    </div>
                                 </TableCell>
                                 <TableCell className="text-center font-medium animate-count-up">{fmt(m.accuracy)}</TableCell>
                                 <TableCell className="text-center animate-count-up">{fmt(m.f1_score)}</TableCell>

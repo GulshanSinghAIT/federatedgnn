@@ -12,15 +12,20 @@ import GlobalSearch from './components/layout/GlobalSearch';
  *  (the federated-aggregation motif from frontend/brand.html). */
 function BrandGlyph({ size = 26 }: { size?: number }) {
     return (
-        <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
-            <line x1="50" y1="50" x2="50" y2="20" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <line x1="50" y1="50" x2="24" y2="72" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <line x1="50" y1="50" x2="76" y2="72" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <circle cx="50" cy="20" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <circle cx="24" cy="72" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <circle cx="76" cy="72" r="8" fill="#fff" stroke="var(--color-cobalt)" strokeWidth="3" />
-            <circle cx="50" cy="50" r="11" fill="#7efffe" />
+        <svg width={size} height={size} viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 14.4L99.48 37.2V82.8L60 105.6L20.52 82.8V37.2L60 14.4Z" stroke="#A0DEFF" stroke-width="2" stroke-linejoin="round" />
+            <path d="M60 60V14.4" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M60 60L99.48 82.8" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M60 60L20.52 82.8" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M60 21C63.6451 21 66.6 18.0451 66.6 14.4C66.6 10.7549 63.6451 7.8 60 7.8C56.3549 7.8 53.4 10.7549 53.4 14.4C53.4 18.0451 56.3549 21 60 21Z" fill="white" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M99.4801 43.8C103.125 43.8 106.08 40.8451 106.08 37.2C106.08 33.5549 103.125 30.6 99.4801 30.6C95.835 30.6 92.8801 33.5549 92.8801 37.2C92.8801 40.8451 95.835 43.8 99.4801 43.8Z" fill="white" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M99.4801 89.4C103.125 89.4 106.08 86.4451 106.08 82.8C106.08 79.1549 103.125 76.2 99.4801 76.2C95.835 76.2 92.8801 79.1549 92.8801 82.8C92.8801 86.4451 95.835 89.4 99.4801 89.4Z" fill="white" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M60 112.2C63.6451 112.2 66.6 109.245 66.6 105.6C66.6 101.955 63.6451 99 60 99C56.3549 99 53.4 101.955 53.4 105.6C53.4 109.245 56.3549 112.2 60 112.2Z" fill="white" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M20.52 89.4C24.1651 89.4 27.12 86.4451 27.12 82.8C27.12 79.1549 24.1651 76.2 20.52 76.2C16.875 76.2 13.92 79.1549 13.92 82.8C13.92 86.4451 16.875 89.4 20.52 89.4Z" fill="white" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M20.52 43.8C24.1651 43.8 27.12 40.8451 27.12 37.2C27.12 33.5549 24.1651 30.6 20.52 30.6C16.875 30.6 13.92 33.5549 13.92 37.2C13.92 40.8451 16.875 43.8 20.52 43.8Z" fill="white" stroke="#A0DEFF" stroke-width="2" />
+            <path d="M60 70.2C65.6334 70.2 70.2001 65.6333 70.2001 60C70.2001 54.3667 65.6334 49.8 60 49.8C54.3667 49.8 49.8 54.3667 49.8 60C49.8 65.6333 54.3667 70.2 60 70.2Z" fill="#A0DEFF" />
         </svg>
+
     );
 }
 
