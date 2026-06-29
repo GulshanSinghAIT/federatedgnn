@@ -1,7 +1,7 @@
 """Patient CRUD router."""
 from fastapi import APIRouter, HTTPException
 from typing import Optional, List
-from datetime import datetime
+from datetime import datetime, date
 import json
 import uuid
 
@@ -10,6 +10,22 @@ from models.db_models import Patient, PatientSymptom, PatientDisease, Symptom
 from models.schemas import PatientCreate, PatientUpdate, PatientOut, PatientSymptomOut, PatientDiseaseOut
 
 router = APIRouter(prefix="/api/patients", tags=["patients"])
+
+
+def _parse_onset(value) -> Optional[date]:
+    """Coerce an onset_date (str 'YYYY-MM-DD', date, or None) to a date.
+
+    The SQLite Date column only accepts Python date objects, so the API's
+    string dates must be converted here (mirrors the seeding path in main.py).
+    """
+    if value is None or value == "":
+        return None
+    if isinstance(value, date):
+        return value
+    try:
+        return date.fromisoformat(str(value)[:10])
+    except ValueError:
+        return None
 
 
 def _patient_to_out(patient: Patient, session) -> PatientOut:
@@ -148,10 +164,10 @@ def create_patient(hospital_id: str, data: PatientCreate):
                 patient_id=patient_id,
                 symptom_id=sym.symptom_id,
                 severity=sym.severity,
-                onset_date=sym.onset_date
+                onset_date=_parse_onset(sym.onset_date)
             )
             session.add(ps)
-        
+
         session.commit()
         
         # Run prediction using the GNN model
@@ -237,7 +253,7 @@ def update_patient(hospital_id: str, patient_id: str, data: PatientUpdate):
                     patient_id=patient_id,
                     symptom_id=sym.symptom_id,
                     severity=sym.severity,
-                    onset_date=sym.onset_date
+                    onset_date=_parse_onset(sym.onset_date)
                 )
                 session.add(ps)
         
