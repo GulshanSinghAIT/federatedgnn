@@ -126,6 +126,33 @@ def main_run():
                 record(f"{model}: training runs", False, f"exception: {e}")
                 traceback.print_exc()
 
+        # ---------------- REAL engine (numpy, trained on dataset) ----------------
+        try:
+            real_sp = {}
+            for model in ["SMPC-LP", "FedFairGNN"]:
+                client.post("/api/federate/reset")
+                client.post("/api/federate/start", json={
+                    "model": model, "rounds": 12, "hospitals": ["H1", "H2", "H3"],
+                    "dataset": DATASET, "engine": "real",
+                })
+                st = wait_idle(client)
+                eng = st.get("effective_engine") if st else None
+                hist = client.get("/api/federate/history",
+                                  params={"model_name": model, "hospital_id": "global"}).json()
+                accs = [h["accuracy"] for h in hist]
+                sps = [h["sp_difference"] for h in hist]
+                ok = (eng == "real" and len(accs) >= 12 and len(set(accs)) > 1 and accs[-1] > 0.7)
+                real_sp[model] = sps[-1] if sps else 1.0
+                record(f"REAL engine: {model} trains on data", ok,
+                       f"engine={eng}, acc {accs[0]:.3f}->{accs[-1]:.3f}, ΔSP last {sps[-1]:.3f}")
+            # Fairness ordering: debiased FedFairGNN should be fairer than the unfair SMPC-LP baseline.
+            record("REAL engine: FedFairGNN fairer than baseline",
+                   real_sp.get("FedFairGNN", 1) < real_sp.get("SMPC-LP", 0),
+                   f"ΔSP FedFairGNN {real_sp.get('FedFairGNN'):.3f} < SMPC-LP {real_sp.get('SMPC-LP'):.3f}")
+        except Exception as e:
+            record("REAL engine: trains on data", False, f"exception: {e}")
+            traceback.print_exc()
+
         # ---------------- compare shows live ----------------
         try:
             comp = client.get("/api/metrics/compare", params={"dataset": DATASET}).json()

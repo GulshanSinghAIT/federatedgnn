@@ -12,7 +12,7 @@ import { InputGroup, InputField } from '@/components/ui/input-group';
 import PageHeader from '../components/layout/PageHeader';
 
 const MODELS = ['FedFairGNN', 'FairGCN', 'FairGNN', 'SMPC-LP', 'all'];
-const ENGINES = [{ id: 'sim', label: 'Simulation' }, { id: 'real', label: 'Real (PyTorch)' }];
+const ENGINES = [{ id: 'sim', label: 'Simulation' }, { id: 'real', label: 'Real (trained on data)' }];
 
 export default function FederationDashboard() {
     useWebSocket();
@@ -74,7 +74,7 @@ export default function FederationDashboard() {
                             </SelectContent>
                         </Select>
                         <Select value={engine} onValueChange={setEngine} disabled={isRunning}>
-                            <SelectTrigger title="Training engine — Simulation (default) or Real PyTorch (requires requirements-ml.txt)" />
+                            <SelectTrigger title="Training engine — Simulation (convergence curves) or Real (numpy model trained on the MedGraph-S dataset)" />
                             <SelectContent>
                                 {ENGINES.map((e, i) => <SelectItem key={e.id} index={i} value={e.id}>{e.label}</SelectItem>)}
                             </SelectContent>

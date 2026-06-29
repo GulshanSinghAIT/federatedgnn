@@ -15,7 +15,7 @@ from typing import Dict, List, Optional, Set
 from copy import deepcopy
 
 from gnn.models import get_model, add_smpc_noise, federated_average, BaseGNNModel
-from gnn import real_engine
+from gnn import fair_trainer
 from data.datasets import DEFAULT_DATASET, is_valid_dataset, MODELS
 
 # Per-hospital accuracy offsets so the three clients differ realistically (sim).
@@ -107,13 +107,23 @@ def _train_model(model_name: str, hospitals: List[str], total_rounds: int,
                  patient_counts: Dict[str, int]):
     """Train one model for total_rounds federated rounds (sim or real)."""
     dataset = federation_state.dataset
-    use_real = (federation_state.engine == "real" and real_engine.is_available())
-    federation_state.effective_engine = "real" if use_real else "sim"
+    use_real = (federation_state.engine == "real" and fair_trainer.is_available())
 
     federation_state.active_model_name = model_name
     sim_model = get_model(model_name)
     federation_state.models[model_name] = sim_model
-    real_global = None
+
+    # Real engine: train the numpy model on the MedGraph-S dataset up front
+    # (fast), then replay its per-round history through the same broadcast path.
+    real_result = None
+    if use_real:
+        try:
+            real_result = fair_trainer.train(model_name, rounds=total_rounds)
+        except Exception as exc:
+            use_real = False
+            _broadcast_sync({"event": "engine_fallback", "model": model_name,
+                             "round": 0, "reason": str(exc)[:200]})
+    federation_state.effective_engine = "real" if use_real else "sim"
 
     _broadcast_sync({
         "event": "model_training_start", "model": model_name,
@@ -127,24 +137,18 @@ def _train_model(model_name: str, hospitals: List[str], total_rounds: int,
         federation_state.current_round = round_num
 
         ran_real = False
-        if use_real:
-            try:
-                per_hospital, glob, real_global = real_engine.run_round(
-                    model_name, round_num, hospitals, patient_counts,
-                    dataset=dataset, global_model=real_global)
-                for hid in hospitals:
-                    if hid in per_hospital:
-                        _record_and_broadcast(model_name, round_num, hid, per_hospital[hid])
-                        time.sleep(0.15)
-                _record_and_broadcast(model_name, round_num, "global", glob)
-                ran_real = True
-            except Exception as exc:  # fall back to sim for the rest of the run
-                use_real = False
-                federation_state.effective_engine = "sim"
-                _broadcast_sync({
-                    "event": "engine_fallback", "model": model_name,
-                    "round": round_num, "reason": str(exc)[:200],
-                })
+        if use_real and real_result:
+            for hid in hospitals:
+                ph = real_result["per_hospital"].get(hid, [])
+                if round_num - 1 < len(ph):
+                    m = {k: v for k, v in ph[round_num - 1].items() if k != "round_num"}
+                    m["nodes_trained"] = patient_counts.get(hid, 0)
+                    _record_and_broadcast(model_name, round_num, hid, m)
+                    time.sleep(0.15)
+            g = {k: v for k, v in real_result["history"][round_num - 1].items() if k != "round_num"}
+            _record_and_broadcast(model_name, round_num, "global", g)
+            time.sleep(0.2)
+            ran_real = True
 
         if not ran_real:
             local_updates = []

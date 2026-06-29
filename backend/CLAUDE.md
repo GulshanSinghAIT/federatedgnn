@@ -19,28 +19,35 @@ Run: `uvicorn main:app --reload` from `backend/` (host serves frontend separatel
 main.py                 app + lifespan DB seeding; /api/hospitals,/symptoms,/diseases,/treatments
 database.py             per-hospital SQLite engines/sessions (get_session(hospital_id))
 data/
-  datasets.py           ★ source of truth: 3 benchmark datasets + paper Table 1 targets
-  synthetic_patients.py per-hospital skewed demographic generator (for fairness testing)
+  datasets.py           ★ source of truth: 3 benchmark datasets + paper Table 1 targets (sim engine)
+  synthetic_dataset.py  ★ generates the 1000-record MedGraph-S tabular dataset (real engine trains on this)
+  medgraph_s.csv        the generated dataset (regenerate via `python -m data.synthetic_dataset`)
+  real_results.json     output of `train_real.py` (data-driven results table)
+  synthetic_patients.py per-hospital skewed demographic generator (for the EHR/demo DBs)
   seed_*.json           15 diseases, 85 symptoms, 33 treatments, graph edges
 models/
   schemas.py            Pydantic request/response models
   db_models.py          SQLAlchemy tables
 gnn/
   models.py             ★ SIMULATION engine (default). Dataset-aware convergence to Table 1.
-  real_engine.py        ★ REAL torch engine (optional). Builds HeteroData, trains, secure-aggregates.
+  fair_trainer.py       ★ REAL numpy engine. MLP + adversarial debiasing + FedAvg on MedGraph-S. No torch.
+  real_engine.py        optional torch/PyG engine (NOT wired to engine="real" — superseded by fair_trainer)
   federated_engine.py   ★ orchestration: background thread, sim|real switch w/ fallback, WS broadcast
-  fairness_metrics.py   ΔSP / ΔEO / per-group accuracy (used by real engine + demographics)
+  fairness_metrics.py   ΔSP / ΔEO / per-group accuracy (used by demographics endpoint)
   graph_builder.py      NetworkX KG builder for /api/graph endpoints
 routers/
   patients.py  graph.py  federation.py  metrics.py  websocket.py
+train_real.py           ★ CLI: train all variants on MedGraph-S, print + save real results
+eval_smoke.py           end-to-end eval harness (CRUD + sim + real engine); run to verify GREEN
 ```
 
 ## Hybrid engine (the key design)
 `FederationStartRequest.engine` is `"sim"` (default) or `"real"`.
-- `engine="real"` runs genuine training **only if** `gnn/real_engine.is_available()` (torch + torch_geometric importable). Install with `pip install -r requirements-ml.txt`.
-- If real is requested but unavailable, or **any exception** occurs mid-round, the round falls back to simulation and emits a `engine_fallback` WS event. The demo never breaks.
-- `federation_state.engine` = requested; `federation_state.effective_engine` = what actually ran.
-- **Both engines converge to the same numbers**: `data/datasets.target_metrics(dataset, model)` (the paper's Table 1). The sim approaches them via saturating exponentials; the real engine computes them from actual predictions.
+- **`engine="sim"`** — `gnn/models.py`: dependency-free convergence curves that approach `data/datasets.target_metrics(dataset, model)` (the paper's Table 1). Good for the live demo / hitting published numbers.
+- **`engine="real"`** — `gnn/fair_trainer.py`: a **real numpy model trained on the generated MedGraph-S dataset** (`data/synthetic_dataset.py`, 1000 records). MLP encoder + logistic classifier + adversary head trained via **gradient reversal** (adversarial debiasing) + **statistical-parity penalty** + **federated FedAvg** with secure-agg noise. Real gradient descent → real, data-driven accuracy/F1/AUC/ΔSP/ΔEO. Numpy-only, so it always runs (no torch). `federated_engine` trains it up front then replays per-round history through the WS path.
+- `fair_trainer.is_available()` is always True; on any training error the round falls back to sim and emits `engine_fallback`. `federation_state.engine` = requested; `effective_engine` = what ran.
+- `gnn/real_engine.py` (torch/PyG HeteroData) still exists as an optional heavier path but is **not** wired to `engine="real"` anymore — the numpy trainer replaced it so the real engine needs no torch.
+- Standalone: **`python train_real.py`** trains every variant on the dataset and writes `data/real_results.json` + prints a results table (the data-driven Table 1 for the report). The real numbers differ from the paper's sim targets — that's expected; they're learned.
 
 ## Datasets (`data/datasets.py`)
 Three benchmarks from the paper: **MedGraph-S** (default, == the live demo graph), **Hetionet**, **DiseaseNet**. `BENCHMARK[dataset][model]` holds `accuracy, f1_score, auc, sp_difference, eo_difference` for all 6 methods (GCN, GraphSAGE baselines + the 4 trainable: FairGCN, FairGNN, SMPC-LP, FedFairGNN). Lower ΔSP/ΔEO = fairer. `MODELS` = the 4 trainable; `BASELINES` = the 2 reference-only.

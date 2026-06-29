@@ -1,0 +1,54 @@
+{
+  "dataset": "MedGraph-S",
+  "rounds": 15,
+  "results": {
+    "GCN": {
+      "round_num": 15,
+      "accuracy": 0.9,
+      "f1_score": 0.9153,
+      "auc": 0.9756,
+      "sp_difference": 0.1567,
+      "eo_difference": 0.0289
+    },
+    "GraphSAGE": {
+      "round_num": 15,
+      "accuracy": 0.9,
+      "f1_score": 0.9153,
+      "auc": 0.9756,
+      "sp_difference": 0.1567,
+      "eo_difference": 0.0289
+    },
+    "FairGCN": {
+      "round_num": 15,
+      "accuracy": 0.908,
+      "f1_score": 0.9215,
+      "auc": 0.9714,
+      "sp_difference": 0.0133,
+      "eo_difference": 0.109
+    },
+    "FairGNN": {
+      "round_num": 15,
+      "accuracy": 0.904,
+      "f1_score": 0.9189,
+      "auc": 0.9733,
+      "sp_difference": 0.05,
+      "eo_difference": 0.0389
+    },
+    "SMPC-LP": {
+      "round_num": 15,
+      "accuracy": 0.896,
+      "f1_score": 0.9116,
+      "auc": 0.9762,
+      "sp_difference": 0.1467,
+      "eo_difference": 0.0416
+    },
+    "FedFairGNN": {
+      "round_num": 15,
+      "accuracy": 0.892,
+      "f1_score": 0.9109,
+      "auc": 0.9699,
+      "sp_difference": 0.02,
+      "eo_difference": 0.0642
+    }
+  }
+}
