@@ -38,7 +38,7 @@ export interface AskUserQuestion {
   nextLabel?: string;
   /** Visual layout for each option row.
    *  - "inline" (default): title and description on one line.
-   *  - "stacked": title above, description below — useful when descriptions
+   *  - "stacked": title above, description below - useful when descriptions
    *    are long enough to wrap. */
   layout?: "inline" | "stacked";
   /** Which side of the row the numbered chip sits on.
@@ -145,7 +145,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
 
     // The footer ← / → icons hint at the ArrowLeft/ArrowRight keys, which
     // mobile has no equivalent for, so render them desktop-only. (The inline
-    // submit arrows on option rows stay — those are tap affordances, not
+    // submit arrows on option rows stay - those are tap affordances, not
     // keyboard hints.)
     const ArrowLeftKey = useMemo(
       () =>
@@ -204,7 +204,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
 
     // ── Refs & proximity hover ───────────────────────────────────
     const rowsContainerRef = useRef<HTMLDivElement>(null);
-    // The Other field is a multi-line textarea — it auto-resizes to fit
+    // The Other field is a multi-line textarea - it auto-resizes to fit
     // wrapped content and lets users press Enter for a newline.
     const otherInputRef = useRef<HTMLTextAreaElement>(null);
     // Stable IDs for contiguous-selection runs (see selectedGroups below).
@@ -229,7 +229,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
     // The Other field is a textarea so users can write a multi-line answer.
     // Browsers don't auto-fit textarea height to content, so we set it
     // manually: reset to 0 (so the field can shrink when lines are deleted),
-    // then expand to scrollHeight. Remeasure the proximity rows after — the
+    // then expand to scrollHeight. Remeasure the proximity rows after - the
     // hover, selected and focus indicators absolutely-position against
     // itemRects, so they need fresh rects when the row's height changes.
     //
@@ -253,7 +253,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
       el.style.height = "0px";
       el.style.height = `${el.scrollHeight}px`;
       // Threshold against the textarea's *measured* line-height, not a
-      // hard-coded 22px — so the flag stays correct at high browser
+      // hard-coded 22px - so the flag stays correct at high browser
       // font-size / zoom settings where line-height grows past 22 even
       // for a single line. 1.5× line-height is a generous fudge below
       // a true second wrapped line (2× line-height) but well above any
@@ -460,7 +460,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
     // mouse hover (activeIndex → bg-hover), so keyboard and pointer focus look
     // identical. Left = Back, Right = Skip. We stopPropagation on the arrows we
     // handle so the doc page's ←/→ page-change nav (a window listener) doesn't
-    // also fire — important for multi-select, whose container is role="group"
+    // also fire - important for multi-select, whose container is role="group"
     // (not "radiogroup") and so isn't auto-skipped by that handler.
     const focusRow = (idx: number) => {
       const el = rowsContainerRef.current?.querySelector(
@@ -472,7 +472,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
     const moveActive = useCallback(
       (next: number) => {
         setActiveIndex(next);
-        // The Other row is a text field — focus the input directly so typing
+        // The Other row is a text field - focus the input directly so typing
         // works; everything else focuses the row for Enter/Space selection.
         if (allowOther && next === otherIndex) otherInputRef.current?.focus();
         else focusRow(next);
@@ -492,7 +492,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
       // to move to in that direction (there's a \n before/after it), let the
       // browser handle native caret movement; only steal the keystroke to
       // navigate to an adjacent option row when the caret is already at the
-      // first / last line — otherwise the user can't edit a multi-line draft
+      // first / last line - otherwise the user can't edit a multi-line draft
       // without focus jumping out of the field.
       if (isTextInput && e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
       if (
@@ -500,7 +500,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
         (e.key === "ArrowUp" || e.key === "ArrowDown") &&
         target.tagName === "TEXTAREA"
       ) {
-        // Position-bounds check — works for BOTH explicit `\n` AND visual
+        // Position-bounds check - works for BOTH explicit `\n` AND visual
         // line wraps. Only steal the key when the caret has nowhere left
         // to go inside the textarea: ArrowUp at the very start, or
         // ArrowDown at the very end. Anywhere else, let the textarea
@@ -581,7 +581,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
     // field: that row has its own input-field treatment (the "type here" hint
     // when empty, the merged selected bg once it has text), so the ring is
     // redundant there and reads as noise while typing. focusedIndex is still
-    // tracked for the hint and submit-arrow visibility — we just don't draw a
+    // tracked for the hint and submit-arrow visibility - we just don't draw a
     // ring around it.
     const focusRect =
       focusedIndex !== null && !(allowOther && focusedIndex === otherIndex)
@@ -639,7 +639,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
     }, [selectedIndices]);
 
     // True when the user is hovering a row that ISN'T part of any selected
-    // run — we dim the selected backgrounds slightly to draw attention to
+    // run - we dim the selected backgrounds slightly to draw attention to
     // the hover target.
     const isHoveringNonSelected =
       activeIndex !== null && !selectedIndices.has(activeIndex);
@@ -670,7 +670,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
           handleRootKey(e);
         }}
       >
-        {/* Header — static top, fixed across questions; only the number
+        {/* Header - static top, fixed across questions; only the number
             changes. Lives outside the morphing region so it never shifts. */}
         <div className="flex items-center px-4 sm:px-5 pt-4 sm:pt-5 pb-2 text-[12px] text-muted-foreground">
           <span>
@@ -678,7 +678,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
           </span>
         </div>
 
-        {/* Morphing Q/A region — its REAL height animates to the measured
+        {/* Morphing Q/A region - its REAL height animates to the measured
             natural height of the content below, so the card border and the
             footer reflow in lockstep with the spring. overflow-hidden clips
             the instantly-swapped content, revealing it as the height opens.
@@ -717,7 +717,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
               onKeyDown={handleNavKey}
               className="relative flex flex-col gap-0.5 -mx-3"
             >
-              {/* Other-row input hint — shown only when the Other input is
+              {/* Other-row input hint - shown only when the Other input is
                   focused and still empty, to signal "type here". As soon as
                   text exists, the row joins selectedIndices and inherits the
                   selected merged bg, so it visually integrates with adjacent
@@ -797,7 +797,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
 
               {/* Selected-row backgrounds (merged for contiguous selections).
                   A run is normally one block; mid merge/split it is drawn as two
-                  abutting halves — see useMergeSplitBlocks. Uses bg-active
+                  abutting halves - see useMergeSplitBlocks. Uses bg-active
                   (overlay-aware) and renders ABOVE the hover indicator so the
                   selected state stays readable when mousing over a row. Corners
                   are driven numerically (around shape.bg's radius) so a single
@@ -1032,7 +1032,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
                         // desktop and mobile soft keyboards (where ⌘/⌃
                         // isn't reachable). In multi-select we leave plain
                         // Enter to the textarea (newline) and let the
-                        // root handler catch ⌘/⌃+Enter for Continue —
+                        // root handler catch ⌘/⌃+Enter for Continue -
                         // multi-select has its own Continue button as the
                         // primary submit affordance.
                         if (e.key !== "Enter") return;
@@ -1046,7 +1046,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
                       className={cn(
                         // Reset every textarea default that would otherwise
                         // make the field taller/boxier than the single-line
-                        // input it replaces — no border, no padding, no
+                        // input it replaces - no border, no padding, no
                         // resize handle, no scrollbars (height is JS-driven,
                         // see the auto-resize effect above).
                         "col-start-1 row-start-1 block w-full bg-transparent border-0 p-0 m-0 outline-none resize-none overflow-hidden text-[13px] leading-snug text-foreground placeholder:text-muted-foreground"
@@ -1061,7 +1061,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
           </div>
         </motion.div>
 
-        {/* Footer — outside the morphing region, so the animating height never
+        {/* Footer - outside the morphing region, so the animating height never
             clips it. Because the height is a real layout value (not a
             transform), the footer reflows frame-by-frame and rides the morph
             in lockstep. */}
@@ -1163,7 +1163,7 @@ const AskUserQuestions = forwardRef<HTMLDivElement, AskUserQuestionsProps>(
                         <span className="inline-flex items-center gap-1.5">
                           {question.nextLabel ??
                             (safeIndex >= total - 1 ? "Finish" : "Continue")}
-                          {/* Shortcut hint — replaces the trailing arrow. Sits
+                          {/* Shortcut hint - replaces the trailing arrow. Sits
                               inside the button so it dims with the disabled
                               state. ⌘↵ on macOS, ⌃↵ elsewhere. Desktop-only:
                               mobile has no physical keyboard to trigger it. */}
@@ -1245,7 +1245,7 @@ interface RowProps {
   /** Anchor the chip to the first line of the body instead of vertically
    *  centering it on the row. Use when the body can grow taller than one
    *  line (Other row's textarea, stacked title + description, or any
-   *  wrapping content) — otherwise the chip drifts toward the middle of a
+   *  wrapping content) - otherwise the chip drifts toward the middle of a
    *  tall row and stops reading as a marker for the row's title. */
   topAlign?: boolean;
   /** Mirrors the per-question `chipPosition`. "left" moves the chip to
@@ -1287,7 +1287,7 @@ function Row({
   }, [index, registerItem]);
 
   // The arrow keeps the same animation regardless of which slot it lands
-  // in — pull it out so the chip-on-right (overlay) and chip-on-left
+  // in - pull it out so the chip-on-right (overlay) and chip-on-left
   // (separate right slot) paths can reuse the exact same element.
   const arrowOverlay = (
     <AnimatePresence>
@@ -1331,11 +1331,11 @@ function Row({
   // lines up with the centre of a `text-[13px] leading-snug` first line
   // (line-height ≈ 18px → centre 9px; chip centre 14px → diff 5px).
   // Stacked rows pair a title with a description, so we add 4px of
-  // breathing room back on top (effective shift -1px) — that lands the
+  // breathing room back on top (effective shift -1px) - that lands the
   // chip near the title's baseline rather than its optical centre, which
   // reads as "row marker" instead of "title label" when descriptions wrap.
   // The arrow overlay only co-renders here when `chipPosition === "right"`
-  // — in chip-on-left mode the arrow has its own right-edge slot so the
+  // - in chip-on-left mode the arrow has its own right-edge slot so the
   // chip stays visible while the submit affordance lives where users
   // expect it (the trailing end of the row).
   const chipSlot = (
@@ -1358,7 +1358,7 @@ function Row({
             : chipFilled
             ? "text-foreground"
             : "text-muted-foreground",
-          // Only fade the chip when it shares a slot with the arrow — for
+          // Only fade the chip when it shares a slot with the arrow - for
           // chip-on-left the arrow has its own slot on the right, so the
           // chip stays in place.
           chipPosition === "right" && showArrow && "opacity-0"
@@ -1375,7 +1375,7 @@ function Row({
     </span>
   );
 
-  // Right-edge arrow slot — only used when the chip is on the LEFT and
+  // Right-edge arrow slot - only used when the chip is on the LEFT and
   // the row can show an arrow (single-select only; in multi-select
   // showArrow is always false and there's nothing to anchor here). Mirrors
   // the chip slot's stacked-vs-inline shift so both end markers stay on
@@ -1411,7 +1411,7 @@ function Row({
       onKeyDown={onKeyDown}
       className={cn(
         "relative z-10 flex cursor-pointer select-none outline-none",
-        // Tighter gap when the chip sits on the left — it reads as a
+        // Tighter gap when the chip sits on the left - it reads as a
         // leading list marker, so coupling it close to the title looks
         // more intentional than the larger right-side gap (where the
         // chip is a trailing affordance instead).
@@ -1419,7 +1419,7 @@ function Row({
         // items-start when the body may exceed one line (stacked layouts,
         // multi-line textareas) so the chip tracks the first line instead
         // of sliding to the row's vertical centre. When topAlign is OFF,
-        // items-center keeps a 1-line row visually centred — that's why
+        // items-center keeps a 1-line row visually centred - that's why
         // the Other row defers topAlign until its textarea actually wraps.
         topAlign ? "items-start" : "items-center",
         bodyLayout === "stacked" ? "min-h-14 py-2" : "min-h-10 py-1.5",
@@ -1441,7 +1441,7 @@ function Row({
 
       {chipPosition === "left" && chipSlot}
 
-      {/* Body — fills row */}
+      {/* Body - fills row */}
       <span
         className={cn(
           "min-w-0 flex-1 text-[13px] leading-snug",

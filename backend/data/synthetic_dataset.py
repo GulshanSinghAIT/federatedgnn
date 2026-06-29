@@ -11,7 +11,7 @@ attribute `s` (e.g. age/socio-economic group), and a BINARY outcome label `y`
 (high-risk / positive diagnosis). The label depends mostly on legitimate
 clinical signal but is deliberately entangled with `s` (direct effect + proxy
 features correlated with `s`) so the fairness–utility tradeoff is real and
-learnable — not hand-drawn curves.
+learnable - not hand-drawn curves.
 
 Run directly to (re)write the CSV:
     python -m data.synthetic_dataset           # writes data/medgraph_s.csv
@@ -40,9 +40,9 @@ def generate(n: int = 1000, seed: int = 42) -> Dict[str, np.ndarray]:
     # Sensitive attribute: ~40% in the protected group.
     s = (rng.random(n) < 0.40).astype(np.int64)
 
-    # Legitimate clinical features — independent of s.
+    # Legitimate clinical features - independent of s.
     X_legit = rng.normal(0.0, 1.0, size=(n, N_LEGIT))
-    # Proxy features — correlated with s (so s is recoverable from features → bias risk).
+    # Proxy features - correlated with s (so s is recoverable from features → bias risk).
     X_proxy = rng.normal(0.0, 1.0, size=(n, N_PROXY)) + 1.6 * s[:, None]
     X = np.concatenate([X_legit, X_proxy], axis=1)
 

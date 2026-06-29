@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import PatientList from '../components/ehr/PatientList';
 import PatientForm from '../components/ehr/PatientForm';
@@ -10,37 +10,27 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import PageHeader from '../components/layout/PageHeader';
 
+type View = 'list' | 'form' | 'detail' | 'graph';
+
 export default function HospitalDashboard() {
     const { hospitalId = 'H1', patientId } = useParams();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const [view, setView] = useState<'list' | 'form' | 'detail' | 'graph'>('list');
-    const [selectedPatientId, setSelectedPatientId] = useState<string | null>(null);
     const [hospitals, setHospitals] = useState<any[]>([]);
 
     useEffect(() => {
         fetchHospitals().then(setHospitals);
     }, []);
 
-    // Honor deep links from global search / routing:
-    //   /hospital/:id/patients/:patientId → open that patient's detail
-    //   /hospital/:id/patients/new        → open the new-patient form
-    //   ?view=graph                        → open the knowledge graph
-    useEffect(() => {
-        if (patientId) {
-            setSelectedPatientId(patientId);
-            setView('detail');
-        } else if (window.location.pathname.endsWith('/patients/new')) {
-            setView('form');
-        } else if (searchParams.get('view') === 'graph') {
-            setView('graph');
-        }
-    }, [patientId, searchParams]);
+    // View is derived from the URL so it's persistent across refresh / shareable:
+    //   /hospital/:id/patients/:patientId → detail
+    //   /hospital/:id/dashboard?tab=graph|form|list → that tab (default list)
+    const tab = searchParams.get('tab') || 'list';
+    const view: View = patientId ? 'detail' : (['form', 'graph'].includes(tab) ? (tab as View) : 'list');
 
-    const handleSelectPatient = (id: string) => {
-        setSelectedPatientId(id);
-        setView('detail');
-    };
+    const goTab = (t: Exclude<View, 'detail'>) =>
+        navigate(`/hospital/${hospitalId}/dashboard${t === 'list' ? '' : `?tab=${t}`}`);
+    const openPatient = (id: string) => navigate(`/hospital/${hospitalId}/patients/${id}`);
 
     const hospital = hospitals.find(h => h.id === hospitalId);
     const HOSPITAL_COLORS: Record<string, string> = { H1: '#38bdf8', H2: '#a78bfa', H3: '#2dd4bf' };
@@ -59,10 +49,12 @@ export default function HospitalDashboard() {
                                 {hospitals.map((h, i) => <SelectItem key={h.id} index={i} value={h.id}>{h.name}</SelectItem>)}
                             </SelectContent>
                         </Select>
-                        <Button variant={view === 'graph' ? 'accent' : 'tertiary'} size="md" leadingIcon={Network} onClick={() => setView('graph')}>
+                        <Button variant={view === 'graph' ? 'accent' : 'tertiary'} size="md" leadingIcon={Network}
+                            onClick={() => goTab(view === 'graph' ? 'list' : 'graph')}>
                             Knowledge Graph
                         </Button>
-                        <Button variant={view === 'form' ? 'tertiary' : 'accent'} size="md" leadingIcon={view === 'form' ? X : Plus} onClick={() => setView(view === 'form' ? 'list' : 'form')}>
+                        <Button variant={view === 'form' ? 'tertiary' : 'accent'} size="md" leadingIcon={view === 'form' ? X : Plus}
+                            onClick={() => goTab(view === 'form' ? 'list' : 'form')}>
                             {view === 'form' ? 'Cancel' : 'Add Patient'}
                         </Button>
                     </>
@@ -71,10 +63,10 @@ export default function HospitalDashboard() {
 
             {/* Main Content */}
             <main className="flex-1 min-h-0 overflow-y-auto p-6">
-                {view === 'list' && <PatientList hospitalId={hospitalId} onSelectPatient={handleSelectPatient} />}
-                {view === 'form' && <PatientForm hospitalId={hospitalId} onComplete={() => setView('list')} />}
-                {view === 'detail' && selectedPatientId && (
-                    <PatientDetail hospitalId={hospitalId} patientId={selectedPatientId} onBack={() => setView('list')} />
+                {view === 'list' && <PatientList hospitalId={hospitalId} onSelectPatient={openPatient} />}
+                {view === 'form' && <PatientForm hospitalId={hospitalId} onComplete={() => goTab('list')} />}
+                {view === 'detail' && patientId && (
+                    <PatientDetail hospitalId={hospitalId} patientId={patientId} onBack={() => goTab('list')} />
                 )}
                 {view === 'graph' && (
                     <div className="h-[calc(100vh-200px)]">

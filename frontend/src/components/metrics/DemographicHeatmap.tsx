@@ -51,7 +51,7 @@ export default function DemographicHeatmap() {
                                                     <span className={`px-2 py-0.5 rounded ${colorScale(val)} font-medium`}>
                                                         {(val * 100).toFixed(1)}%
                                                     </span>
-                                                ) : <span className="text-text-muted">—</span>}
+                                                ) : <span className="text-text-muted">-</span>}
                                             </TableCell>
                                         );
                                     })}
@@ -63,7 +63,7 @@ export default function DemographicHeatmap() {
             )}
             {data.map(d => d.fairness_gap > 0.1 && (
                 <div key={d.hospital_id} className="mt-2 text-xs text-accent-red">
-                    ⚠️ {d.hospital_id} has fairness gap of {d.fairness_gap.toFixed(4)} — above 0.1 threshold
+                    ⚠️ {d.hospital_id} has fairness gap of {d.fairness_gap.toFixed(4)} - above 0.1 threshold
                 </div>
             ))}
         </div>

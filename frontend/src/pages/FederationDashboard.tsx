@@ -58,7 +58,7 @@ export default function FederationDashboard() {
                 title="Federated Learning Network"
                 subtitle={
                     <span className="flex items-center gap-3">
-                        <span>Round <b className="font-medium text-accent-blue animate-count-up">{currentRound}</b> / {totalRounds || '—'}</span>
+                        <span>Round <b className="font-medium text-accent-blue animate-count-up">{currentRound}</b> / {totalRounds || '-'}</span>
                         <span className={`flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium ${isRunning ? 'bg-green-500/20 text-green-600' : 'bg-bg-tertiary text-text-muted'}`}>
                             <span className={`w-2 h-2 rounded-full ${isRunning ? 'bg-green-500 animate-pulse' : 'bg-gray-400'}`} />
                             {isRunning ? 'Training' : 'Idle'}
@@ -74,7 +74,7 @@ export default function FederationDashboard() {
                             </SelectContent>
                         </Select>
                         <Select value={engine} onValueChange={setEngine} disabled={isRunning}>
-                            <SelectTrigger title="Training engine — Simulation (convergence curves) or Real (numpy model trained on the MedGraph-S dataset)" />
+                            <SelectTrigger title="Training engine - Simulation (convergence curves) or Real (numpy model trained on the MedGraph-S dataset)" />
                             <SelectContent>
                                 {ENGINES.map((e, i) => <SelectItem key={e.id} index={i} value={e.id}>{e.label}</SelectItem>)}
                             </SelectContent>
@@ -122,7 +122,7 @@ export default function FederationDashboard() {
                 {/* Privacy Callouts */}
                 <div className="flex gap-3 text-xs">
                     <div className="glass-card px-3 py-2 flex items-center gap-2 text-accent-yellow">
-                        🔒 No raw patient data transmitted — only model weights
+                        🔒 No raw patient data transmitted - only model weights
                     </div>
                     <div className="glass-card px-3 py-2 flex items-center gap-2 text-accent-yellow">
                         🔒 SMPC simulation: σ=0.01 Gaussian noise on shared gradients

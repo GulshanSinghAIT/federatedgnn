@@ -1,7 +1,7 @@
 """
 FairGCN: Fairness-aware Graph Convolutional Network.
 
-Paper inspiration: FairGCN — Fairness-aware Graph Convolutional Network.
+Paper inspiration: FairGCN - Fairness-aware Graph Convolutional Network.
 Architecture: GCN Encoder -> node embeddings -> classifier.
 Loss = prediction_loss + λ * fairness_penalty, where fairness_penalty
 approximates Statistical Parity Difference so that predictions are

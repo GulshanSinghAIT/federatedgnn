@@ -17,7 +17,7 @@ interface ChatMessageProps
   /** Side length of each attachment thumbnail in pixels. Defaults to 64. */
   thumbnailSize?: number;
   /** Timestamp shown in the hover-revealed meta row, before the actions.
-   *  User-message only — ignored on assistant replies. Caller pre-formats it
+   *  User-message only - ignored on assistant replies. Caller pre-formats it
    *  (e.g. `"Wednesday 6:08 PM"`). */
   time?: ReactNode;
   /** Icon-only action buttons shown in the hover-revealed meta row (e.g. copy,
@@ -99,7 +99,7 @@ const ChatMessage = forwardRef<HTMLDivElement, ChatMessageProps>(
           // Meta row: timestamp + icon-only actions. Always rendered (so it
           // reserves its height and the gap between bubbles never shifts) but
           // hidden until the message is hovered or an action is focused.
-          // The timestamp is a user-message affordance only — assistant replies
+          // The timestamp is a user-message affordance only - assistant replies
           // show their actions alone. User rows read date → icons left-to-right.
           <div
             className={cn(

@@ -24,19 +24,19 @@ export default function AggregatorNode() {
                 <div>
                     <span className="text-text-muted">Accuracy</span>
                     <div className="font-medium text-accent-green animate-count-up">
-                        {globalMetrics.accuracy ? `${(globalMetrics.accuracy * 100).toFixed(1)}%` : '—'}
+                        {globalMetrics.accuracy ? `${(globalMetrics.accuracy * 100).toFixed(1)}%` : '-'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔSP</span>
                     <div className="font-medium animate-count-up">
-                        {globalMetrics.sp_difference != null ? globalMetrics.sp_difference.toFixed(3) : '—'}
+                        {globalMetrics.sp_difference != null ? globalMetrics.sp_difference.toFixed(3) : '-'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔEO</span>
                     <div className="font-medium animate-count-up">
-                        {globalMetrics.eo_difference != null ? globalMetrics.eo_difference.toFixed(3) : '—'}
+                        {globalMetrics.eo_difference != null ? globalMetrics.eo_difference.toFixed(3) : '-'}
                     </div>
                 </div>
             </div>

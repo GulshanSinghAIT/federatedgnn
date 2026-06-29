@@ -1,4 +1,4 @@
-// @ts-nocheck — vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
+// @ts-nocheck - vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
 "use client";
 
 import {
@@ -168,7 +168,7 @@ const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
         >
           {/* Selected backgrounds (merged for contiguous checked items).
               A run is normally one block; mid merge/split it is drawn as two
-              abutting halves — see useMergeSplitBlocks. */}
+              abutting halves - see useMergeSplitBlocks. */}
           <SelectionBackgrounds blocks={blocks} dimmed={isHoveringOther} />
 
           {/* Hover background */}
@@ -281,7 +281,7 @@ const CheckboxItem = forwardRef<HTMLDivElement, CheckboxItemProps>(
         )}
         {...props}
       >
-        {/* Checkbox — Radix primitive for accessibility */}
+        {/* Checkbox - Radix primitive for accessibility */}
         <CheckboxPrimitive.Root
           checked={checked}
           onCheckedChange={() => onToggle()}

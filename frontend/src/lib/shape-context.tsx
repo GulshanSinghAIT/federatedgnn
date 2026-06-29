@@ -44,7 +44,7 @@ const shapeMap: Record<ShapeVariant, ShapeClasses> = {
     mergedRadius: 16,
   },
   rounded: {
-    // Driven by --radius-brand in index.css — change that one value to control
+    // Driven by --radius-brand in index.css - change that one value to control
     // the roundedness of every ui component (Button/Select/Input/Badge…).
     item: "rounded-[var(--radius-brand)]",
     bg: "rounded-[var(--radius-brand)]",

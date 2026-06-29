@@ -1,2 +1,10 @@
-.venv
-db_files
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Runtime databases (regenerated on startup from seed data)
+db_files/
+*.db

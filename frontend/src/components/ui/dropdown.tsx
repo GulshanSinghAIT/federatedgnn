@@ -17,7 +17,7 @@ import { useProximityHover } from "@/hooks/use-proximity-hover";
 import { shapeMap } from "@/lib/shape-context";
 import { Elevated } from "@/lib/elevated";
 
-// Dropdown opts out of the global pill/rounded shape context — popover surfaces
+// Dropdown opts out of the global pill/rounded shape context - popover surfaces
 // look cleaner with the smaller "rounded" radii regardless of how the rest of
 // the UI is shaped (the heavy pill bubbling distorts perceived padding at this
 // scale and produces the corner-shadow asymmetry).

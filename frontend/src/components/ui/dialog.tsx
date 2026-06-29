@@ -1,4 +1,4 @@
-// @ts-nocheck — vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
+// @ts-nocheck - vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
 "use client";
 
 import {
@@ -51,8 +51,8 @@ interface DialogContentProps
   size?: "sm" | "lg";
   /** Portal target. When set, the overlay and panel render inside this element
    *  (positioned `absolute`) instead of covering the viewport (`fixed`). Pair
-   *  with a `position: relative; overflow: hidden` container — and usually
-   *  `<Dialog modal={false}>` — to scope a dialog to a bounded region, e.g. a
+   *  with a `position: relative; overflow: hidden` container - and usually
+   *  `<Dialog modal={false}>` - to scope a dialog to a bounded region, e.g. a
    *  docs preview. Defaults to the document body / full-viewport behaviour. */
   container?: HTMLElement | null;
 }

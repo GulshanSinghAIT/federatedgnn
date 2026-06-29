@@ -4,7 +4,7 @@ Secure aggregation (FedAvg / simulated SMPC) over model state dicts.
 Implements the global update of Eq. (7) in the paper:
     theta_{t+1} = (1/N) * sum_i n_i * theta_i^(t),   N = sum_i n_i
 
-Only model weights are combined here — never raw features, embeddings, labels,
+Only model weights are combined here - never raw features, embeddings, labels,
 or sensitive attributes. This mirrors a secure-aggregation protocol where the
 honest-but-curious aggregator observes only the (optionally noised) averaged
 parameters, not any individual hospital's contribution.

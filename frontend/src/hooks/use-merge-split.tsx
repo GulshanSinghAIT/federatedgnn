@@ -15,7 +15,7 @@ const useIsoLayoutEffect =
 const mergeSpring = { type: "spring" as const, duration: 0.16, bounce: 0 };
 const cornerDelay = 0.07;
 // A boundary resolves after its motion finishes (merge → swap to one block;
-// split → drop), driven by a duration timer rather than onAnimationComplete —
+// split → drop), driven by a duration timer rather than onAnimationComplete -
 // framer skips that callback when an animation's target equals its current value
 // (which spam-toggling produces), which would otherwise strand a half. The
 // buffer biases late, by which point the halves have met/parted, so it's unseen.
@@ -50,12 +50,12 @@ interface Boundary {
   kind: "merge" | "split";
   survivorId: number; // persisting run (merged run / split's upper run)
   otherId: number; // merge: absorbed run; split: new lower run
-  gapIndex: number; // bridging/deselected row — where the halves meet
+  gapIndex: number; // bridging/deselected row - where the halves meet
   phase: "converge" | "commit" | "splitIn" | "diverge";
 }
 
 // Two runs within `outer`, ordered, separated by exactly one row (a single-row
-// bridge — the only shape a click can merge or split).
+// bridge - the only shape a click can merge or split).
 function bridgePair(outer: Run, runs: Run[]) {
   const inside = runs
     .filter((r) => r.start >= outer.start && r.end <= outer.end)
@@ -68,13 +68,13 @@ function bridgePair(outer: Run, runs: Run[]) {
 // ── Merge / split boundary animation ─────────────────────────────
 // When one unselected row bridges two selected runs, their inner edges glide to
 // the bridging row's midpoint (facing corners straightening to sharp), then swap
-// to one block with no visible motion — instead of the surviving block
+// to one block with no visible motion - instead of the surviving block
 // spring-growing over the whole union. Deselecting a middle row plays the
 // inverse: snap into two abutting halves, then glide apart.
 //
 // Given the contiguous selection `runs` (with stable ids), the measured
 // `itemRects`, and the corner radius `R` to round to, this returns the list of
-// background blocks to paint — one per run, or two abutting halves for any run
+// background blocks to paint - one per run, or two abutting halves for any run
 // currently mid merge/split. Render them with <SelectionBackgrounds>.
 export function useMergeSplitBlocks(
   runs: Run[],
@@ -271,7 +271,7 @@ export function useMergeSplitBlocks(
       lo.instant = true;
       lo.enterFrom = { top: midY, height: bottom - midY, radii: [0, 0, R, R] };
     }
-    // diverge: nothing to override — the steady blocks spring to their real
+    // diverge: nothing to override - the steady blocks spring to their real
     // rects from the seam; the timer drops the boundary.
   }
 
@@ -303,7 +303,7 @@ export function useMergeSplitBlocks(
   return blocks;
 }
 
-// Renders the selected-background blocks produced by useMergeSplitBlocks — one
+// Renders the selected-background blocks produced by useMergeSplitBlocks - one
 // per run, or two abutting halves mid merge/split. `dimmed` drops the opacity to
 // 0.8 (when the user is hovering a non-selected row) to match the standalone
 // hover indicator; a block's own `opacity` override (e.g. the commit ghost)

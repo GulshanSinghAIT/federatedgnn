@@ -59,7 +59,7 @@ function FileThumbnail({ file, size, className }: FileThumbnailProps) {
   // and the URL-creation stay in sync. In React 18 StrictMode dev, a
   // useMemo-created URL gets revoked by the simulated effect-cleanup but
   // useMemo doesn't re-run on the simulated re-mount (no re-render happens),
-  // leaving the DOM with a stale, revoked `blob:` URL — broken image.
+  // leaving the DOM with a stale, revoked `blob:` URL - broken image.
   // Putting both in the same effect means the simulated re-mount creates a
   // fresh URL and updates state. The one-frame "before URL" state is
   // covered by the bg-accent (no fallback icon shown for images), so the
@@ -72,7 +72,7 @@ function FileThumbnail({ file, size, className }: FileThumbnailProps) {
     return () => URL.revokeObjectURL(url);
   }, [isImage, file]);
 
-  // PDFs need async rendering — loading flash is unavoidable for the first
+  // PDFs need async rendering - loading flash is unavoidable for the first
   // ~100–300ms while pdfjs loads. Falls back to the generic icon on error.
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   useEffect(() => {

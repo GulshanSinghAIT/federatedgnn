@@ -1,5 +1,5 @@
 """
-Real (numpy) fairness-aware federated trainer — trains on the generated
+Real (numpy) fairness-aware federated trainer - trains on the generated
 MedGraph-S dataset (data/synthetic_dataset.py) with actual gradient descent.
 
 This is NOT the convergence-curve simulation: every number comes from training
@@ -133,7 +133,7 @@ class FairNet:
 def secure_average(param_list: List[dict], weights: List[float], noise: float = 0.0,
                    rng=None) -> dict:
     """Weighted FedAvg over client params, with optional secure-agg noise on
-    floating-point weights (only model weights are combined — never raw data)."""
+    floating-point weights (only model weights are combined - never raw data)."""
     total = float(sum(weights)) or 1.0
     fracs = [w / total for w in weights]
     avg = {}

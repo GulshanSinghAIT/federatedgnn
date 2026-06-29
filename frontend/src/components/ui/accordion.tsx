@@ -1,4 +1,4 @@
-// @ts-nocheck — vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
+// @ts-nocheck - vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
 "use client";
 
 import {
@@ -679,7 +679,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
                       </span>
                     </span>
 
-                    {/* Chevron — right when collapsed, rotates 90° down when expanded */}
+                    {/* Chevron - right when collapsed, rotates 90° down when expanded */}
                     <motion.span
                       className="shrink-0 inline-flex items-center justify-center"
                       animate={{ rotate: isOpen ? 90 : 0 }}

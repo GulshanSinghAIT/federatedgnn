@@ -23,17 +23,17 @@ export default function HospitalNode({ data }: { data: HospitalNodeData }) {
     const statusColor = isRunning ? 'bg-green-500' : status === 'completed' ? 'bg-blue-500' : 'bg-gray-500';
 
     return (
-        <div className="glass-card p-4 min-w-[200px] cursor-pointer hover:border-white/20 transition-all"
+        <div className="glass-card p-4 w-60 cursor-pointer hover:border-white/20 transition-all"
             style={{ borderColor: `${color}40` }}
             onClick={() => data.onClick?.(data.hospitalId)}>
             <Handle type="source" position={Position.Bottom} className="!bg-transparent !border-0" />
 
-            <div className="flex items-center justify-between mb-2">
-                <div>
-                    <div className="text-sm font-medium" style={{ color }}>{data.name}</div>
+            <div className="flex items-start justify-between gap-2 mb-2">
+                <div className="min-w-0">
+                    <div className="text-sm font-medium truncate" style={{ color }} title={data.name}>{data.name}</div>
                     <div className="text-xs text-text-muted">{data.hospitalId}</div>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 shrink-0">
                     <div className={`w-2 h-2 rounded-full ${statusColor} ${isRunning ? 'animate-pulse' : ''}`} />
                     <span className="text-[10px] text-text-muted">{statusLabel}</span>
                 </div>
@@ -43,25 +43,25 @@ export default function HospitalNode({ data }: { data: HospitalNodeData }) {
                 <div>
                     <span className="text-text-muted">Accuracy</span>
                     <div className="font-medium text-text-primary animate-count-up">
-                        {metrics?.accuracy ? `${(metrics.accuracy * 100).toFixed(1)}%` : '—'}
+                        {metrics?.accuracy ? `${(metrics.accuracy * 100).toFixed(1)}%` : '-'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔSP</span>
                     <div className="font-medium text-text-primary animate-count-up">
-                        {metrics?.sp_difference != null ? metrics.sp_difference.toFixed(3) : '—'}
+                        {metrics?.sp_difference != null ? metrics.sp_difference.toFixed(3) : '-'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">Nodes</span>
                     <div className="font-medium text-text-primary">
-                        {metrics?.nodes_trained || '—'}
+                        {metrics?.nodes_trained || '-'}
                     </div>
                 </div>
                 <div>
                     <span className="text-text-muted">ΔEO</span>
                     <div className="font-medium text-text-primary">
-                        {metrics?.eo_difference != null ? metrics.eo_difference.toFixed(3) : '—'}
+                        {metrics?.eo_difference != null ? metrics.eo_difference.toFixed(3) : '-'}
                     </div>
                 </div>
             </div>

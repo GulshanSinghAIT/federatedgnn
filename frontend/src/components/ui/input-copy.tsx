@@ -58,7 +58,7 @@ const InputCopy = forwardRef<HTMLDivElement, InputCopyProps>(
           setTooltipState("suppressed");
         }, 2000);
       } catch {
-        // Clipboard API not available — silently fail
+        // Clipboard API not available - silently fail
       }
     }, [value, disabled, onCopy]);
 

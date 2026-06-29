@@ -52,7 +52,7 @@ export default function HospitalNetwork() {
                 <div className="absolute top-0 right-0 w-80 h-full glass-card p-4 overflow-y-auto animate-slide-in z-50">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-sm font-medium text-text-primary">
-                            🔒 Demographics — {demoPanel.hospital_id}
+                            🔒 Demographics - {demoPanel.hospital_id}
                         </h3>
                         <Button variant="ghost" size="icon-sm" onClick={() => setDemoPanel(null)} className="text-text-muted hover:text-white">✕</Button>
                     </div>

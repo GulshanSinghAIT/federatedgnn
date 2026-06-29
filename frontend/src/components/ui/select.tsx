@@ -377,7 +377,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
         ) {
           e.preventDefault();
           if (currentIdx === -1) {
-            // No item focused yet — focus checked or first item
+            // No item focused yet - focus checked or first item
             const checked =
               value !== ""
                 ? items.find((item) => item.getAttribute("data-value") === value)
@@ -558,7 +558,7 @@ const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(
 
             {/* Cues read the elevated surface level from Elevated's provider,
                 so the gradient matches the menu background at any depth. */}
-            {/* Only mount the cue anchors when the list actually overflows —
+            {/* Only mount the cue anchors when the list actually overflows -
                 otherwise their zero-height sticky nodes still consume the
                 container's flex `gap`, adding stray top/bottom spacing. */}
             {scrollFade && edges.top && <ScrollEdgeCue edge="top" visible={edges.top} />}

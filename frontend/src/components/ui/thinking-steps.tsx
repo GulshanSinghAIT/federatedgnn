@@ -158,7 +158,7 @@ function ThinkingStep({
           animate={{ opacity: 1 }}
           transition={{ duration: 0.24, delay: 0.08, ease: "easeOut" }}
         >
-          {/* Content row — this is the proximity hover target */}
+          {/* Content row - this is the proximity hover target */}
           <div className={cn("flex gap-2.5 px-2 py-1.5", shape.item)}>
             {/* Icon column with continuous connector line */}
             <div className="flex flex-col items-center shrink-0 w-[14px]">

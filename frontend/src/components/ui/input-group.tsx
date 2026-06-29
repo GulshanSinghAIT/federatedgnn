@@ -107,7 +107,7 @@ interface InputFieldProps
   disabled?: boolean;
   className?: string;
   /** Drop the stacked label row (keeps it as aria-label) so the field sits at
-   *  a single control height — for inline filter bars / toolbars. */
+   *  a single control height - for inline filter bars / toolbars. */
   hideLabel?: boolean;
 }
 

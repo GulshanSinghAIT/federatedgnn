@@ -1,7 +1,7 @@
 """
 FairGNN: Eliminating Bias in Graph Neural Networks (adversarial debiasing).
 
-Paper inspiration: FairGNN — Eliminating Bias in Graph Neural Networks.
+Paper inspiration: FairGNN - Eliminating Bias in Graph Neural Networks.
 Architecture: Encoder -> Embedding; Embedding -> Predictor (disease/link);
               Embedding -> Adversary (sensitive attribute).
 Goal: Minimize prediction loss while maximizing adversary loss via gradient reversal.

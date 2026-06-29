@@ -192,7 +192,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="FedFairGNN — Federated Fair Graph Neural Network",
+    title="FedFairGNN - Federated Fair Graph Neural Network",
     description="Privacy-preserving medical decision support system",
     version="1.0.0",
     lifespan=lifespan
@@ -338,7 +338,7 @@ def global_search(q: str = "", limit: int = 6):
     finally:
         gs.close()
 
-    # Patients live in per-hospital DBs (never centralized) — search each.
+    # Patients live in per-hospital DBs (never centralized) - search each.
     patient_items = []
     for h in HOSPITALS:
         hid = h["id"]

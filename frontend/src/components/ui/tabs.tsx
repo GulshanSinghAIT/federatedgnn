@@ -152,7 +152,7 @@ const TabsList = forwardRef<HTMLDivElement, TabsListProps>(
     const shape = useShape();
     const substrate = useSurface();
     // Active pill lifts 3 levels above substrate (1 above the muted track + 2 for pop).
-    // On the page (substrate 1) this lands on surface 4 — matches the original design.
+    // On the page (substrate 1) this lands on surface 4 - matches the original design.
     // Inside a dialog (substrate 5) it lifts to surface 8 instead of staying at 4.
     const indicatorLevel = Math.min(substrate + 3, 8);
     const valueOrderCtx = useContext(TabsValueOrderContext);

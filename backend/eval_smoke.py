@@ -5,7 +5,7 @@ Run from backend/ with the project venv:
     .venv/bin/python eval_smoke.py            (macOS/Linux)
     .venv\\Scripts\\python eval_smoke.py       (Windows)
 
-Uses FastAPI TestClient so app startup seeds the SQLite DBs in-process — no
+Uses FastAPI TestClient so app startup seeds the SQLite DBs in-process - no
 separate server needed. Exits non-zero if any check fails. Does NOT mutate the
 product code; it only asserts observable behavior.
 
@@ -32,7 +32,7 @@ results = []  # (check, ok, detail)
 
 def record(check, ok, detail=""):
     results.append((check, bool(ok), detail))
-    print(f"[{'PASS' if ok else 'FAIL'}] {check}" + (f" — {detail}" if detail else ""))
+    print(f"[{'PASS' if ok else 'FAIL'}] {check}" + (f" - {detail}" if detail else ""))
 
 
 def wait_idle(client, timeout=180.0):

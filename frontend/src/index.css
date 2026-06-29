@@ -2,10 +2,10 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
-@import "@fontsource-variable/inter/opsz.css";   /* body — Inter (rsms) w/ optical-size axis */
-@import "@fontsource-variable/geist-mono";       /* mono — Geist Mono */
+@import "@fontsource-variable/inter/opsz.css";   /* body - Inter (rsms) w/ optical-size axis */
+@import "@fontsource-variable/geist-mono";       /* mono - Geist Mono */
 
-/* display — Bagoss Standard (local trial); served from /public/fonts */
+/* display - Bagoss Standard (local trial); served from /public/fonts */
 @font-face {
   font-family: 'Bagoss Standard';
   src: url('/fonts/BagossStandardTRIAL-Medium.woff2') format('woff2');
@@ -13,11 +13,18 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Bagoss Regular';
+  src: url('/fonts/BagossStandardTRIAL-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @custom-variant dark (&:is(.dark *));
 
 /*
-  FedFairGNN theme — "Clinical Signal" light palette (see frontend/brand.html).
+  FedFairGNN theme - "Clinical Signal" light palette (see frontend/brand.html).
   The legacy --color-* variable NAMES are preserved so existing components adopt
   the brand automatically; only their VALUES changed (dark slate -> light clinical).
   New brand tokens (--paper, --cobalt, --disease, ...) are added for new UI.
@@ -56,7 +63,7 @@
   --color-text-muted: #8A92A0;
   --color-border: #E5E8EC;
 
-  /* categorical (hospitals / models) — on-brand, colorblind-considerate */
+  /* categorical (hospitals / models) - on-brand, colorblind-considerate */
   --color-hospital-h1: #2840C9;
   --color-hospital-h2: #0C8F77;
   --color-hospital-h3: #C77A04;
@@ -96,7 +103,7 @@
   --color-card-foreground: #15181E;
   --color-muted: #EEF1F5;
   --color-muted-foreground: #5A626E;    /* graphite */
-  --color-accent: #EAEDFB;              /* cobalt tint — secondary surfaces */
+  --color-accent: #EAEDFB;              /* cobalt tint - secondary surfaces */
   --color-accent-foreground: #1C2C8C;   /* cobalt deep */
   --color-hover: #EEF1F5;
   --color-active: #E5E8EC;
@@ -104,8 +111,9 @@
   --color-ring: #2840C9;
   --color-input: #E5E8EC;
 
-  /* type — generates the font-display / font-body / font-mono utilities. */
+  /* type - generates the font-display / font-body / font-mono utilities. */
   --font-display: 'Bagoss Standard', 'Geist Variable', system-ui, sans-serif;
+  --font-display-regular: 'Bagoss Regular', 'Geist Variable', system-ui, sans-serif;
   --font-body: 'Inter Variable', system-ui, sans-serif;
   --font-mono: 'Geist Mono Variable', ui-monospace, monospace;
 
@@ -192,7 +200,7 @@ h1, h2, h3, h4, .font-display {
 .animate-slide-in { animation: slide-in 0.3s ease-out; }
 .animate-fade-in { animation: fade-in 0.3s ease-out; }
 
-/* Card surface — light clinical panel (was a dark glass card). */
+/* Card surface - light clinical panel (was a dark glass card). */
 .glass-card {
   background: var(--color-surface);
   border: 1px solid var(--color-hairline);

@@ -75,7 +75,7 @@ export default function GlobalSearch() {
         setQ('');
         if (type === 'patient') navigate(`/hospital/${item.hospital_id}/patients/${item.id}`);
         else if (type === 'hospital') navigate(`/hospital/${item.hospital_id}/dashboard`);
-        else navigate(`/hospital/H1/dashboard?view=graph`); // KG entities → knowledge graph
+        else navigate(`/hospital/H1/dashboard?tab=graph`); // KG entities → knowledge graph
     };
 
     const hasResults = groups.some(g => g.items.length > 0);

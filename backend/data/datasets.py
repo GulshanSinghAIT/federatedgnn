@@ -75,7 +75,7 @@ def is_valid_dataset(dataset_id: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Table 1 — Comprehensive benchmark results across medical graph datasets.
+# Table 1 - Comprehensive benchmark results across medical graph datasets.
 # Lower dSP and dEO indicate improved fairness.
 # Order of metrics: accuracy, f1_score, auc, sp_difference, eo_difference.
 # ---------------------------------------------------------------------------

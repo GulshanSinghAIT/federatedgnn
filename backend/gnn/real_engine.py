@@ -1,5 +1,5 @@
 """
-Real (PyTorch Geometric) training engine — the optional half of the hybrid.
+Real (PyTorch Geometric) training engine - the optional half of the hybrid.
 
 This wires the genuine model implementations in the repo-root ``models/``
 package (FairGCN, FairGNN, SMPC-LP, FederatedFairGNN with gradient-reversal
@@ -8,14 +8,14 @@ adversarial debiasing and secure aggregation) into the live federation loop.
 It is OPTIONAL. If torch / torch_geometric are not installed, ``is_available()``
 returns False and the federation engine uses the simulation engine instead.
 Any exception during real training also falls back to simulation, so the demo
-never breaks — see gnn/federated_engine.py.
+never breaks - see gnn/federated_engine.py.
 
 To enable the real engine:
     pip install -r backend/requirements-ml.txt
     start federation with engine="real" (or env FEDGNN_ENGINE=real).
 
 Privacy: only model weights leave a hospital (via secure aggregation). Node
-features, embeddings, labels and the sensitive attribute stay local — exactly
+features, embeddings, labels and the sensitive attribute stay local - exactly
 the constraint described in the paper (Sec. 4.4).
 """
 
@@ -239,7 +239,7 @@ def run_round(model_name, round_num, hospitals, patient_counts,
 
     Returns (per_hospital_metrics: dict[hid]->metrics, global_metrics, global_model).
     Local secure aggregation (weighted FedAvg + optional noise) builds the next
-    global model. Raises on any torch/data error — the caller falls back to sim.
+    global model. Raises on any torch/data error - the caller falls back to sim.
     """
     pkg = _load_models_package()
 

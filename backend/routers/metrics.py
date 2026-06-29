@@ -59,6 +59,7 @@ def compare_models(dataset: Optional[str] = None):
                 comm_cost=profile.get("comm_cost", "N/A"),
                 is_proposed=model_name == "FedFairGNN",
                 source="live",
+                engine=latest.get("engine", "sim"),
             ))
         else:
             t = target_metrics(ds, model_name)

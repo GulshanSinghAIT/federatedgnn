@@ -83,6 +83,7 @@ def _record_and_broadcast(model_name, round_num, hospital_id, metrics):
         "round_num": round_num,
         "hospital_id": hospital_id,
         "dataset": federation_state.dataset,
+        "engine": federation_state.effective_engine,
         **metrics,
         "timestamp": datetime.utcnow().isoformat(),
     }

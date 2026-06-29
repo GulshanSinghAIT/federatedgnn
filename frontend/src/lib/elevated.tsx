@@ -18,15 +18,15 @@ interface ElevatedProps extends ComponentPropsWithoutRef<"div"> {
    * nesting walks up the ladder automatically.
    *
    * Conventional offsets:
-   *   2 — dropdown / popover / select menu
-   *   4 — dialog / modal
+   *   2 - dropdown / popover / select menu
+   *   4 - dialog / modal
    */
   offset: number;
   /**
    * Override for the shadow level. Defaults to the computed surface level.
    *
    * Pass a fixed value when the component should keep a constant shadow
-   * weight regardless of how deeply it's nested — e.g. a dropdown always
+   * weight regardless of how deeply it's nested - e.g. a dropdown always
    * reads `shadow-surface-3` whether it opens on the page or inside a
    * dialog, even though its background tracks the substrate.
    */

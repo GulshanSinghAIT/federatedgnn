@@ -1,4 +1,4 @@
-# OPTIONAL — only needed to run the REAL training engine (engine="real").
+# OPTIONAL - only needed to run the REAL training engine (engine="real").
 # The default simulation engine needs none of this; the app boots fine without it.
 #
 #   pip install -r requirements.txt          # always

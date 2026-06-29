@@ -1,6 +1,6 @@
 """
 Train the REAL (numpy) models on the generated MedGraph-S dataset and print a
-results table — the data-driven counterpart to the paper's Table 1.
+results table - the data-driven counterpart to the paper's Table 1.
 
     .venv/bin/python train_real.py            # macOS/Linux
     .venv\\Scripts\\python train_real.py        # Windows

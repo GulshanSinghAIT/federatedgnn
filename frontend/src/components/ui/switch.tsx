@@ -1,4 +1,4 @@
-// @ts-nocheck — vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
+// @ts-nocheck - vendored shadcn component using a radix `render=` prop the installed radix lacks. Unused by the app; remove once the radix API is fixed.
 "use client";
 
 import {

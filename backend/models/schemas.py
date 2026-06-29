@@ -185,6 +185,7 @@ class ModelComparisonOut(BaseModel):
     comm_cost: str = "N/A"
     is_proposed: bool = False
     source: str = "benchmark"  # "live" once trained this session, else paper "benchmark"
+    engine: Optional[str] = None  # "sim" | "real" - which engine produced live results
 
 
 # --- Decision Support Schemas ---

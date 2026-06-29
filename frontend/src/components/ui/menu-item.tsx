@@ -9,7 +9,7 @@ import { fontWeights } from "@/lib/font-weight";
 import { shapeMap } from "@/lib/shape-context";
 
 // MenuItem is only used inside Dropdown, which opts out of the global pill
-// shape — see dropdown.tsx for the rationale.
+// shape - see dropdown.tsx for the rationale.
 const shape = shapeMap.rounded;
 
 interface MenuItemProps extends HTMLAttributes<HTMLDivElement> {

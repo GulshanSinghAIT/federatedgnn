@@ -1099,7 +1099,7 @@ function EyeDropperButton({ onPick }: { onPick: (hex: string) => void }) {
 }
 
 // ---------------------------------------------------------------------------
-// ColorTile (small colored square — checker behind alpha)
+// ColorTile (small colored square - checker behind alpha)
 // ---------------------------------------------------------------------------
 
 interface ColorTileProps {
@@ -1260,7 +1260,7 @@ const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
     // Cleared whenever the color changes through a non-OKLCH-internal channel.
     const oklchHueRef = useRef<number | null>(null);
 
-    // External value sync — when controlled value changes from outside, sync HSV
+    // External value sync - when controlled value changes from outside, sync HSV
     const lastEmittedRef = useRef<string>("");
     useEffect(() => {
       if (!isControlled) return;
@@ -1475,7 +1475,7 @@ const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(
 ColorPicker.displayName = "ColorPicker";
 
 // ---------------------------------------------------------------------------
-// ColorInputsRow — adapts inputs to format
+// ColorInputsRow - adapts inputs to format
 // ---------------------------------------------------------------------------
 
 type ChannelKey =

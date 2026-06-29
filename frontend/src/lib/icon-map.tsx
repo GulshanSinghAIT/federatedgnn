@@ -320,7 +320,7 @@ function hugeicons(iconDef: unknown): IconComponent {
   };
 }
 
-// Untitled UI: standard 24px SVG components — `strokeWidth`/`className` pass
+// Untitled UI: standard 24px SVG components - `strokeWidth`/`className` pass
 // through natively; only `size` needs mapping to `width`/`height`.
 function untitledui(Icon: ComponentType<{ width?: number; height?: number; strokeWidth?: number; className?: string }>): IconComponent {
   return function UntitledUiAdapter({ size, strokeWidth, className }: IconComponentProps) {
@@ -537,7 +537,7 @@ const untitleduiMap: Record<IconName, IconComponent> = {
   "x": untitledui(UuiX),
   "copy": untitledui(UuiCopy),
   "menu": untitledui(UuiMenu),
-  // No bare dot in the set — reuse Circle (matches HugeIcons' dot handling).
+  // No bare dot in the set - reuse Circle (matches HugeIcons' dot handling).
   "dot": untitledui(UuiCircle),
   "monitor": untitledui(UuiMonitor),
   "sun": untitledui(UuiSun),
@@ -564,7 +564,7 @@ const untitleduiMap: Record<IconName, IconComponent> = {
   "rocket": untitledui(UuiRocket),
   "heart": untitledui(UuiHeart),
   "paintbrush": untitledui(UuiBrush),
-  // No brain icon in the free set — CpuChip01 carries the "intelligence" metaphor.
+  // No brain icon in the free set - CpuChip01 carries the "intelligence" metaphor.
   "brain": untitledui(UuiCpuChip),
   "globe": untitledui(UuiGlobe),
   "user": untitledui(UuiUser),

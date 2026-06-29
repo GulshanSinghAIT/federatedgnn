@@ -12,7 +12,7 @@ import { useSurface } from "@/lib/surface-context";
 // Scroll-edge primitives
 //
 // useScrollEdges tracks which edges of a scroll container have more content
-// beyond them; ScrollEdgeCue renders the affordance for one edge — a
+// beyond them; ScrollEdgeCue renders the affordance for one edge - a
 // surface-colour gradient fading the content out toward the edge, with a
 // small chevron hinting at the scroll direction. Together they give any
 // scrolling surface the same "there's more" cue the Select menu uses.
@@ -137,7 +137,7 @@ export interface ScrollEdgeCueProps {
    *  sitting over the viewport. Defaults to `"sticky"`. */
   mode?: "sticky" | "absolute";
   /** Surface ladder level the gradient fades toward. Defaults to the level
-   *  provided by the nearest SurfaceProvider/Elevated — override only when
+   *  provided by the nearest SurfaceProvider/Elevated - override only when
    *  the scroller sits on a background outside the ladder. */
   surfaceLevel?: number;
   /** Band size along the scroll axis: `"tight"` (32px) or `"comfortable"`
@@ -161,7 +161,7 @@ export function ScrollEdgeCue({
   chevron = true,
 }: ScrollEdgeCueProps) {
   const contextLevel = useSurface();
-  // Clamp to the ladder (1–8), mirroring SurfaceProvider — an out-of-range
+  // Clamp to the ladder (1–8), mirroring SurfaceProvider - an out-of-range
   // override would interpolate an invalid var and silently kill the gradient.
   const level = Math.max(1, Math.min(8, surfaceLevel ?? contextLevel));
   const surface = `var(--surface-${level})`;

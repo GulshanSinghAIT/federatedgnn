@@ -77,7 +77,7 @@ interface InputMessageProps
   onValueChange: (value: string) => void;
   /** Fired when the user submits (Enter or the send button) and when a queued
    *  message auto-dispatches. Receives the trimmed value, the attached files,
-   *  and — for auto-dispatched queue items — `meta.queuedId` (the originating
+   *  and - for auto-dispatched queue items - `meta.queuedId` (the originating
    *  QueuedMessage id), so a consumer can e.g. morph the queued item into the
    *  sent message via a shared-layout (`layoutId`) transition. */
   onSend?: (
@@ -134,7 +134,7 @@ interface InputMessageProps
   onQueueChange?: (queue: QueuedMessage[]) => void;
   /** Render the built-in reorderable queue rows above the textarea. Set to
    *  `false` to suppress them and render the queue yourself (e.g. as full-width
-   *  rows above the composer) — enqueue + auto-dispatch still run. */
+   *  rows above the composer) - enqueue + auto-dispatch still run. */
   showQueue?: boolean;
   /** Previously-sent messages, oldest first. When the textarea is focused,
    *  ArrowUp (caret on the first line) recalls the previous one and walks
@@ -158,8 +158,8 @@ function FilePreviewTile({ file, onRemove, size }: FilePreviewTileProps) {
   return (
     <motion.div
       // `layout` animates sibling tiles into the gap when one is removed.
-      // Enter: spring-fast (0.08s) — the chip category per animation-guidelines.md.
-      // Exit: 0.06s linear — "exits should be slightly faster than enter",
+      // Enter: spring-fast (0.08s) - the chip category per animation-guidelines.md.
+      // Exit: 0.06s linear - "exits should be slightly faster than enter",
       // matches CheckboxGroup's hover-bg pattern.
       layout
       initial={{ opacity: 0, scale: 0.9 }}
@@ -180,7 +180,7 @@ function FilePreviewTile({ file, onRemove, size }: FilePreviewTileProps) {
           }}
           aria-label={`Remove ${file.name}`}
           // Force the light-mode palette (dark circle + white X) regardless
-          // of theme — the close badge needs to read as a "delete affordance"
+          // of theme - the close badge needs to read as a "delete affordance"
           // over arbitrary image/PDF content, so it sits at a fixed contrast
           // instead of flipping with the surrounding surface.
           className="absolute top-1 right-1 w-5 h-5 rounded-full bg-neutral-900 text-white opacity-0 group-hover/tile:opacity-100 transition-opacity duration-80 flex items-center justify-center cursor-pointer outline-none focus-visible:opacity-100 focus-visible:ring-1 focus-visible:ring-[#6B97FF]"
@@ -195,7 +195,7 @@ function FilePreviewTile({ file, onRemove, size }: FilePreviewTileProps) {
 // ─── Queued message row ───────────────────────────────────────────────────
 // A pending message in the queue: a recessed, draggable row that reads as
 // "staged, not live". Double-click (or Enter/F2) edits it back into the
-// composer; the hover-revealed × (or Delete) removes it; drag — or Alt+↑/↓ —
+// composer; the hover-revealed × (or Delete) removes it; drag - or Alt+↑/↓ -
 // reorders. Top of the list is next to dispatch.
 interface QueuedRowProps {
   item: QueuedMessage;
@@ -347,7 +347,7 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
     const supportsFiles = onFilesChange !== undefined;
 
     // Queue is active only when both the status is controlled and a change
-    // handler is wired — same opt-in shape as `supportsFiles`.
+    // handler is wired - same opt-in shape as `supportsFiles`.
     const queueArr = useMemo(() => queue ?? [], [queue]);
     // Always-current view of the queue, so enqueue/edit/remove/move read the
     // latest value even if a handler closure is stale (e.g. two submits land
@@ -656,7 +656,7 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
         if (overrideAccept) {
           el.accept = overrideAccept;
           el.click();
-          // Restore on next tick — the picker dialog reads `accept` synchronously.
+          // Restore on next tick - the picker dialog reads `accept` synchronously.
           queueMicrotask(() => {
             if (fileInputRef.current) fileInputRef.current.accept = accept;
           });
@@ -681,7 +681,7 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
     const handleDragOver = useCallback(
       (e: ReactDragEvent<HTMLDivElement>) => {
         if (!supportsFiles || disabled) return;
-        // Only treat as a file drag — text/HTML drags shouldn't trigger.
+        // Only treat as a file drag - text/HTML drags shouldn't trigger.
         if (!Array.from(e.dataTransfer.types).includes("Files")) return;
         e.preventDefault();
         e.dataTransfer.dropEffect = "copy";
@@ -729,7 +729,7 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
         className={cn(
           // The edge is the box-shadow's hairline ring (from surface-2), not a
           // border. State changes recolor that same 1px ring in place rather
-          // than layering a second colored border beside it — so hover / focus
+          // than layering a second colored border beside it - so hover / focus
           // bump *contrast* without ever appearing to thicken the stroke.
           "flex flex-col gap-1 p-2 transition-[box-shadow,color] duration-80",
           surfaceClasses(2, 2),
@@ -757,14 +757,14 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
             />
           )}
 
-          {/* Attached files preview row — sits above the textarea.
+          {/* Attached files preview row - sits above the textarea.
               The outer motion.div animates the row's height (collapsing the
               whole component height) when files appear / disappear.
               The inner `mode="popLayout"` AnimatePresence pulls a removing
               tile out of layout flow so siblings can slide into the gap
               without fighting its exit anim. Keys are purely file-identity
-              (no index) so removing the first file doesn't re-key — and
-              remount — every surviving sibling. */}
+              (no index) so removing the first file doesn't re-key - and
+              remount - every surviving sibling. */}
           <AnimatePresence initial={false}>
             {filesArr.length > 0 && (
               <motion.div
@@ -791,7 +791,7 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
             )}
           </AnimatePresence>
 
-          {/* Queued messages — reorderable rows above the textarea. The outer
+          {/* Queued messages - reorderable rows above the textarea. The outer
               motion.div collapses the region height when the queue empties;
               the Reorder.Group handles drag-reorder (top = next to dispatch)
               and AnimatePresence handles per-row enter/exit. */}
@@ -896,7 +896,7 @@ const InputMessage = forwardRef<HTMLDivElement, InputMessageProps>(
                     {buttonMode === "stop" ? (
                       <span className="h-3 w-3 rounded-[3px] bg-current" />
                     ) : (
-                      // Override icon-sm's small 14px svg — the send glyph reads
+                      // Override icon-sm's small 14px svg - the send glyph reads
                       // better a touch larger. `size` matches the attribute to
                       // the CSS so the svg box stays centered.
                       <ArrowUpIcon

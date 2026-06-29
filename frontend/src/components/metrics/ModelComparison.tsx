@@ -17,6 +17,7 @@ interface Model {
     comm_cost: string;
     is_proposed?: boolean;
     source?: string; // 'live' | 'benchmark'
+    engine?: string; // 'sim' | 'real'
 }
 
 interface Dataset {
@@ -41,19 +42,22 @@ export default function ModelComparison() {
     }, [dataset]);
 
     const fmt = (v?: number, pct = true) => {
-        if (v == null) return <span className="text-text-muted">—</span>;
+        if (v == null) return <span className="text-text-muted">-</span>;
         return pct ? `${(v * 100).toFixed(1)}%` : v.toFixed(4);
     };
 
-    const isLive = models.some(m => m.source === 'live');
+    const liveEngine = models.find(m => m.source === 'live')?.engine;
+    const isLive = !!liveEngine;
 
     return (
         <div className="glass-card p-4">
             <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                     <h3 className="text-sm font-medium text-text-primary">Model Comparison</h3>
-                    <Badge variant="dot" size="sm" color={isLive ? 'blue' : 'gray'}>
-                        {isLive ? 'live (this session)' : 'paper benchmark'}
+                    <Badge variant="dot" size="sm" color={isLive ? (liveEngine === 'real' ? 'green' : 'blue') : 'gray'}>
+                        {isLive
+                            ? `live · ${liveEngine === 'real' ? 'real (trained on data)' : 'simulation'}`
+                            : 'paper benchmark'}
                     </Badge>
                 </div>
                 <Button size="sm" variant="tertiary" leadingIcon={Download} onClick={() => exportCSV()}>
@@ -116,10 +120,10 @@ export default function ModelComparison() {
 
             <div className="mt-4 space-y-2 text-xs text-text-muted">
                 <div className="glass-card p-3">
-                    <strong>ΔSP</strong> = |P(Ŷ=1 | A=0) − P(Ŷ=1 | A=1)| — Statistical Parity Difference (lower is fairer; target {'<'} 0.05)
+                    <strong>ΔSP</strong> = |P(Ŷ=1 | A=0) − P(Ŷ=1 | A=1)| - Statistical Parity Difference (lower is fairer; target {'<'} 0.05)
                 </div>
                 <div className="glass-card p-3">
-                    <strong>ΔEO</strong> = |TPR(A=0) − TPR(A=1)| — Equal Opportunity Difference (lower is fairer; target {'<'} 0.05)
+                    <strong>ΔEO</strong> = |TPR(A=0) − TPR(A=1)| - Equal Opportunity Difference (lower is fairer; target {'<'} 0.05)
                 </div>
                 <p className="px-1">
                     Values are this session's live results once a model has been trained on {dataset}; otherwise the
