@@ -2,6 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { fetchSymptoms } from '../../api/client';
 import { Button } from '@/components/ui/button';
 import { InputGroup, InputField } from '@/components/ui/input-group';
+import { SliderComfortable } from '@/components/ui/slider';
+import { DateField } from '@/components/ui/date-field';
 
 interface Symptom {
     id: string;
@@ -111,18 +113,19 @@ export default function SymptomSelector({ selected, onChange }: Props) {
                             </div>
                             <div className="flex items-center gap-3">
                                 <label className="text-xs text-text-muted w-16">Severity</label>
-                                <input type="range" min="1" max="10" value={sym.severity}
-                                    onChange={e => updateSeverity(sym.symptom_id, parseInt(e.target.value))}
-                                    className="flex-1 accent-accent-blue" />
+                                <div className="flex-1">
+                                    <SliderComfortable
+                                        variant="scrubber" min={1} max={10} step={1} value={sym.severity}
+                                        onChange={v => updateSeverity(sym.symptom_id, v)} />
+                                </div>
                                 <span className={`text-sm font-medium w-6 text-center ${sym.severity >= 8 ? 'text-accent-red' : sym.severity >= 5 ? 'text-accent-yellow' : 'text-accent-green'}`}>
                                     {sym.severity}
                                 </span>
                             </div>
                             <div className="flex items-center gap-3">
                                 <label className="text-xs text-text-muted w-16">Onset</label>
-                                <input type="date" value={sym.onset_date}
-                                    onChange={e => updateOnset(sym.symptom_id, e.target.value)}
-                                    className="flex-1 px-2 py-1 bg-bg-tertiary border border-border rounded text-sm text-text-primary" />
+                                <DateField className="flex-1" value={sym.onset_date}
+                                    onChange={d => updateOnset(sym.symptom_id, d)} />
                             </div>
                         </div>
                     ))}

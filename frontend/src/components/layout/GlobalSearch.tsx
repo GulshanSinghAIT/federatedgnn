@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { InputGroup, InputField } from '@/components/ui/input-group';
+import { Button } from '@/components/ui/button';
 import { searchAll } from '../../api/client';
 
 interface ResultItem {
@@ -111,13 +112,16 @@ export default function GlobalSearch() {
                         <div key={g.type} className="mb-1 last:mb-0">
                             <div className="eyebrow px-3 pt-2 pb-1">{g.label}</div>
                             {g.items.map(it => (
-                                <button
+                                <Button
                                     key={g.type + it.id}
+                                    variant="ghost"
                                     onClick={() => go(g.type, it)}
-                                    className="w-full text-left px-3 py-2 rounded-md hover:bg-hover transition-colors flex flex-col gap-0.5">
-                                    <span className="text-sm text-text-primary">{it.title}</span>
-                                    {it.subtitle && <span className="text-xs text-text-muted">{it.subtitle}</span>}
-                                </button>
+                                    className="w-full h-auto justify-start text-left px-3 py-2 rounded-md">
+                                    <span className="flex flex-col gap-0.5 items-start min-w-0">
+                                        <span className="text-sm text-text-primary truncate">{it.title}</span>
+                                        {it.subtitle && <span className="text-xs text-text-muted truncate">{it.subtitle}</span>}
+                                    </span>
+                                </Button>
                             ))}
                         </div>
                     ))}

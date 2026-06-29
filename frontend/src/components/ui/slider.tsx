@@ -914,7 +914,7 @@ const Slider = forwardRef<HTMLDivElement, SliderProps>(
               {/* Filled range */}
               {!hideFill && (
               <motion.div
-                className={cn("absolute h-full bg-selected/50 dark:bg-accent/40", fillClassName)}
+                className={cn("absolute h-full bg-cobalt dark:bg-accent/40", fillClassName)}
                 style={{
                   left: fillLeft,
                   width: fillWidth,
@@ -1436,7 +1436,7 @@ const SliderComfortable = forwardRef<HTMLDivElement, SliderComfortableProps>(
             className="absolute left-0 top-0 bottom-0 pointer-events-none z-[3]"
             style={{
               width: pipsFillWidthStyle,
-              backgroundColor: "var(--active)",
+              backgroundColor: "var(--color-cobalt)",
             }}
           />
         )}
@@ -1494,7 +1494,7 @@ const SliderComfortable = forwardRef<HTMLDivElement, SliderComfortableProps>(
             className="absolute left-0 top-0 bottom-0 pointer-events-none"
             style={{
               width: fillWidthStyle,
-              backgroundColor: "var(--active)",
+              backgroundColor: "var(--cobalt)",
             }}
           />
         )}
@@ -1510,8 +1510,8 @@ const SliderComfortable = forwardRef<HTMLDivElement, SliderComfortableProps>(
               backgroundColor: isFocused
                 ? "var(--foreground)"
                 : isHovered
-                ? "color-mix(in srgb, var(--foreground) 50%, transparent)"
-                : "color-mix(in srgb, var(--foreground) 25%, transparent)",
+                ? "color-mix(in srgb, var(--background) 70%, transparent)"
+                : "color-mix(in srgb, var(--background) 60%, transparent)",
             }}
             transition={spring.fast}
             style={{

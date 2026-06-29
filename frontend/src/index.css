@@ -110,6 +110,9 @@
   --color-destructive: #D6336C;
   --color-ring: #2840C9;
   --color-input: #E5E8EC;
+  --color-selected: #2840C9;  /* slider fill / select + tab selected state (cobalt) */
+  --color-primary: #2840C9;            /* calendar selected day (cobalt) */
+  --color-primary-foreground: #FFFFFF;
 
   /* type - generates the font-display / font-body / font-mono utilities. */
   --font-display: 'Bagoss Standard', 'Geist Variable', system-ui, sans-serif;
@@ -127,6 +130,8 @@
   --foreground: #15181E;
   --accent: #EAEDFB;
   --muted-foreground: #5A626E;
+  --active: #E5E8EC;
+  --cobalt: #2840C9;   /* slider (scrubber/pips) fill */
 }
 
 @layer base {
